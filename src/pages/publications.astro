@@ -1,0 +1,284 @@
+---
+// Phase 4 — Publications page.
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PaperCard from '../components/PaperCard.astro';
+import PublicationsGraph from '../components/PublicationsGraph.astro';
+import { TAGS, type TagCategory } from '../data/tags';
+
+type PaperData = CollectionEntry<'papers'>['data'];
+
+const papersEntries = await getCollection('papers');
+
+const papers: PaperData[] = papersEntries
+  .map((entry) => entry.data)
+  .sort((a, b) => (b.year !== a.year ? b.year - a.year : b.month - a.month));
+
+function flattenTags(tags: PaperData['tags']): string[] {
+  return [...tags.domain, ...tags.method, ...tags.topic, ...tags.tech];
+}
+
+const categoryOrder: TagCategory[] = ['domain', 'method', 'topic', 'tech'];
+
+// Only tags actually used by >=1 paper are offered as filter chips.
+const usedTagSlugs = new Set(papers.flatMap((p) => flattenTags(p.tags)));
+const tagsByCategory = categoryOrder.map((category) => ({
+  category,
+  tags: Object.values(TAGS).filter((t) => t.category === category && usedTagSlugs.has(t.slug)),
+}));
+
+// JSON-LD structured data — one ScholarlyArticle per paper. Tags map to `keywords`
+// so search engines can index the same research-area vocabulary the UI filters on.
+const jsonLd = papers.map((p) => ({
+  '@context': 'https://schema.org',
+  '@type': 'ScholarlyArticle',
+  name: p.title,
+  author: p.authors.map((a) => ({ '@type': 'Person', name: a.name })),
+  datePublished: `${p.year}-${String(p.month).padStart(2, '0')}`,
+  isPartOf: { '@type': 'Periodical', name: p.venue },
+  publisher: p.venue,
+  keywords: flattenTags(p.tags).map((slug) => TAGS[slug]?.en ?? slug),
+}));
+
+const graphPapers = papers.map((p) => ({
+  title: p.title,
+  authors: p.authors,
+  year: p.year,
+  month: p.month,
+  venue: p.venue,
+  type: p.type,
+  doi_url: p.doi_url,
+  tags: flattenTags(p.tags),
+}));
+
+const pageDescription =
+  '實驗室歷年研究成果，涵蓋智慧製造、瑕疵檢測、設備健康監測、排程最佳化與 AI Agent 應用等領域，提供清單瀏覽與研究標籤關聯圖兩種檢視方式。';
+---
+
+<BaseLayout title="研究成果 / Publications" description={pageDescription}>
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+    <h1 class="text-3xl font-bold text-brand-900">
+      研究成果 <span class="block text-base font-normal text-brand-400 sm:inline sm:text-lg">Publications</span>
+    </h1>
+    <p class="mt-4 max-w-3xl text-sm leading-relaxed text-slate-600 sm:text-base">
+      實驗室歷年發表之期刊與研討會論文，可切換「清單模式」瀏覽完整內容，或透過「關聯圖」探索論文之間共享的研究方法、主題與技術。
+    </p>
+    <p class="mt-1 max-w-3xl text-xs leading-relaxed text-slate-400">
+      Journal and conference publications from our lab. Switch to List Mode for the full text-based view, or Graph
+      View to explore how papers connect through shared methods, topics, and technologies.
+    </p>
+
+    <!-- Mode switcher -->
+    <div
+      class="mt-8 inline-flex rounded-full border border-brand-200 bg-brand-50/60 p-1"
+      role="tablist"
+      aria-label="展示模式 Display mode"
+    >
+      <button
+        id="mode-list-btn"
+        type="button"
+        role="tab"
+        aria-selected="true"
+        class="rounded-full bg-white px-4 py-2 text-sm font-semibold text-brand-900 shadow-sm transition-colors"
+      >
+        清單模式 <span class="text-xs font-normal">List</span>
+      </button>
+      <button
+        id="mode-graph-btn"
+        type="button"
+        role="tab"
+        aria-selected="false"
+        class="rounded-full px-4 py-2 text-sm font-semibold text-slate-500 transition-colors"
+      >
+        關聯圖 <span class="text-xs font-normal">Graph View</span>
+      </button>
+    </div>
+
+    <!-- Shared filter/sort toolbar (drives both List and Graph views) -->
+    <div class="mt-6 flex flex-wrap items-center gap-3 rounded-xl border border-brand-100 bg-white p-4 shadow-sm">
+      <div class="flex items-center gap-2">
+        <label for="type-filter" class="text-xs font-medium text-slate-500">類別 Type</label>
+        <select
+          id="type-filter"
+          class="rounded-md border border-brand-200 bg-white px-2 py-1.5 text-sm text-slate-700"
+        >
+          <option value="all">全部 All</option>
+          <option value="journal">期刊 Journal</option>
+          <option value="conference">研討會 Conference</option>
+          <option value="other">其他 Other</option>
+        </select>
+      </div>
+
+      <button
+        id="sort-toggle"
+        type="button"
+        class="rounded-md border border-brand-200 px-3 py-1.5 text-xs font-medium text-slate-600 transition-colors hover:bg-brand-50"
+      >
+        新到舊 Newest First
+      </button>
+
+      <button
+        id="filter-reset"
+        type="button"
+        class="rounded-md px-3 py-1.5 text-xs font-medium text-brand-600 underline underline-offset-2 hover:text-brand-800"
+      >
+        清除篩選 Clear Filters
+      </button>
+
+      <div class="mt-1 flex w-full basis-full flex-wrap gap-1.5">
+        {
+          tagsByCategory.map(({ tags }) =>
+            tags.map((t) => (
+              <button
+                type="button"
+                data-tag-chip={t.slug}
+                class="rounded-full border border-brand-200 bg-white px-2.5 py-1 text-xs font-medium text-slate-600 transition-colors hover:bg-brand-50"
+              >
+                {t.zh} <span class="text-slate-400">{t.en}</span>
+              </button>
+            ))
+          )
+        }
+      </div>
+    </div>
+
+    <!-- List view (SEO-friendly: fully static HTML, filtering is a JS enhancement) -->
+    <div id="list-view" class="mt-8">
+      <p
+        id="list-empty-message"
+        class="hidden rounded-lg border border-dashed border-brand-200 bg-brand-50/40 p-6 text-center text-sm text-slate-500"
+      >
+        沒有符合篩選條件的論文 <span class="block text-xs text-slate-400">No publications match the current filter.</span>
+      </p>
+      <div id="list-view-grid" class="grid grid-cols-1 gap-6 md:grid-cols-2">
+        {
+          papers.map((paper) => (
+            <div data-paper data-tags={flattenTags(paper.tags).join(',')} data-type={paper.type}>
+              <PaperCard paper={paper} />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- Graph view -->
+    <div id="graph-view" class="mt-8 hidden">
+      <PublicationsGraph papers={graphPapers} />
+    </div>
+  </section>
+
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+
+  <script>
+    const state: { tag: string | null; type: string } = { tag: null, type: 'all' };
+
+    const listItems = () => Array.from(document.querySelectorAll<HTMLElement>('#list-view [data-paper]'));
+
+    function matches(el: HTMLElement): boolean {
+      const tags = (el.dataset.tags || '').split(',').filter(Boolean);
+      const type = el.dataset.type || '';
+      if (state.tag && !tags.includes(state.tag)) return false;
+      if (state.type !== 'all' && type !== state.type) return false;
+      return true;
+    }
+
+    function applyFilters() {
+      let anyVisible = false;
+      listItems().forEach((el) => {
+        const ok = matches(el);
+        el.classList.toggle('hidden', !ok);
+        if (ok) anyVisible = true;
+      });
+      document.getElementById('list-empty-message')?.classList.toggle('hidden', anyVisible);
+
+      window.dispatchEvent(new CustomEvent('pub:filterchange', { detail: { tag: state.tag, type: state.type } }));
+    }
+
+    // Tag filter chips — shared by both List and Graph view via the event above.
+    const ACTIVE_CHIP = ['bg-brand-600', 'border-brand-600', 'text-white'];
+    const INACTIVE_CHIP = ['bg-white', 'border-brand-200', 'text-slate-600'];
+    const chips = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-tag-chip]'));
+
+    function paintChips() {
+      chips.forEach((c) => {
+        const active = c.getAttribute('data-tag-chip') === state.tag;
+        c.classList.remove(...ACTIVE_CHIP, ...INACTIVE_CHIP);
+        c.classList.add(...(active ? ACTIVE_CHIP : INACTIVE_CHIP));
+      });
+    }
+    paintChips();
+
+    chips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const tag = chip.getAttribute('data-tag-chip');
+        state.tag = state.tag === tag ? null : tag;
+        paintChips();
+        applyFilters();
+      });
+    });
+
+    // Type filter
+    const typeSelect = document.getElementById('type-filter') as HTMLSelectElement | null;
+    typeSelect?.addEventListener('change', () => {
+      state.type = typeSelect.value;
+      applyFilters();
+    });
+
+    // Reset
+    document.getElementById('filter-reset')?.addEventListener('click', () => {
+      state.tag = null;
+      state.type = 'all';
+      if (typeSelect) typeSelect.value = 'all';
+      paintChips();
+      applyFilters();
+    });
+
+    // Mode switcher (List <-> Graph View). List Mode is always the default/active
+    // view on load, on every screen size — the switcher itself stays visible so
+    // mobile users can still opt into Graph View if they want.
+    const listBtn = document.getElementById('mode-list-btn');
+    const graphBtn = document.getElementById('mode-graph-btn');
+    const listView = document.getElementById('list-view');
+    const graphView = document.getElementById('graph-view');
+    const ACTIVE_MODE = ['bg-white', 'text-brand-900', 'shadow-sm'];
+    const INACTIVE_MODE = ['text-slate-500'];
+
+    function setMode(mode: 'list' | 'graph') {
+      const isList = mode === 'list';
+      listView?.classList.toggle('hidden', !isList);
+      graphView?.classList.toggle('hidden', isList);
+      [listBtn, graphBtn].forEach((btn) => btn?.classList.remove(...ACTIVE_MODE, ...INACTIVE_MODE));
+      (isList ? listBtn : graphBtn)?.classList.add(...ACTIVE_MODE);
+      (isList ? graphBtn : listBtn)?.classList.add(...INACTIVE_MODE);
+      listBtn?.setAttribute('aria-selected', String(isList));
+      graphBtn?.setAttribute('aria-selected', String(!isList));
+    }
+    listBtn?.addEventListener('click', () => setMode('list'));
+    graphBtn?.addEventListener('click', () => setMode('graph'));
+
+    // Sort toggle (nice-to-have): base sort is newest-first from the build-time
+    // sort above; this just reverses the already-sorted DOM order client-side.
+    let sortAsc = false;
+    document.getElementById('sort-toggle')?.addEventListener('click', (e) => {
+      sortAsc = !sortAsc;
+      const container = document.getElementById('list-view-grid');
+      if (container) {
+        Array.from(container.children)
+          .reverse()
+          .forEach((el) => container.appendChild(el));
+      }
+      (e.currentTarget as HTMLButtonElement).textContent = sortAsc ? '舊到新 Oldest First' : '新到舊 Newest First';
+    });
+
+    // Deep-link support: /publications?tag=<slug> (used by the homepage's
+    // research-axis teaser cards) pre-selects that tag chip on load, if it
+    // matches a chip actually rendered on this page. Stays in List Mode —
+    // only the tag filter is applied, the view mode is untouched.
+    const initialTag = new URLSearchParams(window.location.search).get('tag');
+    if (initialTag && chips.some((c) => c.getAttribute('data-tag-chip') === initialTag)) {
+      state.tag = initialTag;
+      paintChips();
+      applyFilters();
+    }
+  </script>
+</BaseLayout>

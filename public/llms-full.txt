@@ -1,0 +1,86 @@
+# 先進製程與設備智能輔助實驗室 (Advanced Process Control and Intelligent Equipment Laboratory)
+
+> 國立臺灣科技大學 (NTUST) 研究實驗室，聚焦於 AI Agent、數位雙生與閉環智慧製造。
+> A research laboratory at National Taiwan University of Science and Technology (NTUST), focused on AI Agents, Digital Twins, and closed-loop smart manufacturing.
+
+本實驗室以 AI Agent 與數位雙生技術為核心，融合工業知識與先進控制，致力打造自主決策與人機協作的閉環智慧製造創新中心。
+
+Centered on AI Agents and Digital Twins, driving closed-loop smart manufacturing through autonomous decision-making and human–AI collaboration.
+
+This is the full companion to /llms.txt: it adds the complete current-member roster and the complete publication list, for AI tools that want to crawl deeper than the short overview.
+
+## Research Pillars 研究重點
+
+- **AI Agent 智慧代理人與決策支援 / AI Agent & Decision Support** — combining large language models (LLMs), optimization algorithms, and industrial knowledge (SOPs, standards, equipment parameters) into executable decision units via task decomposition, tool orchestration, reasoning verification, and human–AI collaboration.
+- **數位雙生與實體場域導入 / Digital Twin & Real-World Deployment** — deploying digital twin, process optimization, and multi-agent coordination research directly into real industrial sites through close industry partnerships.
+- **先進控制與閉環智慧製造 / Advanced Control & Closed-loop Manufacturing** — integrating process control theory, intelligent equipment design, and AI technology to address high-precision, high-efficiency manufacturing challenges, including scheduling, defect detection, predictive maintenance, and equipment health monitoring.
+
+## Team 團隊成員
+
+Principal Investigator / 指導教授: Jr-Fong Dang (鄧志峰).
+
+All members listed below have status "current" (no alumni are currently listed). 11 members total, grouped by degree.
+
+### PhD Students 博士生 (1)
+
+- **王元 (Wang Yuan)** — tags: Image Recognition 影像識別, Deep Learning 深度學習, Machine Learning 機器學習, Smart Manufacturing 智慧製造, AI Agent, Web Development 網頁設計, Database Management 資料庫管理. Thesis: https://etheses.lib.ntust.edu.tw/detail/8a0233ad8e5dd9367afc0bad39f7def1/
+
+### Master's Students 碩士生 (10)
+
+- **林郁庭 (Lin Yu-Ting)** — tags: Image Recognition 影像識別, Deep Learning 深度學習, Machine Learning 機器學習, Web Development 網頁設計, Database Management 資料庫管理. Thesis: https://etheses.lib.ntust.edu.tw/detail/ca77add379768f55d6b279ee8bfe3676/
+- **劉恩慈 (Liu En-Tzu)** — tags: Machine Learning 機器學習, Database Management 資料庫管理.
+- **周青松 (Chou Ching-Sung)** — tags: Image Recognition 影像識別, Machine Learning 機器學習.
+- **林耘孜 (Lin Yun-Tzu)** — tags: Machine Learning 機器學習, Smart Manufacturing 智慧製造.
+- **劉少宇 (Liu Shao-Yu)** — tags: Machine Learning 機器學習, Smart Manufacturing 智慧製造, AI Agent.
+- **蔡婉煜 (Tsai Wan-Yu)** — tags: Smart Manufacturing 智慧製造, AI Agent.
+- **王才瑜 (Wang Tsai-Yu)** — tags: Machine Learning 機器學習, Smart Manufacturing 智慧製造, AI Agent.
+- **林家仟 (Lin Chia-Chien)** — tags: Image Recognition 影像識別, Deep Learning 深度學習, Machine Learning 機器學習, Smart Manufacturing 智慧製造, AI Agent, Database Management 資料庫管理.
+- **王亮凱 (Wang Liang-Kai)** — tags: Image Recognition 影像識別, Deep Learning 深度學習, Machine Learning 機器學習, Smart Manufacturing 智慧製造, AI Agent, Web Development 網頁設計, Database Management 資料庫管理.
+- **陳楷綸 (Chen Kai-Lun)** — tags: Image Recognition 影像識別, Machine Learning 機器學習, Smart Manufacturing 智慧製造, AI Agent, Web Development 網頁設計, Database Management 資料庫管理.
+
+### Undergraduate Students 大學部 (0)
+
+No undergraduate members are currently listed.
+
+## Publications 出版著作
+
+16 publications total, sorted newest first. Format: Title — Authors (corresponding author marked *) (Year, Venue) [Type] — tags.
+
+- **A closed-loop cGAN-based framework for surface defect detection in industrial LPG rubber hoses** — Dang, Jr-Fong; Tzu-Li Chen*; Bing-Yi Lin (2026, International Journal of Advanced Manufacturing Technology) [journal] — tags: Deep Learning 深度學習, Anomaly Detection 異常偵測, Defect Detection 瑕疵檢測, Smart Manufacturing 智慧製造, GAN 生成對抗網路.
+- **Intelligent defect‑detection framework integrating a modified YOLO algorithm, a domain knowledge graph, and RAG‑enabled large language model** — Dang, Jr-Fong; Li-Na Wang; Tzu-Li Chen* (2026, Advanced Engineering Informatics) [journal] — tags: Deep Learning 深度學習, LLM 大型語言模型, RAG 檢索增強生成, Defect Detection 瑕疵檢測, Smart Manufacturing 智慧製造, YOLO, Knowledge Graph 知識圖譜.
+- **The intelligent wafer bin map pattern recognition framework integrating attention-based deep learning network with information fusion** — Dang, Jr-Fong*; Cheng-Chien Wu (2026, International Journal of Pattern Recognition and Artificial Intelligence) [journal] — tags: Deep Learning 深度學習, Attention Mechanism 注意力機制, Anomaly Detection 異常偵測, Defect Detection 瑕疵檢測, Smart Manufacturing 智慧製造, Image Recognition 影像識別.
+- **Thick walls, hidden stories: Integrating scRNA-seq and snRNA-seq with spatial transcriptomics to complete the xylem puzzle** — Wei, Mingke; Jo-Wei Allison Hsieh; Jr-Fong Dang; Botong Tong; Hui Li; Ronald Sederof; Ying-Chung Jimmy Lin; Quanzi Li (2026, Genome Biology) [journal] — tags: (none; cross-domain exploratory study, not tagged in lab taxonomy).
+- **From product specifications to smart manufacturing: Generative AI-driven process innovation for BOM digitization and its applications** — Lin, Yu-Chi; Jr-Fong Dang* (2026, Advanced Engineering Informatics) [journal] — tags: Deep Learning 深度學習, Generative AI 生成式 AI, Smart Manufacturing 智慧製造.
+- **Fulfilling a smart scheduling system prototype based on an Industry 4.0 framework: A case study** — Chen, Ping-Shun; Jr-Fong Dang*; Yu-Chieh Chuang; Dah-Chuan Gong (2025, Journal of the Chinese Institute of Engineers) [journal] — tags: Optimization 最佳化, Scheduling 排程, Smart Manufacturing 智慧製造.
+- **Single cell and spatial multi-omics reveal mechanical stress driving heterogeneous xylem development in populus** — Hsieh, J.-W. A.; P.-C. Liou; C.-C. Lin; X. Dai; C.-W. Hu; I-F. Wang; J.-F. Dang; Y.-C. Ho; K.-W. Cheng; W. Xu; S.-C. Kuo; C.-T. Kao; D.-X. Yang; R. Wang; K. Xiao; J.-S. Lin; C.-C. Hsu; C.-C. Hsu; T.-L. Mai; Y. Cheng; M.-C. Tseng; W. Li*; Y.-L. Chen*; Y.-C. J. Lin* (2025, Developmental Cell) [journal] — tags: (none; cross-domain exploratory study, not tagged in lab taxonomy).
+- **The human-centric framework integrating knowledge distillation architecture with fine-tuning mechanism for equipment health monitoring** — Dang, Jr-Fong; Tzu-Li Chen*; Hung-Yi Huang (2025, Advanced Engineering Informatics) [journal] — tags: Deep Learning 深度學習, Knowledge Distillation 知識蒸餾, Equipment Health Monitoring 設備健康監測, Smart Manufacturing 智慧製造.
+- **Constructing modified variable neighborhood search approaches to solve a nurse scheduling problem** — Chen, Ping-Shun; Wen-Tso Huang; Gary Yu-Hsin Chen; Jr-Fong Dang*; Erh-Chun Yeh (2024, International Journal of Production Research) [journal] — tags: Meta-heuristics 啟發式演算法, Optimization 最佳化, Scheduling 排程.
+- **The multisensor information fusion-based deep learning model for equipment health monitor integrating subject matter expert knowledge** — Dang, Jr-Fong (2024, Journal of Intelligent Manufacturing) [journal] — tags: Deep Learning 深度學習, Equipment Health Monitoring 設備健康監測, Smart Manufacturing 智慧製造.
+- **Optimal analysis of a multi-server queue with preprocessing time and replenishment inventory** — Wu, Chia-Huang; Wen-Tso Huang; Jr-Fong Dang*; Ming-Yang Yeh (2024, Journal of the Chinese Institute of Engineers) [journal] — tags: Optimization 最佳化.
+- **The deep learning-based equipment health monitoring model adopting subject matter expert** — Dang, Jr-Fong (2024, International Journal of Computer Integrated Manufacturing) [journal] — tags: Deep Learning 深度學習, Equipment Health Monitoring 設備健康監測, Smart Manufacturing 智慧製造.
+- **Using simplified drum-buffer-rope method for identifying bottleneck ports in the north American line** — Huang, Wen-Tso; Jr-Fong Dang*; Tzu-Yun Chang (2023, Journal of Technology) [journal] — tags: Optimization 最佳化, Scheduling 排程.
+- **The dynamic flow shop scheduling problem with JIT philosophy and common due-date** — Huang, Wen-Tso; Ping-Shun Chen; Gary Yu-Hsin Chen; Jr-Fong Dang* (2021, Mathematical Problems in Engineering) [journal] — tags: Optimization 最佳化, Scheduling 排程, Smart Manufacturing 智慧製造.
+- **Applying meta-heuristics algorithm to solve assembly line balancing problem with labor skill level in garment industry** — Chen, Gary Yu-Hsin; Ping-Shun Chen; Jr-Fong Dang*; Sung-Lien Kang; Li-Jen Cheng (2021, International Journal of Computational Intelligence Systems) [journal] — tags: Meta-heuristics 啟發式演算法, Optimization 最佳化, Scheduling 排程, Smart Manufacturing 智慧製造.
+- **The equilibrium contract rent and reward money under incomplete information in reverse supply chains: A game theoretical approach and computational study** — Hong, I-Husan; Jr-Fong Dang; Kuan-Wen Lin (2016, Computers & Industrial Engineering) [journal] — tags: Optimization 最佳化.
+
+## Pages
+
+- [About](/about): Lab overview, mission, and research philosophy.
+- [Professor](/professor): Faculty advisor profile and research interests (Prof. Jr-Fong Dang).
+- [Team](/team): Current graduate student members, degree levels, and research tags.
+- [Publications](/publications): Full publication list with an interactive tag-based graph view connecting papers by shared research topics, methods, domains, and techniques.
+- [Join Us](/join-us): Information for prospective graduate students interested in joining the lab.
+- [Contact](/contact): Lab address, email, and location at NTUST Huaxia Campus.
+
+## Key Terms
+
+Professor / Principal Investigator: Jr-Fong Dang (鄧志峰).
+Research keywords: AI Agent, Digital Twin, LLM, RAG, smart manufacturing, defect detection, predictive maintenance, equipment health monitoring, knowledge distillation, multi-agent systems, scheduling optimization.
+
+Tag taxonomy (see /publications for the interactive graph):
+- Domain 研究領域: Smart Manufacturing 智慧製造, Defect Detection 瑕疵檢測, Predictive Maintenance 預測性維修, Equipment Health Monitoring 設備健康監測, Digital Twin 數位雙生.
+- Method 研究方法: Deep Learning 深度學習, Machine Learning 機器學習, Optimization 最佳化, Attention Mechanism 注意力機制, Knowledge Distillation 知識蒸餾, Meta-heuristics 啟發式演算法.
+- Topic 主題: AI Agent, Scheduling 排程, Anomaly Detection 異常偵測, LLM 大型語言模型, RAG 檢索增強生成, Generative AI 生成式 AI.
+- Tech 技術: YOLO, Knowledge Graph 知識圖譜, Multi-Agent System 多代理系統, GAN 生成對抗網路, Image Recognition 影像識別, Web Development 網頁設計, Database Management 資料庫管理.
+
+Contact: zaira4edu@gmail.com

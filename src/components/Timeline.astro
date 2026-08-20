@@ -1,0 +1,29 @@
+---
+interface TimelineItem {
+  title_zh: string;
+  title_en: string;
+  org_zh?: string;
+  org_en?: string;
+}
+
+interface Props {
+  items: TimelineItem[];
+}
+
+const { items } = Astro.props;
+---
+
+{/* Always a single stacked column — no left/right alternating layout, so mobile is safe by construction. */}
+<ol class="relative space-y-8 border-l-2 border-brand-200 pl-6">
+  {
+    items.map((item) => (
+      <li class="relative">
+        <span class="absolute -left-[1.65rem] top-1 h-3 w-3 rounded-full bg-brand-600 ring-4 ring-brand-100" />
+        <p class="text-sm font-bold text-brand-900">{item.title_zh}</p>
+        <p class="text-xs text-brand-500">{item.title_en}</p>
+        {item.org_zh && <p class="mt-0.5 text-sm text-slate-600">{item.org_zh}</p>}
+        {item.org_en && <p class="text-xs text-slate-400">{item.org_en}</p>}
+      </li>
+    ))
+  }
+</ol>

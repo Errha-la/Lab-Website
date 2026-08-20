@@ -1,0 +1,30 @@
+# 先進製程與設備智能輔助實驗室 (Advanced Process Control and Intelligent Equipment Laboratory)
+
+> 國立臺灣科技大學 (NTUST) 研究實驗室，聚焦於 AI Agent、數位雙生與閉環智慧製造。
+> A research laboratory at National Taiwan University of Science and Technology (NTUST), focused on AI Agents, Digital Twins, and closed-loop smart manufacturing.
+
+本實驗室以 AI Agent 與數位雙生技術為核心，融合工業知識與先進控制，致力打造自主決策與人機協作的閉環智慧製造創新中心。
+
+Centered on AI Agents and Digital Twins, driving closed-loop smart manufacturing through autonomous decision-making and human–AI collaboration.
+
+## Research Pillars 研究重點
+
+- **AI Agent 智慧代理人與決策支援 / AI Agent & Decision Support** — combining large language models (LLMs), optimization algorithms, and industrial knowledge (SOPs, standards, equipment parameters) into executable decision units via task decomposition, tool orchestration, reasoning verification, and human–AI collaboration.
+- **數位雙生與實體場域導入 / Digital Twin & Real-World Deployment** — deploying digital twin, process optimization, and multi-agent coordination research directly into real industrial sites through close industry partnerships.
+- **先進控制與閉環智慧製造 / Advanced Control & Closed-loop Manufacturing** — integrating process control theory, intelligent equipment design, and AI technology to address high-precision, high-efficiency manufacturing challenges, including scheduling, defect detection, predictive maintenance, and equipment health monitoring.
+
+## Pages
+
+- [About](/about): Lab overview, mission, and research philosophy.
+- [Professor](/professor): Faculty advisor profile and research interests (Prof. Jr-Fong Dang).
+- [Team](/team): Current graduate student members, degree levels, and research tags.
+- [Publications](/publications): Full publication list with an interactive tag-based graph view connecting papers by shared research topics, methods, domains, and techniques.
+- [Join Us](/join-us): Information for prospective graduate students interested in joining the lab.
+- [Contact](/contact): Lab address, email, and location at NTUST Huaxia Campus.
+
+## Key Terms
+
+Professor / Principal Investigator: Jr-Fong Dang (鄧志峰).
+Research keywords: AI Agent, Digital Twin, LLM, RAG, smart manufacturing, defect detection, predictive maintenance, equipment health monitoring, knowledge distillation, multi-agent systems, scheduling optimization.
+
+Contact: zaira4edu@gmail.com

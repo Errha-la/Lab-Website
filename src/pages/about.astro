@@ -1,0 +1,260 @@
+---
+// Phase 4 — About page.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ResearchPillarCard from '../components/ResearchPillarCard.astro';
+import TechniqueCard from '../components/TechniqueCard.astro';
+import TagBadge from '../components/TagBadge.astro';
+import { RESEARCH_PILLARS } from '../consts';
+import { TAGS, type TagCategory } from '../data/tags';
+
+// Detailed technique/application breakdown — more granular than RESEARCH_PILLARS above.
+// Intentionally not mapped 1:1 onto the 3 pillars; kept as its own reference table.
+const TECHNIQUE_APPLICATIONS = [
+  {
+    titleZh: '生成式 AI 與 LLM 智慧製造應用',
+    titleEn: 'Generative AI & LLM Applications in Smart Manufacturing',
+    techniques: [
+      { zh: '大型語言模型（LLM）', en: 'Large Language Models (LLMs)' },
+      { zh: 'RAG 檢索增強生成', en: 'Retrieval-Augmented Generation (RAG)' },
+      { zh: '知識圖譜（Knowledge Graph）', en: 'Knowledge Graphs' },
+      { zh: '改進型 YOLO / cGAN 生成模型', en: 'Modified YOLO / cGAN generative models' },
+    ],
+    applications: [
+      { zh: '結合 SME 領域知識進行智慧瑕疵檢測', en: 'SME-informed intelligent defect detection' },
+      { zh: '自動將規格書轉化為 BOM 數位化', en: 'Automated BOM digitization from specifications' },
+      { zh: '具任務分解與人機協作能力之 AI Agent', en: 'Task-decomposing, human-collaborative AI agents' },
+    ],
+  },
+  {
+    titleZh: '設備健康監測與預測性維修（EHM & PdM）',
+    titleEn: 'Equipment Health Monitoring & Predictive Maintenance',
+    techniques: [
+      { zh: '多感測器資訊融合', en: 'Multi-sensor information fusion' },
+      { zh: '知識蒸餾（Knowledge Distillation）', en: 'Knowledge distillation' },
+      { zh: '微調（Fine-tuning）機制', en: 'Fine-tuning mechanisms' },
+      { zh: '閉環式條件生成對抗網路', en: 'Closed-loop conditional GANs' },
+    ],
+    applications: [
+      { zh: '即時設備狀態監控與異常診測', en: 'Real-time equipment condition monitoring and anomaly diagnosis' },
+      { zh: '以人為本（human-centric）輕量化模型落地', en: 'Human-centric lightweight model deployment' },
+      {
+        zh: '工業組件（如 LPG 軟管）表面瑕疵辨識',
+        en: 'Surface defect recognition for industrial components (e.g. LPG rubber hoses)',
+      },
+    ],
+  },
+  {
+    titleZh: '電腦視覺與晶圓影像識別',
+    titleEn: 'Computer Vision & Wafer Image Recognition',
+    techniques: [
+      { zh: '注意力機制深度學習（Attention-based DL）', en: 'Attention-based deep learning' },
+      { zh: '巨量資料與影像資訊融合', en: 'Big-data + image information fusion' },
+      { zh: '自動化影像處理演算法', en: 'Automated image processing algorithms' },
+    ],
+    applications: [
+      { zh: '高精確度晶圓圖樣（Wafer Bin Map）識別', en: 'High-accuracy Wafer Bin Map pattern recognition' },
+      {
+        zh: '複雜生產線之產品品質分類與智慧監控',
+        en: 'Product quality classification and smart monitoring on complex production lines',
+      },
+    ],
+  },
+  {
+    titleZh: '系統最佳化與智慧排程',
+    titleEn: 'System Optimization & Smart Scheduling',
+    techniques: [
+      { zh: '變異鄰域搜尋法（VNS）/ 超啟發式演算法', en: 'Variable Neighborhood Search / meta-heuristics' },
+      { zh: '佇列理論與動態排程', en: 'Queueing theory + dynamic scheduling' },
+      { zh: '賽局理論與合約模型', en: 'Game theory + contract models' },
+    ],
+    applications: [
+      { zh: '工業 4.0 智慧排程與動態流程車間', en: 'Industry 4.0 smart scheduling and dynamic flow shops' },
+      {
+        zh: '複雜資源排班（如護理排班）與裝配線平衡',
+        en: 'Complex resource scheduling (e.g. nurse scheduling) and assembly line balancing',
+      },
+      {
+        zh: '供應鏈庫存、租約與服務系統最佳化',
+        en: 'Supply chain inventory, leasing, and service system optimization',
+      },
+    ],
+  },
+];
+
+const categoryLabels: Record<TagCategory, { zh: string; en: string }> = {
+  domain: { zh: '研究領域', en: 'Domain' },
+  method: { zh: '研究方法', en: 'Method' },
+  topic: { zh: '主題', en: 'Topic' },
+  tech: { zh: '技術', en: 'Technology' },
+};
+
+const categoryOrder: TagCategory[] = ['domain', 'method', 'topic', 'tech'];
+const tagsByCategory = categoryOrder.map((category) => ({
+  category,
+  tags: Object.values(TAGS).filter((t) => t.category === category),
+}));
+
+const pageDescription =
+  '本實驗室整合了製程控制理論、智能設備設計與 AI 技術，致力於解決現代製造業對高精度、高效率的挑戰，並透過 AI Agent 概念實現閉環式智慧製造。';
+---
+
+<BaseLayout title="關於我們 / About" description={pageDescription}>
+  {/* 1. 實驗室簡介濃縮版 */}
+  <section class="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
+    <h1 class="text-3xl font-bold text-brand-900">
+      關於我們 <span class="block text-base font-normal text-brand-400 sm:inline sm:text-lg">About Us</span>
+    </h1>
+    <p class="mt-6 text-base leading-relaxed text-slate-600 sm:text-lg">
+      本實驗室整合了製程控制理論、智能設備設計與 AI
+      技術，致力於解決現代製造業對高精度、高效率的挑戰。並進一步導入 AI Agent（智慧代理人）概念，將大型語言模型（LLM）、最佳化與工業知識（SOP／規範／設備參數）融合為可執行的決策單元，透過任務分解、工具調度、推理驗證與人機協作，實現從「被動分析」走向「主動決策支援」的閉環式智慧製造。我們透過與業界的緊密合作，將數位雙生、流程優化與多代理協作等研究成果導入真實場域，旨在成為先進控制與智慧製造的頂尖創新中心。
+    </p>
+    <p class="mt-4 text-sm leading-relaxed text-slate-400">
+      Our laboratory focuses on developing AI agent applications that integrate large language models (LLMs),
+      optimization methods, and industrial information systems to enable autonomous decision-making and
+      collaborative problem solving. Our research encompasses agent architectures, multi-agent coordination, task
+      planning, tool integration, and human–AI collaboration, with applications in intelligent scheduling, defect
+      detection, predictive maintenance, and knowledge-based management using real-time data from MES, ERP, PLM, and
+      IoT platforms.
+    </p>
+  </section>
+
+  {/* 2. 三大研究主軸詳細說明 — interstitial image placeholders for visual rhythm */}
+  <section class="bg-brand-50/50">
+    <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+      <h2 class="text-center text-2xl font-bold text-brand-900">
+        研究主軸 <span class="text-base font-normal text-brand-400">Research Pillars</span>
+      </h2>
+
+      <div class="mt-10 flex flex-col items-center gap-6 md:flex-row md:items-stretch">
+        <div class="w-full md:w-1/2">
+          <ResearchPillarCard
+            titleZh={RESEARCH_PILLARS[0].title_zh}
+            titleEn={RESEARCH_PILLARS[0].title_en}
+            descZh={RESEARCH_PILLARS[0].desc_zh}
+            descEn={RESEARCH_PILLARS[0].desc_en}
+            index={1}
+          />
+        </div>
+        <div class="flex aspect-[4/3] w-full items-center justify-center rounded-xl border-2 border-dashed border-brand-200 bg-gradient-to-br from-brand-50 to-brand-100 text-center md:w-1/2">
+          <div class="px-4 text-brand-300">
+            <p class="text-sm font-medium">研究場域照片 Coming Soon</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 flex flex-col-reverse items-center gap-6 md:flex-row md:items-stretch">
+        <div class="flex aspect-[4/3] w-full items-center justify-center rounded-xl border-2 border-dashed border-brand-200 bg-gradient-to-br from-brand-50 to-brand-100 text-center md:w-1/2">
+          <div class="px-4 text-brand-300">
+            <p class="text-sm font-medium">設備照片 Coming Soon</p>
+          </div>
+        </div>
+        <div class="w-full md:w-1/2">
+          <ResearchPillarCard
+            titleZh={RESEARCH_PILLARS[1].title_zh}
+            titleEn={RESEARCH_PILLARS[1].title_en}
+            descZh={RESEARCH_PILLARS[1].desc_zh}
+            descEn={RESEARCH_PILLARS[1].desc_en}
+            index={2}
+          />
+        </div>
+      </div>
+
+      <div class="mt-8 flex flex-col items-center gap-6 md:flex-row md:items-stretch">
+        <div class="w-full md:w-1/2">
+          <ResearchPillarCard
+            titleZh={RESEARCH_PILLARS[2].title_zh}
+            titleEn={RESEARCH_PILLARS[2].title_en}
+            descZh={RESEARCH_PILLARS[2].desc_zh}
+            descEn={RESEARCH_PILLARS[2].desc_en}
+            index={3}
+          />
+        </div>
+        <div class="flex aspect-[4/3] w-full items-center justify-center rounded-xl border-2 border-dashed border-brand-200 bg-gradient-to-br from-brand-50 to-brand-100 text-center md:w-1/2">
+          <div class="px-4 text-brand-300">
+            <p class="text-sm font-medium">研究場域照片 Coming Soon</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* 3. 核心技術與應用 — detailed technique/application breakdown, more granular than the 3 pillars above */}
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+    <h2 class="text-2xl font-bold text-brand-900">
+      核心技術與應用 <span class="text-base font-normal text-brand-400">Core Techniques & Applications</span>
+    </h2>
+    <p class="mt-3 text-sm leading-relaxed text-slate-600">
+      以下依四大研究面向，詳列各領域採用之核心技術與方法，以及其關鍵應用與效益。
+    </p>
+    <p class="text-xs leading-relaxed text-slate-400">
+      A more detailed breakdown of the core techniques and key applications underlying each of our four research
+      areas.
+    </p>
+
+    <div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2">
+      {
+        TECHNIQUE_APPLICATIONS.map((item, i) => (
+          <TechniqueCard
+            titleZh={item.titleZh}
+            titleEn={item.titleEn}
+            techniques={item.techniques}
+            applications={item.applications}
+            index={i + 1}
+          />
+        ))
+      }
+    </div>
+  </section>
+
+  {/* 4. 研究方法/主題/技術 tag 總覽 */}
+  <section class="bg-brand-50/50">
+    <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+      <h2 class="text-2xl font-bold text-brand-900">
+        標籤分類系統 <span class="text-base font-normal text-brand-400">Tag Classification System</span>
+      </h2>
+      <p class="mt-3 text-sm leading-relaxed text-slate-600">
+        以下標籤系統貫穿本站的教授研究領域、成員研究方向與論文分類。
+      </p>
+      <p class="text-xs leading-relaxed text-slate-400">
+        This tag system is used consistently across the professor's research areas, team members' directions, and
+        publication classifications on this site.
+      </p>
+
+      <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
+        {
+          tagsByCategory.map(({ category, tags }) => (
+            <div class="rounded-xl border border-brand-100 bg-white p-5 shadow-sm">
+              <h3 class="text-sm font-bold text-brand-900">
+                {categoryLabels[category].zh}{' '}
+                <span class="text-xs font-normal text-brand-400">{categoryLabels[category].en}</span>
+              </h3>
+              <div class="mt-3 flex flex-wrap gap-1.5">
+                {tags.map((t) => (
+                  <TagBadge tag={t.slug} lang="both" />
+                ))}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* 5. Bottom links */}
+  <section class="mx-auto max-w-4xl px-4 pb-16 text-center sm:px-6 lg:px-8">
+    <div class="flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-8">
+      <a
+        href="/publications"
+        class="text-sm font-semibold text-brand-600 underline underline-offset-2 hover:text-brand-800"
+      >
+        查看完整論文列表 →
+      </a>
+      <a
+        href="/team"
+        class="text-sm font-semibold text-brand-600 underline underline-offset-2 hover:text-brand-800"
+      >
+        認識我們的團隊 →
+      </a>
+    </div>
+  </section>
+</BaseLayout>

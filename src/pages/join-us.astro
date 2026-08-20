@@ -1,0 +1,246 @@
+---
+// Join Us page — phase 4.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TagBadge from '../components/TagBadge.astro';
+import { CONTACT_EMAIL } from '../consts';
+
+const recruitTags = [
+  'machine-learning',
+  'deep-learning',
+  'ai-agent',
+  'smart-manufacturing',
+  'image-recognition',
+  'web-development',
+  'database-management',
+  'optimization',
+];
+
+const applySteps = [
+  {
+    zh: '了解實驗室研究方向',
+    en: 'Learn about our research focus',
+    descZh: '花點時間瀏覽網站的研究方向、團隊與研究成果，確認彼此興趣相符。',
+    descEn: 'Browse our research focus, team, and publications to see if your interests align with ours.',
+  },
+  {
+    zh: 'Email 聯絡並附上簡歷／成績單',
+    en: 'Email us with your CV / transcript',
+    descZh: '透過下方 Email 與我們聯繫，簡單自我介紹並附上簡歷或成績單（如有）。',
+    descEn: 'Reach out via the email below with a short self-introduction and your CV or transcript, if available.',
+  },
+  {
+    zh: '安排面談',
+    en: 'Schedule an interview',
+    descZh: '我們會盡快回覆並安排線上或現場面談，進一步聊聊研究興趣與規劃。',
+    descEn: "We'll get back to you and arrange an online or in-person chat about your interests and plans.",
+  },
+  {
+    zh: '確認加入',
+    en: 'Confirm and join',
+    descZh: '面談後雙方確認合適，即可加入實驗室，開始展開研究！',
+    descEn: "Once both sides feel it's a good fit, you're welcome to join the lab and get started.",
+  },
+];
+
+const faqs = [
+  {
+    qZh: '沒有程式基礎可以加入嗎？',
+    qEn: 'Can I join without a programming background?',
+    aZh: '可以。我們重視學習意願與邏輯思考能力，程式與相關技能可以在實驗室中逐步累積。',
+    aEn: 'Yes. We value willingness to learn and logical thinking — programming and related skills can be built up along the way.',
+  },
+  {
+    qZh: '需要先修過哪些課程？',
+    qEn: 'Are there prerequisite courses I need to take?',
+    aZh: '沒有硬性規定的先修課程，但具備程式設計、機率統計或控制相關基礎會有幫助。實際狀況歡迎聯繫討論。',
+    aEn: 'There are no strict prerequisites, though a background in programming, statistics, or control theory helps. Feel free to reach out to discuss your specific situation.',
+  },
+  {
+    qZh: '專題生和正式研究生的參與方式一樣嗎？',
+    qEn: 'Is the experience different for undergraduate research assistants vs. graduate students?',
+    aZh: '參與深度略有不同，專題生多從協助既有專案入手，研究生則會逐步發展獨立研究主題，實際安排會依個人狀況調整。',
+    aEn: 'The level of involvement differs — undergraduates typically start by assisting on existing projects, while graduate students gradually develop their own research topics. Arrangements are adjusted individually.',
+  },
+  {
+    qZh: '可以先旁聽或參觀實驗室嗎？',
+    qEn: 'Can I sit in on a meeting or visit the lab first?',
+    aZh: '歡迎來信詢問，我們會依實際狀況安排參訪或說明。',
+    aEn: "Feel free to email us — we're happy to arrange a visit or a chat depending on availability.",
+  },
+];
+---
+
+<BaseLayout title="加入我們 / Join Us" description="想在真實產業場域中打造能自主決策的 AI Agent 嗎？加入我們，一起把智慧製造的未來做出來。">
+  <!-- 1. Opening -->
+  <section class="bg-gradient-to-b from-brand-50 to-white">
+    <div class="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 sm:py-24 lg:px-8">
+      <h1 class="text-3xl font-bold leading-tight text-brand-900 sm:text-4xl lg:text-5xl">
+        想在真實產業場域中打造能自主決策的 AI Agent 嗎？
+      </h1>
+      <p class="mt-4 text-lg font-medium text-brand-600 sm:text-xl">
+        Want to build AI agents that make real decisions in real industrial settings?
+      </p>
+      <p class="mt-6 text-base leading-relaxed text-slate-600 sm:text-lg">
+        加入我們，一起把智慧製造的未來做出來 —— 從 AI Agent 決策支援、數位雙生到先進控制，與業界緊密合作，把研究成果落地。
+      </p>
+      <p class="mt-1 text-sm text-slate-400">
+        Join us and help shape the future of smart manufacturing — from AI agent decision support to digital twins and
+        advanced control, working closely with industry to bring research into real-world practice.
+      </p>
+
+      <a
+        href={`mailto:${CONTACT_EMAIL}`}
+        class="mt-8 inline-flex min-h-[44px] items-center justify-center rounded-full border border-brand-300 px-6 py-3 text-sm font-semibold text-brand-800 transition-colors hover:bg-brand-50"
+      >
+        與我們聯繫 <span class="ml-1.5 text-xs font-normal text-brand-400">Email Us</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- 2. Photo placeholder -->
+  <section class="mx-auto max-w-6xl px-4 pb-4 sm:px-6 lg:px-8">
+    <div class="relative aspect-[21/9] w-full overflow-hidden rounded-2xl bg-gradient-to-br from-brand-700 via-brand-800 to-brand-900 shadow-lg">
+      <div
+        class="absolute inset-0 opacity-20"
+        style="background-image: radial-gradient(circle at 20% 20%, white 1px, transparent 1px); background-size: 24px 24px;"
+      >
+      </div>
+      <div class="absolute inset-0 flex flex-col items-center justify-center gap-2 px-4 text-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14 text-white/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3 16.5V19a2 2 0 002 2h14a2 2 0 002-2v-2.5M16 8l-4-4-4 4M12 4v13"
+          />
+        </svg>
+        <p class="text-sm font-medium text-white/60">實驗室日常照片 <span class="text-white/40">Lab &amp; Team Photos</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Who we're recruiting -->
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+    <h2 class="text-2xl font-bold text-brand-900">
+      目前招收對象 <span class="text-base font-normal text-brand-400">Who We're Recruiting</span>
+    </h2>
+    <div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
+      <div class="rounded-2xl border border-brand-100 p-6 shadow-sm">
+        <h3 class="text-lg font-semibold text-brand-900">碩士班 <span class="text-sm font-normal text-brand-400">Master's Students</span></h3>
+        <p class="mt-3 text-sm leading-relaxed text-slate-600">
+          參與實驗室研究專案，在指導教授帶領下發展碩士論文題目，並有機會參與產學合作案。
+        </p>
+        <p class="mt-2 text-xs text-slate-400">
+          Join ongoing research projects and develop a thesis topic under faculty guidance, with opportunities to
+          take part in industry collaborations.
+        </p>
+      </div>
+      <div class="rounded-2xl border border-brand-100 p-6 shadow-sm">
+        <h3 class="text-lg font-semibold text-brand-900">博士班 <span class="text-sm font-normal text-brand-400">PhD Students</span></h3>
+        <p class="mt-3 text-sm leading-relaxed text-slate-600">
+          針對 AI Agent、數位雙生或先進控制等方向發展獨立研究，並參與國際期刊與研討會投稿。
+        </p>
+        <p class="mt-2 text-xs text-slate-400">
+          Pursue independent research in areas such as AI agents, digital twins, or advanced control, with an
+          emphasis on publishing in international journals and conferences.
+        </p>
+      </div>
+      <div class="rounded-2xl border border-brand-100 p-6 shadow-sm">
+        <h3 class="text-lg font-semibold text-brand-900">專題生 <span class="text-sm font-normal text-brand-400">Undergraduate Research Assistants</span></h3>
+        <p class="mt-3 text-sm leading-relaxed text-slate-600">
+          協助既有研究專案，在做中學累積程式、數據分析與研究方法的實作經驗。
+        </p>
+        <p class="mt-2 text-xs text-slate-400">
+          Assist with ongoing research projects and gain hands-on experience in programming, data analysis, and
+          research methods.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Expected background / skills -->
+  <section class="bg-brand-50/50">
+    <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+      <h2 class="text-2xl font-bold text-brand-900">
+        期待背景／技能 <span class="text-base font-normal text-brand-400">Backgrounds We Value</span>
+      </h2>
+      <p class="mt-3 text-sm leading-relaxed text-slate-600">
+        不需要樣樣精通，符合任一項即歡迎聯繫；我們也重視學習意願與團隊合作。
+      </p>
+      <div class="mt-6 flex flex-wrap gap-2">
+        {recruitTags.map((tag) => <TagBadge tag={tag} lang="both" />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Application process -->
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+    <h2 class="text-2xl font-bold text-brand-900">
+      申請方式與流程 <span class="text-base font-normal text-brand-400">How to Apply</span>
+    </h2>
+    <p class="mt-3 text-sm leading-relaxed text-slate-500">
+      以下為一般性參考流程，實際安排會依個人狀況彈性調整。
+      <span class="block text-xs text-slate-400">A general reference process — actual arrangements may vary case by case.</span>
+    </p>
+    <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        applySteps.map((step, i) => (
+          <div class="relative rounded-2xl border border-brand-100 p-6 shadow-sm">
+            <div class="flex h-9 w-9 items-center justify-center rounded-full bg-brand-900 text-sm font-bold text-white">
+              {i + 1}
+            </div>
+            <h3 class="mt-4 text-base font-semibold text-brand-900">{step.zh}</h3>
+            <p class="text-xs font-medium text-brand-400">{step.en}</p>
+            <p class="mt-2 text-sm leading-relaxed text-slate-600">{step.descZh}</p>
+            <p class="mt-1 text-xs text-slate-400">{step.descEn}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- 6. FAQ -->
+  <section class="bg-brand-50/50">
+    <div class="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
+      <h2 class="text-2xl font-bold text-brand-900">
+        常見問題 <span class="text-base font-normal text-brand-400">FAQ</span>
+      </h2>
+      <div class="mt-8 space-y-3">
+        {
+          faqs.map((faq) => (
+            <details class="group rounded-xl border border-brand-100 bg-white p-4 shadow-sm">
+              <summary class="cursor-pointer list-none font-semibold text-brand-900 marker:content-none">
+                <span class="flex items-center justify-between gap-4">
+                  <span>
+                    {faq.qZh} <span class="text-sm font-normal text-brand-400">{faq.qEn}</span>
+                  </span>
+                  <span class="shrink-0 text-brand-400 transition-transform group-open:rotate-45">+</span>
+                </span>
+              </summary>
+              <p class="mt-3 text-sm leading-relaxed text-slate-600">{faq.aZh}</p>
+              <p class="mt-1 text-xs text-slate-400">{faq.aEn}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Primary Email CTA -->
+  <section class="bg-brand-900">
+    <div class="mx-auto max-w-4xl px-4 py-14 text-center sm:px-6 lg:px-8">
+      <h2 class="text-2xl font-bold text-white sm:text-3xl">準備好加入我們了嗎？</h2>
+      <p class="mt-1 text-sm font-medium text-brand-300 sm:text-base">Ready to Join Us?</p>
+      <p class="mt-4 leading-relaxed text-brand-100">
+        歡迎來信附上簡歷或成績單，我們很樂意進一步認識你。
+      </p>
+      <p class="mt-1 text-sm text-brand-400">Send us your CV or transcript — we'd love to get to know you.</p>
+
+      <a
+        href={`mailto:${CONTACT_EMAIL}`}
+        class="mt-8 inline-flex min-h-[48px] items-center justify-center rounded-full bg-accent-500 px-8 py-4 text-base font-semibold text-white shadow-sm transition-colors hover:bg-accent-600"
+      >
+        寄信給我們 <span class="ml-1.5 text-xs font-normal text-accent-50">Email Us: {CONTACT_EMAIL}</span>
+      </a>
+    </div>
+  </section>
+</BaseLayout>

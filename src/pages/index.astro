@@ -1,0 +1,152 @@
+---
+// Real homepage — phase 3.
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import ClosedLoopDiagram from '../components/ClosedLoopDiagram.astro';
+import HomeResearchCard from '../components/HomeResearchCard.astro';
+import CTASection from '../components/CTASection.astro';
+import PaperCard from '../components/PaperCard.astro';
+import MapEmbed from '../components/MapEmbed.astro';
+import { SITE_TITLE_ZH, SITE_TITLE_EN, SITE_DESCRIPTION_ZH } from '../consts';
+
+// Homepage-only narrative teaser for the 4 research axes (illoca-style: short
+// punchy tagline + real title + one-line description). This is intentionally
+// separate from RESEARCH_PILLARS (still used on About) and from about.astro's
+// longer TECHNIQUE_APPLICATIONS breakdown — same 4 axes, 3 different "altitudes"
+// of detail depending on the page.
+const HOME_RESEARCH_AXES = [
+  {
+    tagline: 'Insight, Generated.',
+    titleZh: '生成式 AI 與 LLM 智慧製造應用',
+    titleEn: 'Generative AI & LLM Applications',
+    descZh: '結合大型語言模型與知識圖譜，把規格書與領域知識轉化為可執行的智慧決策。',
+    descEn: 'Combining LLMs and knowledge graphs to turn specs and domain knowledge into executable decisions.',
+    tagSlug: 'generative-ai',
+  },
+  {
+    tagline: 'Failure, Foreseen.',
+    titleZh: '設備健康監測與預測性維修',
+    titleEn: 'Equipment Health Monitoring & Predictive Maintenance',
+    descZh: '融合多感測器資訊與知識蒸餾，提前預警設備異常，降低意外停機風險。',
+    descEn: 'Fusing multi-sensor data with knowledge distillation to catch anomalies before they cause downtime.',
+    tagSlug: 'equipment-health-monitoring',
+  },
+  {
+    tagline: 'Defects, Detected.',
+    titleZh: '電腦視覺與晶圓影像識別',
+    titleEn: 'Computer Vision & Wafer Image Recognition',
+    descZh: '運用注意力機制深度學習，實現高精確度的瑕疵辨識與品質分類。',
+    descEn: 'Using attention-based deep learning for high-accuracy defect recognition and quality classification.',
+    tagSlug: 'image-recognition',
+  },
+  {
+    tagline: 'Flow, Optimized.',
+    titleZh: '系統最佳化與智慧排程',
+    titleEn: 'System Optimization & Smart Scheduling',
+    descZh: '以啟發式演算法與佇列理論，動態調度產線資源，提升整體營運效率。',
+    descEn: 'Using meta-heuristics and queueing theory to dynamically schedule resources and boost efficiency.',
+    tagSlug: 'scheduling',
+  },
+];
+
+const featuredPapers = (await getCollection('papers', ({ data }) => data.featured)).sort((a, b) => {
+  if (b.data.year !== a.data.year) return b.data.year - a.data.year;
+  return b.data.month - a.data.month;
+});
+
+const members = await getCollection('members');
+const memberCount = members.length;
+---
+
+<BaseLayout title="首頁 / Home" description={SITE_DESCRIPTION_ZH}>
+  <Hero
+    titleZh={SITE_TITLE_ZH}
+    titleEn={SITE_TITLE_EN}
+    subtitleZh="本實驗室以 AI Agent 與數位雙生技術為核心，融合工業知識與先進控制，致力打造自主決策與人機協作的閉環智慧製造創新中心。"
+    subtitleEn="Centered on AI Agents and Digital Twins, driving closed-loop smart manufacturing through autonomous decision-making and human–AI collaboration."
+    primaryCta={{ href: '/join-us', zh: '加入我們', en: 'Join Us' }}
+    secondaryCta={{ href: '/about', zh: '看研究方向', en: 'Research' }}
+    imageSlot={true}
+  />
+
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+    <h2 class="text-center text-2xl font-bold text-brand-900">
+      研究方向 <span class="text-base font-normal text-brand-400">Research Focus</span>
+    </h2>
+
+    <div class="mx-auto mt-10 max-w-5xl">
+      <ClosedLoopDiagram />
+    </div>
+
+    <div class="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-4">
+      {
+        HOME_RESEARCH_AXES.map((axis, i) => (
+          <HomeResearchCard
+            index={i + 1}
+            tagline={axis.tagline}
+            titleZh={axis.titleZh}
+            titleEn={axis.titleEn}
+            descZh={axis.descZh}
+            descEn={axis.descEn}
+            tagSlug={axis.tagSlug}
+          />
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="bg-brand-50/50">
+    <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+      <div class="flex flex-col items-baseline justify-between gap-2 sm:flex-row">
+        <h2 class="text-2xl font-bold text-brand-900">
+          精選論文 <span class="text-base font-normal text-brand-400">Featured Publications</span>
+        </h2>
+        <a href="/publications" class="text-sm font-semibold text-brand-600 underline underline-offset-2 hover:text-brand-800">
+          查看全部 <span class="text-brand-400">View All</span> →
+        </a>
+      </div>
+      <div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2">
+        {featuredPapers.map((paper) => <PaperCard paper={paper.data} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 lg:px-8">
+    <h2 class="text-2xl font-bold text-brand-900">
+      團隊亮點 <span class="text-base font-normal text-brand-400">Our Team</span>
+    </h2>
+    <p class="mt-4 text-base leading-relaxed text-slate-600 sm:text-lg">
+      我們是一支由 {memberCount} 位成員組成的跨領域研究團隊，研究涵蓋 AI Agent 決策支援、數位雙生場域導入，以及先進控制與閉環智慧製造，並持續與業界合作將研究成果落地應用。
+    </p>
+    <p class="mt-2 text-sm text-slate-400">
+      A team of {memberCount} researchers spanning AI agent decision support, digital twin deployment, and advanced control for closed-loop smart manufacturing — working closely with industry to bring research into real-world practice.
+    </p>
+    <a
+      href="/team"
+      class="mt-8 inline-flex items-center justify-center rounded-full border border-brand-300 px-6 py-3 text-sm font-semibold text-brand-800 transition-colors hover:bg-brand-50"
+    >
+      認識團隊 <span class="ml-1.5 text-xs font-normal text-brand-400">Meet the Team</span>
+    </a>
+  </section>
+
+  <CTASection
+    titleZh="準備好加入我們了嗎？"
+    titleEn="Ready to Join Us?"
+    bodyZh="我們持續招募對 AI Agent、數位雙生與智慧製造有熱忱的研究生與專題生，歡迎與我們聯繫。"
+    bodyEn="We are always looking for motivated students interested in AI agents, digital twins, and smart manufacturing. Get in touch with us."
+  />
+
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+    <h2 class="text-2xl font-bold text-brand-900">
+      聯絡資訊 <span class="text-base font-normal text-brand-400">Contact</span>
+    </h2>
+    <p class="mt-2 text-sm text-slate-500">
+      詳細地址與聯絡方式請見頁尾，或前往
+      <a href="/contact" class="font-medium text-brand-600 underline underline-offset-2 hover:text-brand-800">聯絡我們頁面 Contact page</a>。
+    </p>
+    <div class="mt-6">
+      <MapEmbed height="280" />
+    </div>
+  </section>
+</BaseLayout>

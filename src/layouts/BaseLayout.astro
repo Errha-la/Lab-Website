@@ -1,0 +1,51 @@
+---
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+import { SITE_TITLE_ZH, SITE_TITLE_EN, SITE_DESCRIPTION_ZH, ADDRESS_ZH } from '../consts';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = SITE_DESCRIPTION_ZH } = Astro.props;
+const pageTitle = `${title} | ${SITE_TITLE_ZH}`;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ResearchOrganization',
+  name: SITE_TITLE_ZH,
+  alternateName: SITE_TITLE_EN,
+  description,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: ADDRESS_ZH,
+  },
+  url: Astro.site?.toString() ?? Astro.url.origin,
+};
+---
+
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body class="flex min-h-screen flex-col bg-white font-sans text-slate-800">
+    <Nav />
+    <main class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

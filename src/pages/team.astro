@@ -1,0 +1,60 @@
+---
+// Team page — phase 4.
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import MemberCard from '../components/MemberCard.astro';
+import CTASection from '../components/CTASection.astro';
+
+const currentMembers = await getCollection('members', ({ data }) => data.status === 'current');
+const memberCount = currentMembers.length;
+
+const byDegree = (degree: 'phd' | 'master' | 'undergrad') =>
+  currentMembers
+    .filter((m) => m.data.degree === degree)
+    .sort((a, b) => a.data.order - b.data.order);
+
+const groups = [
+  { degree: 'phd' as const, zh: '博士班', en: 'PhD Students', members: byDegree('phd') },
+  { degree: 'master' as const, zh: '碩士班', en: "Master's Students", members: byDegree('master') },
+  { degree: 'undergrad' as const, zh: '專題生', en: 'Undergraduate Students', members: byDegree('undergrad') },
+].filter((g) => g.members.length > 0);
+---
+
+<BaseLayout
+  title="團隊成員 / Team"
+  description="認識實驗室團隊成員，包含博士班與碩士班學生，研究方向涵蓋影像識別、深度學習、AI Agent 與智慧製造。"
+>
+  <section class="mx-auto max-w-6xl px-4 pb-4 pt-16 sm:px-6 lg:px-8">
+    <h1 class="text-2xl font-bold text-brand-900">
+      團隊成員 <span class="text-base font-normal text-brand-400">Team</span>
+    </h1>
+    <p class="mt-4 text-base leading-relaxed text-slate-600 sm:text-lg">
+      實驗室目前共有 {memberCount} 位成員，橫跨博士班與碩士班，研究涵蓋影像識別、深度學習、AI Agent 與智慧製造等多元方向。
+    </p>
+    <p class="mt-2 text-sm text-slate-400">
+      Our lab currently has {memberCount} members spanning PhD and Master's programs, with research covering image recognition, deep learning, AI agents, and smart manufacturing.
+    </p>
+  </section>
+
+  {
+    groups.map((group) => (
+      <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+        <h2 class="text-xl font-bold text-brand-900">
+          {group.zh} <span class="text-base font-normal text-brand-400">{group.en}</span>
+        </h2>
+        <div class="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {group.members.map((member) => (
+            <MemberCard member={member.data} />
+          ))}
+        </div>
+      </section>
+    ))
+  }
+
+  <CTASection
+    titleZh="想加入我們的研究嗎？"
+    titleEn="Interested in Joining Our Research?"
+    bodyZh="我們涵蓋影像識別、深度學習、AI Agent、智慧製造等多元方向，歡迎對這些領域有熱忱的你加入團隊。"
+    bodyEn="We cover image recognition, deep learning, AI agents, smart manufacturing, and more — come join us if these areas excite you."
+  />
+</BaseLayout>

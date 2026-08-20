@@ -1,0 +1,79 @@
+---
+interface CTA {
+  href: string;
+  zh: string;
+  en: string;
+}
+
+interface Props {
+  titleZh: string;
+  titleEn: string;
+  subtitleZh?: string;
+  subtitleEn?: string;
+  primaryCta?: CTA;
+  secondaryCta?: CTA;
+  /** Whether to reserve a side area for a background/side image placeholder. Default true. */
+  imageSlot?: boolean;
+}
+
+const { titleZh, titleEn, subtitleZh, subtitleEn, primaryCta, secondaryCta, imageSlot = true } = Astro.props;
+---
+
+<section class="relative overflow-hidden bg-gradient-to-b from-brand-50 to-white">
+  <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+    <div class:list={['grid grid-cols-1 items-center gap-10', imageSlot && 'lg:grid-cols-2']}>
+      <div>
+        <h1 class="text-3xl font-bold leading-tight text-brand-900 sm:text-4xl lg:text-5xl">
+          {titleZh}
+        </h1>
+        <p class="mt-2 text-lg font-medium text-brand-600 sm:text-xl">{titleEn}</p>
+
+        {subtitleZh && <p class="mt-6 text-base leading-relaxed text-slate-600 sm:text-lg">{subtitleZh}</p>}
+        {subtitleEn && <p class="mt-1 text-sm text-slate-400">{subtitleEn}</p>}
+
+        {
+          (primaryCta || secondaryCta) && (
+            <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+              {primaryCta && (
+                <a
+                  href={primaryCta.href}
+                  class="inline-flex items-center justify-center rounded-full bg-accent-500 px-6 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-accent-600"
+                >
+                  {primaryCta.zh} <span class="ml-1.5 text-xs font-normal text-accent-50">{primaryCta.en}</span>
+                </a>
+              )}
+              {secondaryCta && (
+                <a
+                  href={secondaryCta.href}
+                  class="inline-flex items-center justify-center rounded-full border border-brand-300 px-6 py-3 text-sm font-semibold text-brand-800 transition-colors hover:bg-brand-50"
+                >
+                  {secondaryCta.zh} <span class="ml-1.5 text-xs font-normal text-brand-400">{secondaryCta.en}</span>
+                </a>
+              )}
+            </div>
+          )
+        }
+      </div>
+
+      {
+        imageSlot && (
+          <div class="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-gradient-to-br from-brand-700 via-brand-800 to-brand-900 shadow-lg">
+            <div
+              class="absolute inset-0 opacity-20"
+              style="background-image: radial-gradient(circle at 20% 20%, white 1px, transparent 1px); background-size: 24px 24px;"
+            />
+            <div class="absolute inset-0 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-white/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                />
+              </svg>
+            </div>
+          </div>
+        )
+      }
+    </div>
+  </div>
+</section>

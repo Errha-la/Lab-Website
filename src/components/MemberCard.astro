@@ -1,0 +1,79 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import TagBadge from './TagBadge.astro';
+
+// Accepts the `data` shape of a members collection entry (pass `entry.data` for
+// real content-collection entries, or an equivalent plain object).
+type MemberData = CollectionEntry<'members'>['data'];
+
+interface Props {
+  member: MemberData;
+}
+
+const { member } = Astro.props;
+const { name, name_en, degree, tags, image, thesis_url, github_url } = member;
+
+const degreeLabel: Record<string, { zh: string; en: string }> = {
+  phd: { zh: '博士班', en: 'PhD Student' },
+  master: { zh: '碩士班', en: "Master's Student" },
+  undergrad: { zh: '專題生', en: 'Undergraduate' },
+};
+
+const initials = name.slice(0, 1);
+---
+
+<div class="flex w-full flex-col rounded-xl border border-brand-100 bg-white p-5 shadow-sm transition-shadow hover:shadow-md">
+  <div class="flex aspect-square w-full items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-brand-200 to-brand-400">
+    {
+      image ? (
+        <img src={image} alt={name} class="h-full w-full object-cover" />
+      ) : (
+        <span class="text-4xl font-bold text-white/90">{initials}</span>
+      )
+    }
+  </div>
+
+  <h3 class="mt-4 text-base font-bold text-brand-900">{name}</h3>
+  {name_en && <p class="text-xs text-slate-400">{name_en}</p>}
+
+  <span class="mt-1 inline-block w-fit rounded-full bg-brand-100 px-2 py-0.5 text-xs font-medium text-brand-700">
+    {degreeLabel[degree]?.zh ?? degree} <span class="text-brand-400">{degreeLabel[degree]?.en}</span>
+  </span>
+
+  {
+    tags.length > 0 && (
+      <div class="mt-3 flex flex-wrap gap-1.5">
+        {tags.map((t) => (
+          <TagBadge tag={t} />
+        ))}
+      </div>
+    )
+  }
+
+  {
+    (thesis_url || github_url) && (
+      <div class="mt-auto flex gap-3 pt-3">
+        {thesis_url && (
+          <a
+            href={thesis_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-xs font-medium text-brand-600 underline underline-offset-2 hover:text-brand-800"
+          >
+            論文 Thesis →
+          </a>
+        )}
+        {github_url && (
+          <a
+            href={github_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-xs font-medium text-slate-500 underline underline-offset-2 hover:text-slate-700"
+          >
+            GitHub →
+          </a>
+        )}
+      </div>
+    )
+  }
+</div>
