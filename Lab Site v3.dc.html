@@ -521,7 +521,7 @@ html.rev-on [data-reveal].shown{opacity:1;transform:none}
             <article class="blueprint" data-reveal="" style="position:relative;height:280px;padding:20px;background:transparent;display:flex;flex-direction:column">
               <div style="display:flex;gap:16px;align-items:center">
                 <div style="flex:none;width:106px;height:142px;border:1px solid var(--color-accent-300);background:var(--color-accent-100);overflow:hidden">
-                  <img src="{{ m.photo }}" alt="{{ m.name }}" loading="eager" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center 25%;display:block">
+                  <img src="{{ m.photo }}" alt="{{ m.name }}" loading="eager" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:{{ m.photoPosition }};display:block">
                 </div>
                 <div style="min-width:0">
                   <h4 style="font-size:23px;margin:0;line-height:1.1">{{ m.name }}</h4>
@@ -1504,11 +1504,12 @@ class Component extends DCLogic {
       setYear:this.setYear,
       memberGroups:['phd','master'].map(d=>{
         let list=MEMBERS.filter(m=>m.deg===d);
+        if(d==='master')list=list.slice().sort((a,b)=>(Number(b.yr)||0)-(Number(a.yr)||0));
         if(d==='master'&&s.mYear!=='all')list=list.filter(m=>String(m.yr)===s.mYear);
         return {zh:d==='phd'?'博士班':'碩士班', en:d==='phd'?'Doctoral Students':'Master\u2019s Students',
           showYear:d==='master', empty:!list.length,
           count:list.length+(zh?' 位':(list.length>1?' MEMBERS':' MEMBER')),
-          list:list.map(m=>({name:m.name,degLabel:DEG[m.deg][zh?'zh':'en'],photo:m.photo||'',
+          list:list.map(m=>({name:m.name,degLabel:DEG[m.deg][zh?'zh':'en'],photo:m.photo||'',photoPosition:m.name==='林郁庭'?'16% 25%':'center 25%',
             hasThesis:!!m.thesis, thesis:m.thesis||'',
             tagList:m.tags.map(t=>({label:(TAGS[t]||[t,t])[zh?0:1]}))}))};
       }).filter(g=>g.list.length||g.showYear),
@@ -1579,3 +1580,4 @@ class Component extends DCLogic {
 </script>
 </body>
 </html>
+
