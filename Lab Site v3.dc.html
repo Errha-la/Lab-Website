@@ -1520,5 +1520,22 @@ class Component extends DCLogic {
   }
 }
 </script>
+<script>
+/* Patch: two template bindings ({{ mapSrc }} on the contact iframe,
+   {{ gTransform }} on the publications graph <g>) never resolve inside
+   the exported dc-runtime -- likely a scope wiring dropped during editing
+   upstream. Rather than touch the generated/minified runtime, watch the
+   live DOM and rewrite these two attributes whenever they land as the
+   raw placeholder string. */
+(function(){
+  var MAP_SRC='https://www.google.com/maps?q=24.981617,121.507716&hl=zh-TW&z=17&output=embed';
+  function patch(){
+    document.querySelectorAll('iframe[src="{{ mapSrc }}"]').forEach(function(f){ f.src=MAP_SRC; });
+    document.querySelectorAll('g[transform="{{ gTransform }}"]').forEach(function(g){ g.setAttribute('transform','translate(0,0) scale(1)'); });
+  }
+  patch();
+  new MutationObserver(patch).observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['src','transform']});
+})();
+</script>
 </body>
 </html>
