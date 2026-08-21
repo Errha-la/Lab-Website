@@ -13,8 +13,8 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&amp;family=Barlow+Condensed:wght@500;600;700&amp;family=Noto+Sans+TC:wght@400;500;700&amp;display=swap" rel="stylesheet">
 <style>
 body{margin:0;background:var(--color-bg);color:var(--color-text);font-family:"Barlow","Noto Sans TC",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 h1,h2,h3,h4{font-family:"Barlow Condensed","Noto Sans TC",system-ui,sans-serif}
@@ -58,10 +58,8 @@ html.rev-on [data-reveal].shown{opacity:1;transform:none}
 
 <header style="position:sticky;top:0;z-index:60;background:rgba(242,242,243,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--color-divider)">
   <div style="max-width:1320px;margin:0 auto;padding:0 28px;height:66px;display:flex;align-items:center;gap:20px">
-    <button type="button" onClick="{{ goHome }}" style="display:flex;flex-direction:column;align-items:flex-start;line-height:1.05;background:transparent;border:0;padding:0;cursor:pointer;text-align:left;color:var(--color-text)">
-      <span class="l-zh" style="font-family:'Barlow Condensed','Noto Sans TC',sans-serif;font-weight:700;font-size:19px;white-space:nowrap">先進製程與設備智能輔助實驗室</span>
-      <span class="l-en" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:19px;white-space:nowrap">Advanced Process Control Lab</span>
-      <span style="font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--color-accent-700);white-space:nowrap">NTUST · Hwa Hsia Campus</span>
+    <button type="button" onClick="{{ goHome }}" aria-label="先進製程與設備智能輔助實驗室 Advanced Process Control and Intelligent Equipment Laboratory" style="display:flex;align-items:center;background:transparent;border:0;padding:0;cursor:pointer;color:var(--color-text)">
+      <img src="photos/head-banner.png" alt="Advanced Process Control and Intelligent Equipment Laboratory" style="height:44px;width:auto;display:block">
     </button>
     <nav aria-label="主導覽" style="display:flex;align-items:center;gap:2px;margin-left:auto">
       <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
@@ -147,7 +145,7 @@ html.rev-on [data-reveal].shown{opacity:1;transform:none}
     </div>
     <div id="g-feat" style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px">
       <sc-for list="{{ featured }}" as="p" hint-placeholder-count="4">
-        <article class="blueprint" data-reveal style="position:relative;padding:22px 24px;background:transparent">
+        <article class="blueprint" data-reveal="" style="position:relative;padding:22px 24px;background:transparent">
           <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px">
             <span class="tag tag-outline">{{ p.typeLabel }}</span>
             <span style="font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:.12em;color:var(--color-neutral-600)">{{ p.date }}</span>
@@ -179,20 +177,19 @@ html.rev-on [data-reveal].shown{opacity:1;transform:none}
     </div>
 
     <figure class="blueprint" style="position:relative;margin:0;height:294px;background:transparent;display:flex;flex-direction:column">
-      <div style="flex:1;min-height:0;display:grid;place-items:center;border-bottom:1px solid var(--color-divider)">
-        <div style="text-align:center;padding:18px">
-          <svg viewBox="0 0 64 64" style="width:40px;height:40px;color:var(--color-accent-500);margin-bottom:12px" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="12" width="52" height="40"></rect><circle cx="24" cy="28" r="6"></circle><path d="M6 44l16-12 12 9 10-7 14 10"></path></svg>
-          <p style="margin:0;font-family:'Barlow Condensed','Noto Sans TC',sans-serif;font-weight:600;font-size:15px;letter-spacing:.04em;color:var(--color-accent-800)"><span class="l-zh">實驗室照片輪播</span><span class="l-en">Lab photo carousel</span></p>
-          <p class="l-zh" style="margin:6px 0 0;font-size:12.5px;line-height:1.6;color:var(--color-neutral-600)">預留位置，待提供照片後置入</p>
-          <p class="l-en" style="margin:6px 0 0;font-size:12.5px;line-height:1.6;color:var(--color-neutral-600)">Reserved, pending photographs</p>
-        </div>
+      <div style="position:relative;flex:1;min-height:0;border-bottom:1px solid var(--color-divider);overflow:hidden;background:var(--color-neutral-200)">
+        <sc-for list="{{ labPhotos }}" as="ph" hint-placeholder-count="4">
+          <img src="{{ ph.src }}" alt="{{ ph.alt }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:opacity .6s ease;opacity: {{ ph.op }}">
+        </sc-for>
+        <button type="button" onClick="{{ prevPhoto }}" aria-label="上一張 Previous" style="position:absolute;left:0;top:0;bottom:0;width:52px;border:0;background:transparent;cursor:pointer;color:var(--color-accent-900);display:grid;place-items:center;font-size:18px" style-hover="background:rgba(242,242,243,.55)">‹</button>
+        <button type="button" onClick="{{ nextPhoto }}" aria-label="下一張 Next" style="position:absolute;right:0;top:0;bottom:0;width:52px;border:0;background:transparent;cursor:pointer;color:var(--color-accent-900);display:grid;place-items:center;font-size:18px" style-hover="background:rgba(242,242,243,.55)">›</button>
       </div>
-      <figcaption style="flex:none;display:flex;align-items:center;justify-content:space-between;padding:11px 15px">
-        <span style="font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:10px;letter-spacing:.18em;color:var(--color-accent-700)">FIG. 02 — LAB</span>
+      <figcaption style="flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 15px">
+        <span style="font-family:'Barlow Condensed','Noto Sans TC',sans-serif;font-weight:600;font-size:12px;letter-spacing:.06em;color:var(--color-accent-700)"><span class="l-zh">{{ labCaptionZh }}</span><span class="l-en">{{ labCaptionEn }}</span></span>
         <span style="display:flex;gap:5px">
-          <span style="width:20px;height:3px;background:var(--color-accent)"></span>
-          <span style="width:20px;height:3px;background:var(--color-accent-200)"></span>
-          <span style="width:20px;height:3px;background:var(--color-accent-200)"></span>
+          <sc-for list="{{ labDots }}" as="d" hint-placeholder-count="4">
+            <button type="button" onClick="{{ d.go }}" aria-label="{{ d.label }}" style="width:20px;height:3px;border:0;padding:0;cursor:pointer;background: {{ d.bg }}"></button>
+          </sc-for>
         </span>
       </figcaption>
       <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
@@ -203,26 +200,14 @@ html.rev-on [data-reveal].shown{opacity:1;transform:none}
   <div style="max-width:1320px;margin:0 auto;padding:24px 28px 88px">
     <h3 style="font-size:32px;margin:0"><span class="l-zh">核心技術與應用</span><span class="l-en">Core Techniques &amp; Applications</span></h3>
     <div style="display:flex;align-items:center;gap:12px;margin:18px 0 0">
-      <span style="font-family:'Barlow Condensed','Noto Sans TC',sans-serif;font-weight:600;font-size:11px;letter-spacing:.16em;color:var(--color-neutral-600)"><span class="l-zh">機械爪定位 · 滑鼠移入翻面 · 技術 ⇄ 應用</span><span class="l-en">GANTRY PICK · HOVER TO FLIP · TECHNIQUES ⇄ APPLICATIONS</span></span>
+      <span style="font-family:'Barlow Condensed','Noto Sans TC',sans-serif;font-weight:600;font-size:11px;letter-spacing:.16em;color:var(--color-neutral-600)"><span class="l-zh">滑鼠移入翻面 · 技術 ⇄ 應用</span><span class="l-en">HOVER TO FLIP · TECHNIQUES ⇄ APPLICATIONS</span></span>
       <span style="flex:1;height:1px;background:var(--color-divider)"></span>
     </div>
 
-    <div style="position:relative;height:56px;margin-top:14px">
-      <div style="position:absolute;left:0;right:0;top:16px;border-top:2px solid var(--color-accent-500)"></div>
-      <div style="position:absolute;left:0;top:10px;width:2px;height:14px;background:var(--color-accent-500)"></div>
-      <div style="position:absolute;right:0;top:10px;width:2px;height:14px;background:var(--color-accent-500)"></div>
-      <div id="claw" style="position:absolute;top:14px;left:12.5%;transform:translateX(-50%);transition:left .5s cubic-bezier(.4,0,.2,1)">
-        <svg viewBox="0 0 60 40" style="width:56px;height:38px;color:var(--color-accent-700)" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="18" y="2" width="24" height="12"></rect>
-          <path d="M22 14l-8 20M38 14l8 20" stroke-width="2.4" style="animation:clawbob 2.6s ease-in-out infinite"></path>
-        </svg>
-      </div>
-    </div>
-
-    <div id="g-tech" style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px">
+    <div id="g-tech" style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:26px">
       <sc-for list="{{ techCards }}" as="c" hint-placeholder-count="4">
-        <div data-card style="position:relative;height:474px;perspective:1400px">
-          <div data-inner style="position:absolute;inset:0;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.4,0,.2,1)">
+        <div data-card="" style="position:relative;height:474px;perspective:1400px">
+          <div data-inner="" style="position:absolute;inset:0;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.4,0,.2,1)">
             <div class="blueprint" style="position:absolute;inset:0;backface-visibility:hidden;transform:translateZ(2px);padding:22px 20px;background:transparent;display:flex;flex-direction:column;overflow:hidden">
               <span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;background:var(--color-accent);color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:17px;flex:none">{{ c.n }}</span>
               <h4 style="font-size:20px;line-height:1.22;margin:16px 0 4px"><span class="l-zh">{{ c.titleZh }}</span><span class="l-en">{{ c.titleEn }}</span></h4>
@@ -296,9 +281,9 @@ html.rev-on [data-reveal].shown{opacity:1;transform:none}
           </div>
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px;margin-top:22px;align-items:start">
+        <div id="g-pubs" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px;margin-top:22px;align-items:start">
           <sc-for list="{{ pagePapers }}" as="p" hint-placeholder-count="10">
-            <article class="blueprint" data-reveal style="position:relative;padding:20px 22px;background:var(--color-bg)">
+            <article class="blueprint" data-reveal="" style="position:relative;padding:20px 22px;background:var(--color-bg)">
               <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px">
                 <span class="tag tag-outline">{{ p.typeLabel }}</span>
                 <span style="font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:.12em;color:var(--color-neutral-600)">{{ p.date }}</span>
@@ -390,13 +375,8 @@ html.rev-on [data-reveal].shown{opacity:1;transform:none}
     </div>
     <div style="display:grid;grid-template-columns:1fr 268px;gap:34px;align-items:start">
       <figure class="blueprint" style="position:relative;order:2;margin:0;background:transparent;display:flex;flex-direction:column">
-        <div style="flex:1;aspect-ratio:3/4;display:grid;place-items:center;border-bottom:1px solid var(--color-divider)">
-          <div style="text-align:center;padding:16px">
-            <svg viewBox="0 0 64 64" style="width:40px;height:40px;color:var(--color-accent-500);margin-bottom:10px" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="32" cy="22" r="11"></circle><path d="M12 56c0-11 9-18 20-18s20 7 20 18"></path></svg>
-            <p style="margin:0;font-family:'Barlow Condensed','Noto Sans TC',sans-serif;font-weight:600;font-size:13.5px;color:var(--color-accent-800)"><span class="l-zh">教授照片輪播</span><span class="l-en">Portrait carousel</span></p>
-            <p class="l-zh" style="margin:5px 0 0;font-size:12px;line-height:1.55;color:var(--color-neutral-600)">預留位置，待提供照片後置入</p>
-            <p class="l-en" style="margin:5px 0 0;font-size:12px;line-height:1.55;color:var(--color-neutral-600)">Reserved, pending photographs</p>
-          </div>
+        <div style="flex:1;aspect-ratio:3/4;border-bottom:1px solid var(--color-divider);overflow:hidden">
+          <img src="photos/prof.jpg" alt="鄧志峰 Jr-Fong Dang" style="width:100%;height:100%;object-fit:cover;object-position:center 22%;display:block">
         </div>
         <figcaption style="flex:none;display:flex;align-items:center;justify-content:space-between;padding:10px 14px">
           <span style="font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:10px;letter-spacing:.18em;color:var(--color-accent-700)">FIG. 01 — PORTRAIT</span>
@@ -415,7 +395,7 @@ html.rev-on [data-reveal].shown{opacity:1;transform:none}
           <span class="tag tag-accent"><span class="l-zh">副教授 Associate Professor</span><span class="l-en">Associate Professor</span></span>
           <span class="tag tag-outline">NTUST</span>
         </div>
-        <p class="l-zh" style="margin:0;font-size:15.5px;line-height:1.8;max-width:62ch;color:var(--color-neutral-800)">研究橫跨智慧製造、設備健康監測與 AI Agent 應用，並具半導體與製造業界資訊系統實務經歷，長期將工業知識與先進控制結合為可落地的決策系統。</p>
+        <p class="l-zh" style="margin:0;font-size:15.5px;line-height:1.8;text-wrap:pretty;color:var(--color-neutral-800)">研究橫跨智慧製造、設備健康監測與 AI Agent 應用，並具半導體與製造業界資訊系統實務經歷，長期將工業知識與先進控制結合為可落地的決策系統。</p>
         <p class="l-en" style="margin:0;font-size:15px;line-height:1.75;max-width:68ch;color:var(--color-neutral-800)">Research spanning smart manufacturing, equipment health monitoring and AI agent applications, backed by industry experience in semiconductor and manufacturing information systems.</p>
         <div style="display:flex;gap:10px;margin-top:24px">
           <a href="mailto:jfdang@mail.ntust.edu.tw" class="btn btn-primary blueprint" style="position:relative;font-size:15px">jfdang@mail.ntust.edu.tw<i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i></a>
@@ -429,7 +409,7 @@ html.rev-on [data-reveal].shown{opacity:1;transform:none}
     <h3 style="font-size:30px;margin:0 0 8px"><span class="l-zh">學歷</span><span class="l-en">Education</span></h3>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:20px">
       <sc-for list="{{ education }}" as="e" hint-placeholder-count="3">
-        <div class="blueprint" data-reveal style="position:relative;padding:20px;background:transparent">
+        <div class="blueprint" data-reveal="" style="position:relative;padding:20px;background:transparent">
           <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:26px;letter-spacing:.04em;color:var(--color-accent);margin-bottom:10px">{{ e.y }}</div>
           <p style="margin:0;font-size:14.5px;line-height:1.55"><span class="l-zh">{{ e.zh }}</span><span class="l-en">{{ e.en }}</span></p>
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
@@ -444,7 +424,7 @@ html.rev-on [data-reveal].shown{opacity:1;transform:none}
     <ol id="exp" style="position:relative;margin:0;padding:0 0 0 34px;list-style:none;display:flex;flex-direction:column;gap:18px">
       <span id="expLine" style="position:absolute;left:6px;top:6px;width:1px;background:var(--color-accent-400);height:0;transition:height .8s cubic-bezier(.4,0,.2,1)"></span>
       <sc-for list="{{ experience }}" as="x" hint-placeholder-count="5">
-        <li data-exp style="position:relative;opacity:0;transform:translateX(26px);transition:opacity .55s ease,transform .55s ease">
+        <li data-exp="" style="position:relative;opacity:0;transform:translateX(26px);transition:opacity .55s ease,transform .55s ease">
           <span style="position:absolute;left:-34px;top:16px;width:13px;height:13px;background:var(--color-bg);border:1.5px solid var(--color-accent);"></span>
           <div class="blueprint" style="position:relative;padding:18px 20px;background:transparent">
             <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:12px">
@@ -472,9 +452,9 @@ html.rev-on [data-reveal].shown{opacity:1;transform:none}
       <h3 style="font-size:30px;margin:0"><span class="l-zh">代表著作</span><span class="l-en">Representative Publications</span></h3>
       <button type="button" onClick="{{ goPubs }}" style="background:transparent;border:0;cursor:pointer;font-family:'Barlow Condensed','Noto Sans TC',sans-serif;font-weight:600;font-size:15px;color:var(--color-accent-700)"><span class="l-zh">查看完整論文列表</span><span class="l-en">All publications</span> →</button>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px;align-items:start">
+    <div id="g-recent" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px;align-items:start">
       <sc-for list="{{ recentPapers }}" as="p" hint-placeholder-count="6">
-        <article class="blueprint" data-reveal style="position:relative;padding:20px 22px;background:transparent">
+        <article class="blueprint" data-reveal="" style="position:relative;padding:20px 22px;background:transparent">
           <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px">
             <span class="tag tag-outline">{{ p.typeLabel }}</span>
             <span style="font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:.12em;color:var(--color-neutral-600)">{{ p.date }}</span>
@@ -504,10 +484,10 @@ html.rev-on [data-reveal].shown{opacity:1;transform:none}
         <svg viewBox="0 0 40 40" style="width:40px;height:40px;color:var(--color-accent-700)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
           <circle cx="20" cy="8" r="5"></circle>
           <path d="M20 13v13"></path>
-          <path data-arm d="M20 18l-9 5"></path>
-          <path data-arm-b d="M20 18l9 4"></path>
-          <path data-leg-a d="M20 26l-6 12"></path>
-          <path data-leg-b d="M20 26l6 12"></path>
+          <path data-arm="" d="M20 18l-9 5"></path>
+          <path data-arm-b="" d="M20 18l9 4"></path>
+          <path data-leg-a="" d="M20 26l-6 12"></path>
+          <path data-leg-b="" d="M20 26l6 12"></path>
         </svg>
       </div>
     </div>
@@ -524,14 +504,24 @@ html.rev-on [data-reveal].shown{opacity:1;transform:none}
         <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px">
           <h3 style="font-size:26px;margin:0"><span class="l-zh">{{ g.zh }}</span><span class="l-en">{{ g.en }}</span></h3>
           <span style="font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:12px;letter-spacing:.16em;color:var(--color-accent-700)">{{ g.count }}</span>
+          <sc-if value="{{ g.showYear }}" hint-placeholder-val="{{ false }}">
+            <select class="input" value="{{ mYear }}" onChange="{{ setYear }}" style="width:auto;padding:6px 10px;font-family:'Barlow Condensed','Noto Sans TC',sans-serif;font-weight:600;font-size:13.5px">
+              <sc-for list="{{ yearOptions }}" as="o" hint-placeholder-count="4">
+                <option value="{{ o.v }}">{{ o.label }}</option>
+              </sc-for>
+            </select>
+          </sc-if>
           <span style="flex:1;height:1px;background:var(--color-divider)"></span>
         </div>
+        <sc-if value="{{ g.empty }}" hint-placeholder-val="{{ false }}">
+          <p style="margin:0 0 4px;font-size:14.5px;color:var(--color-neutral-600)"><span class="l-zh">此學年尚無成員。</span><span class="l-en">No members for this class year yet.</span></p>
+        </sc-if>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(286px,1fr));gap:18px;align-items:stretch">
           <sc-for list="{{ g.list }}" as="m" hint-placeholder-count="4">
-            <article class="blueprint" data-reveal style="position:relative;height:280px;padding:20px;background:transparent;display:flex;flex-direction:column">
+            <article class="blueprint" data-reveal="" style="position:relative;height:280px;padding:20px;background:transparent;display:flex;flex-direction:column">
               <div style="display:flex;gap:16px;align-items:center">
-                <div style="flex:none;width:106px;height:142px;border:1px solid var(--color-accent-300);display:grid;place-items:center;background:var(--color-accent-100)">
-                  <svg viewBox="0 0 64 64" style="width:30px;height:30px;color:var(--color-accent-500)" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="32" cy="24" r="11"></circle><path d="M13 56c0-11 8-18 19-18s19 7 19 18"></path></svg>
+                <div style="flex:none;width:106px;height:142px;border:1px solid var(--color-accent-300);background:var(--color-accent-100);overflow:hidden">
+                  <img src="{{ m.photo }}" alt="{{ m.name }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 25%;display:block">
                 </div>
                 <div style="min-width:0">
                   <h4 style="font-size:23px;margin:0;line-height:1.1">{{ m.name }}</h4>
@@ -586,7 +576,10 @@ html.rev-on [data-reveal].shown{opacity:1;transform:none}
           <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:.18em;color:var(--color-accent-700)">MAP · 24.9816 N, 121.5077 E</span>
           <a href="https://www.google.com/maps/search/?api=1&amp;query=24.981617,121.507716" target="_blank" rel="noopener noreferrer" style="font-family:'Barlow Condensed','Noto Sans TC',sans-serif;font-weight:600;font-size:12.5px"><span class="l-zh">在 Google 地圖開啟</span><span class="l-en">Open in Google Maps</span> →</a>
         </div>
-        <iframe src="{{ mapSrc }}" title="實驗室位置 Lab location" loading="lazy" referrerpolicy="no-referrer-when-downgrade" style="flex:1;width:100%;border:0;display:block"></iframe>
+        <div style="position:relative;flex:1;display:flex">
+          <iframe src="{{ mapSrc }}" title="實驗室位置 Lab location" loading="lazy" referrerpolicy="no-referrer-when-downgrade" style="flex:1;width:100%;border:0;display:block"></iframe>
+          <div aria-hidden="true" style="position:absolute;inset:0;background:transparent;cursor:default"></div>
+        </div>
         <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
       </figure>
 
@@ -668,7 +661,8 @@ const STATIONS=[
 {num:'02',code:'DIAGNOSIS',zh:'診斷',en:'Diagnosis',descZh:'以注意力機制深度學習判讀晶圓圖樣與表面瑕疵，將原始訊號轉為可解釋的異常判斷。',descEn:'Attention-based deep learning reads wafer bin maps and surface defects, turning raw signals into explainable anomaly calls.',areaZh:'電腦視覺與晶圓影像識別',areaEn:'Computer Vision & Wafer Image Recognition'},
 {num:'03',code:'DECISION',zh:'決策',en:'Decision',descZh:'大型語言模型與知識圖譜構成 AI Agent，執行任務分解、工具調度、推理驗證與人機協作。',descEn:'LLMs and knowledge graphs form an AI agent that decomposes tasks, orchestrates tools, verifies reasoning and collaborates with operators.',areaZh:'生成式 AI 與 LLM 智慧製造應用',areaEn:'Generative AI & LLM Applications'},
 {num:'04',code:'CONTROL',zh:'控制',en:'Control',descZh:'啟發式演算法與佇列理論動態調度產線資源，讓決策落回設備的實際動作。',descEn:'Meta-heuristics and queueing theory dynamically schedule line resources, turning decisions back into machine motion.',areaZh:'系統最佳化與智慧排程',areaEn:'System Optimization & Smart Scheduling'},
-{num:'05',code:'FEEDBACK',zh:'回饋',en:'Feedback',descZh:'結果回寫知識庫並重新訓練模型，閉環持續收斂 —— 這是整條產線的核心命題。',descEn:'Outcomes are written back to the knowledge base and models retrain — the loop keeps converging.',areaZh:'先進控制與閉環智慧製造',areaEn:'Advanced Control & Closed-loop Manufacturing'}];
+{num:'05',code:'FEEDBACK',zh:'回饋',en:'Feedback',descZh:'結果回寫知識庫並重新訓練模型，閉環持續收斂 —— 這是整條產線的核心命題。',descEn:'Outcomes are written back to the knowledge base and models retrain — the loop keeps converging.',areaZh:'先進控制與閉環智慧製造',areaEn:'Advanced Control & Closed-loop Manufacturing'},
+{num:'06',code:'IMPROVE',zh:'改善',en:'Improvement',descZh:'改善提案回到現場：以看板管理與標準化作業，把每一輪回饋落實成下一輪的作業基準。',descEn:'Improvement proposals return to the floor: kanban management and standardized work turn each round of feedback into the next baseline.',areaZh:'精實生產與持續改善',areaEn:'Lean Production & Continuous Improvement'}];
 
 const TECH=[
 {n:'1',titleZh:'生成式 AI 與 LLM 智慧製造應用',titleEn:'Generative AI & LLM in Smart Manufacturing',
@@ -741,24 +735,30 @@ const EXP=[
 const PROF_TAGS=['machine-learning','deep-learning','anomaly-detection','defect-detection','smart-manufacturing','equipment-health-monitoring'];
 
 const MEMBERS=[
-{name:'王元',deg:'phd',descZh:'博士班學生，研究方向聚焦於影像識別與深度學習於智慧製造場域的應用，並延伸至 AI Agent 架構設計。',descEn:'Doctoral student working on image recognition and deep learning for smart manufacturing, extending into AI agent architecture design.',tags:['image-recognition','deep-learning','smart-manufacturing','ai-agent']},
-{name:'林郁庭',deg:'master',descZh:'碩士班學生，專注於影像識別與深度學習技術之研究，並具備網頁開發與資料庫管理之實務經驗。',descEn:'Master\u2019s student focused on image recognition and deep learning, with practical experience in web development and database management.',tags:['image-recognition','deep-learning','machine-learning']},
-{name:'劉恩慈',deg:'master',descZh:'碩士班學生，研究方向以機器學習為核心，並熟悉資料庫管理相關技術之應用。',descEn:'Master\u2019s student centred on machine learning, with applied knowledge of database management.',tags:['machine-learning','database-management']},
-{name:'周青松',deg:'master',descZh:'碩士班學生，致力於影像識別與機器學習技術之研究與應用。',descEn:'Master\u2019s student researching image recognition and machine learning techniques.',tags:['image-recognition','machine-learning']},
-{name:'林耘孜',deg:'master',descZh:'碩士班學生，研究聚焦於機器學習技術於智慧製造領域之應用。',descEn:'Master\u2019s student applying machine learning to smart manufacturing.',tags:['machine-learning','smart-manufacturing']},
-{name:'劉少宇',deg:'master',descZh:'碩士班學生，研究方向涵蓋機器學習與智慧製造，並延伸探討 AI Agent 於製造場域之應用潛力。',descEn:'Master\u2019s student covering machine learning and smart manufacturing, exploring AI agents on the shop floor.',tags:['machine-learning','smart-manufacturing','ai-agent']},
-{name:'蔡婉煜',deg:'master',descZh:'碩士班學生，專注於智慧製造與 AI Agent 相關議題之研究。',descEn:'Master\u2019s student focused on smart manufacturing and AI agent topics.',tags:['smart-manufacturing','ai-agent']},
-{name:'王才瑜',deg:'master',descZh:'碩士班學生，研究方向結合機器學習與智慧製造，並關注 AI Agent 於決策支援之應用。',descEn:'Master\u2019s student combining machine learning and smart manufacturing, with an interest in AI agents for decision support.',tags:['machine-learning','smart-manufacturing','ai-agent']},
-{name:'林家仟',deg:'master',descZh:'碩士班學生，研究涵蓋影像識別、深度學習與機器學習於智慧製造場域之應用，並延伸至 AI Agent 與資料庫管理。',descEn:'Master\u2019s student spanning image recognition, deep learning and machine learning for smart manufacturing, extending into AI agents and database management.',tags:['image-recognition','deep-learning','smart-manufacturing','ai-agent']},
-{name:'王亮凱',deg:'master',descZh:'碩士班學生，研究方向聚焦於影像識別與深度學習於智慧製造之應用，並具備 AI Agent、網頁開發與資料庫管理之整合能力。',descEn:'Master\u2019s student focused on image recognition and deep learning for smart manufacturing, integrating AI agents, web development and database management.',tags:['image-recognition','deep-learning','smart-manufacturing','ai-agent']},
-{name:'陳楷綸',deg:'master',descZh:'碩士班學生，研究方向結合影像識別與機器學習於智慧製造場域之應用，並延伸至 AI Agent、網頁開發與資料庫管理。',descEn:'Master\u2019s student combining image recognition and machine learning for smart manufacturing, extending into AI agents, web development and database management.',tags:['image-recognition','machine-learning','smart-manufacturing','ai-agent']}];
+{name:'王元',photo:'photos/m-wang-yuan.jpeg',deg:'phd',descZh:'博士班學生，研究方向聚焦於影像識別與深度學習於智慧製造場域的應用，並延伸至 AI Agent 架構設計。',descEn:'Doctoral student working on image recognition and deep learning for smart manufacturing, extending into AI agent architecture design.',tags:['image-recognition','deep-learning','smart-manufacturing','ai-agent']},
+{name:'林郁庭',photo:'photos/m-lin-yuting.jpeg',deg:'master',yr:113,descZh:'碩士班學生，專注於影像識別與深度學習技術之研究，並具備網頁開發與資料庫管理之實務經驗。',descEn:'Master\u2019s student focused on image recognition and deep learning, with practical experience in web development and database management.',tags:['image-recognition','deep-learning','machine-learning']},
+{name:'劉恩慈',photo:'photos/m-liu-enci.jpeg',deg:'master',yr:113,descZh:'碩士班學生，研究方向以機器學習為核心，並熟悉資料庫管理相關技術之應用。',descEn:'Master\u2019s student centred on machine learning, with applied knowledge of database management.',tags:['machine-learning','database-management']},
+{name:'周青松',photo:'photos/m-zhou-qingsong.jpg',deg:'master',yr:113,descZh:'碩士班學生，致力於影像識別與機器學習技術之研究與應用。',descEn:'Master\u2019s student researching image recognition and machine learning techniques.',tags:['image-recognition','machine-learning']},
+{name:'林耘孜',photo:'photos/m-lin-yunzi.jpeg',deg:'master',yr:113,descZh:'碩士班學生，研究聚焦於機器學習技術於智慧製造領域之應用。',descEn:'Master\u2019s student applying machine learning to smart manufacturing.',tags:['machine-learning','smart-manufacturing']},
+{name:'劉少宇',photo:'photos/m-liu-shaoyu.jpg',deg:'master',yr:114,descZh:'碩士班學生，研究方向涵蓋機器學習與智慧製造，並延伸探討 AI Agent 於製造場域之應用潛力。',descEn:'Master\u2019s student covering machine learning and smart manufacturing, exploring AI agents on the shop floor.',tags:['machine-learning','smart-manufacturing','ai-agent']},
+{name:'蔡婉煜',photo:'photos/m-cai-wanyu.jpeg',deg:'master',yr:114,descZh:'碩士班學生，專注於智慧製造與 AI Agent 相關議題之研究。',descEn:'Master\u2019s student focused on smart manufacturing and AI agent topics.',tags:['smart-manufacturing','ai-agent']},
+{name:'王才瑜',photo:'photos/m-wang-caiyu.jpg',deg:'master',yr:114,descZh:'碩士班學生，研究方向結合機器學習與智慧製造，並關注 AI Agent 於決策支援之應用。',descEn:'Master\u2019s student combining machine learning and smart manufacturing, with an interest in AI agents for decision support.',tags:['machine-learning','smart-manufacturing','ai-agent']},
+{name:'林家仟',photo:'photos/m-lin-jiaqian.jpg',deg:'master',yr:114,descZh:'碩士班學生，研究涵蓋影像識別、深度學習與機器學習於智慧製造場域之應用，並延伸至 AI Agent 與資料庫管理。',descEn:'Master\u2019s student spanning image recognition, deep learning and machine learning for smart manufacturing, extending into AI agents and database management.',tags:['image-recognition','deep-learning','smart-manufacturing','ai-agent']},
+{name:'王亮凱',photo:'photos/m-wang-liangkai.png',deg:'master',yr:114,descZh:'碩士班學生，研究方向聚焦於影像識別與深度學習於智慧製造之應用，並具備 AI Agent、網頁開發與資料庫管理之整合能力。',descEn:'Master\u2019s student focused on image recognition and deep learning for smart manufacturing, integrating AI agents, web development and database management.',tags:['image-recognition','deep-learning','smart-manufacturing','ai-agent']},
+{name:'陳楷綸',photo:'photos/m-chen-kailun.jpg',deg:'master',yr:114,descZh:'碩士班學生，研究方向結合影像識別與機器學習於智慧製造場域之應用，並延伸至 AI Agent、網頁開發與資料庫管理。',descEn:'Master\u2019s student combining image recognition and machine learning for smart manufacturing, extending into AI agents, web development and database management.',tags:['image-recognition','machine-learning','smart-manufacturing','ai-agent']}];
 
 const DEG={phd:{zh:'博士班',en:'Ph.D. Student'},master:{zh:'碩士班',en:'Master\u2019s Student'}};
 
+const LAB_PHOTOS=[
+{src:'photos/lab-room.jpg',zh:'實驗室現場',en:'Lab space'},
+{src:'photos/world-pm2024.jpg',zh:'World PM2024 國際會議',en:'World PM2024 conference'},
+{src:'photos/dinner-260115.jpg',zh:'實驗室聚餐',en:'Lab dinner'},
+{src:'photos/dinner-ajoy.jpg',zh:'實驗室聚餐',en:'Lab dinner'}];
+
 const TRANSIT=[
 {id:'mrt',zh:'捷運',en:'MRT',
- items:[{zh:'搭乘捷運中和新蘆線至「南勢角站」，4 號出口出站後騎乘 YouBike 約 4 分鐘，或步行約 10～15 分鐘可達校區。',en:'Take the Zhonghe–Xinlu Line to Nanshijiao Station. From Exit 4, about a 4-minute YouBike ride or a 10–15 minute walk to campus.'},
- {zh:'新北市新巴士 F512 副線 — 南勢角站 4 號出口搭乘，每日上午 06:30、07:00～20:00 每整點一班。',en:'New Taipei New Bus F512 (branch line) — board at Exit 4; daily 06:30, then hourly 07:00–20:00.'},
+ items:[{zh:'搭乘捷運中和新蘆線至「南勢角站」，1 號出口出站後騎乘 YouBike 約 4 分鐘，或步行約 10～15 分鐘可達校區。',en:'Take the Zhonghe–Xinlu Line to Nanshijiao Station. From Exit 4, about a 4-minute YouBike ride or a 10–15 minute walk to campus.'},
+ {zh:'新北市新巴士 F512 副線 — 南勢角站 1 號出口搭乘，每日上午 06:30、07:00～20:00 每整點一班。',en:'New Taipei New Bus F512 (branch line) — board at Nanshijiao Station Exit 1; daily 06:30, then hourly 07:00–20:00.'},
  {zh:'欣欣客運華夏專車 — 南勢角站 2 號出口搭乘，平日上午 06:28、06:46、07:08、07:35、07:52、08:08、08:25。',en:'Shin Shin Bus (Hwa Hsia route) — board at Exit 2; weekday mornings at 06:28, 06:46, 07:08, 07:35, 07:52, 08:08, 08:25.'},
  {zh:'圓通雅筑接駁車 — 南勢角站 2 號出口搭乘，每日 06:30～10:00、16:00～20:30 約 15 分鐘一班。',en:'Yuantong Yazhu shuttle — board at Exit 2; daily 06:30–10:00 and 16:00–20:30, roughly every 15 minutes.'}]},
 {id:'bus',zh:'公車',en:'City Bus',
@@ -773,7 +773,7 @@ const TRANSIT=[
  items:[{zh:'走水源快速道路、環河路接 111 縣道至忠孝街，再轉工專路即達校區，車程約 17～20 分鐘。',en:'Take the Shuiyuan Expressway, then Huanhe Rd. and County Road 111 to Zhongxiao St., turning onto Gongzhuan Rd. — roughly a 17–20 minute drive.'},
  {zh:'停車資訊：周邊有公共停車位，可以善加利用。',en:'Parking: public parking spaces are available nearby.'}]},
 {id:'rail',zh:'高鐵／台鐵',en:'HSR / TRA',
- items:[{zh:'台北站出發：高鐵或台鐵至台北車站，轉乘捷運板南線至忠孝復興站，換乘中和新蘆線至南勢角站。',en:'From Taipei Main Station: by HSR or TRA, transfer to the MRT Bannan Line to Zhongxiao Fuxing, then the Zhonghe–Xinlu Line to Nanshijiao.'},
+ items:[{zh:'台北站出發：高鐵或台鐵至台北車站。1. 轉乘捷運板南線至忠孝新生站，換乘中和新蘆線至南勢角站。2. 公車249、670可以直達華夏校區',en:'From Taipei Main Station: arrive by HSR or TRA. 1. Transfer to the MRT Bannan Line to Zhongxiao Xinsheng, then the Zhonghe–Xinlu Line to Nanshijiao. 2. Bus 249 or 670 runs directly to the NTUST Hwa Hsia Campus.'},
  {zh:'板橋站出發：高鐵或台鐵至板橋站，轉乘捷運板南線至忠孝復興站，換乘中和新蘆線至南勢角站。',en:'From Banqiao Station: by HSR or TRA, transfer to the MRT Bannan Line to Zhongxiao Fuxing, then the Zhonghe–Xinlu Line to Nanshijiao.'},
  {zh:'板橋站亦可搭乘公車或計程車經環河路、111 縣道至工專路，車程約 15～20 分鐘。',en:'From Banqiao you can also take a bus or taxi via Huanhe Rd. and County Road 111 to Gongzhuan Rd. — roughly a 15–20 minute ride.'},
  {zh:'南勢角站後續接駁方式請參考「捷運」分頁。',en:'From Nanshijiao, see the MRT tab for onward connections.'}]}];
@@ -786,15 +786,21 @@ const pad=n=>String(n).padStart(2,'0');
 function fmt(p){
   const shown=p.a.length>5?p.a.slice(0,3):p.a;
   const extra=p.a.length-shown.length;
+  const en=document.documentElement.dataset.lang==='en';
   return {title:p.t,venue:p.v,date:p.y+'/'+pad(p.m),typeLabel:TYPE_LABEL[p.ty]||p.ty,
-    authorLine:shown.join('、')+(extra>0?' et al. (+'+extra+')':''),
+    authorLine:shown.join(en?', ':'、')+(extra>0?' et al. (+'+extra+')':''),
     doi:p.doi||'', hasDoi:!!p.doi, noDoi:!p.doi,
-    tagList:p.g.map(s=>({label:(TAGS[s]||[s,s,'tech'])[0]}))};
+    tagList:p.g.map(s=>({label:(TAGS[s]||[s,s,'tech'])[en?1:0]}))};
 }
 
 class Component extends DCLogic {
   state={page:'home',lang:'zh',view:'list',type:'all',tag:null,perPage:10,pg:1,asc:false,
-    nodes:[],sel:null,hover:null,zoom:1,px:0,py:0,tick:0,transit:'mrt'};
+    nodes:[],sel:null,hover:null,zoom:1,px:0,py:0,tick:0,transit:'mrt',mYear:'all',photo:0};
+
+  setYear=e=>{ this.setState({mYear:e.target.value}); };
+  goPhoto=i=>()=>{ this.setState({photo:i}); };
+  nextPhoto=()=>{ this.setState(s=>({photo:(s.photo+1)%LAB_PHOTOS.length})); };
+  prevPhoto=()=>{ this.setState(s=>({photo:(s.photo+LAB_PHOTOS.length-1)%LAB_PHOTOS.length})); };
 
   componentDidMount(){
     document.documentElement.dataset.lang='zh';
@@ -803,8 +809,32 @@ class Component extends DCLogic {
     this.startLoop();
     this.wireReveal();
     this.wireGantry();
+    this.__photoTimer=setInterval(()=>{ if(this.state.page==='about')this.nextPhoto(); },6000);
+    setTimeout(()=>this.wireMasonry(),0);
+    setTimeout(()=>this.wireMasonry(),600);
   }
-  componentDidUpdate(){ this.wireReveal(); this.wireGantry(); this.wireGraphInput(); this.wireExp(); }
+  componentDidUpdate(){ this.wireReveal(); this.wireGantry(); this.wireGraphInput(); this.wireExp(); this.wireMasonry(); }
+
+  /* 論文卡片自動上移：以 grid 列跨距做 masonry，上下排間距固定 */
+  wireMasonry(){
+    const gap=18;
+    ['g-pubs','g-recent'].forEach(id=>{
+      const grid=document.getElementById(id); if(!grid)return;
+      grid.style.gridAutoRows='1px';
+      grid.style.rowGap='0px';
+      grid.style.alignItems='start';
+      const kids=Array.from(grid.children);
+      kids.forEach(el=>{ el.style.gridRowEnd='span 4000'; el.style.marginBottom=gap+'px'; });
+      kids.forEach(el=>{
+        const h=el.getBoundingClientRect().height;
+        el.style.gridRowEnd='span '+Math.max(1,Math.ceil(h+gap));
+      });
+    });
+    if(!this.__mre){
+      this.__mre=true;
+      window.addEventListener('resize',()=>{ clearTimeout(this.__mrt); this.__mrt=setTimeout(()=>this.wireMasonry(),120); });
+    }
+  }
 
   /* experience timeline: line draws, then rows slide in one by one */
   wireExp(){
@@ -822,7 +852,7 @@ class Component extends DCLogic {
       });
     },90);
   }
-  componentWillUnmount(){ if(this._timer)clearInterval(this._timer); if(window.__labOff)window.__labOff(); this.disposeLine(); }
+  componentWillUnmount(){ if(this._timer)clearInterval(this._timer); if(this.__photoTimer)clearInterval(this.__photoTimer); if(window.__labOff)window.__labOff(); this.disposeLine(); }
 
   toggleLang=()=>{
     const next=this.state.lang==='zh'?'en':'zh';
@@ -1059,7 +1089,7 @@ class Component extends DCLogic {
     const sm=tr*tr*(3-2*tr);
     const fidx=sm>0.5?Math.min(n-1,idx+1):idx;
     /* 進場一段就完成推近，之後每站高度角度完全一致 */
-    const ap=Math.max(0,Math.min(1,pv/0.16));
+    const ap=Math.max(0,Math.min(1,pv/0.03));
     const ease=ap*ap*(3-2*ap);
     const V=L.THREE.Vector3;
     const dolly=this.props.dolly==null?1:this.props.dolly;
@@ -1068,24 +1098,27 @@ class Component extends DCLogic {
     /* 遠景全線：高角俯瞰 */
     const distFar=(r/Math.tan(half))*1.1;
     const tiltFar=this.props.camTilt==null?0.6:this.props.camTilt;
-    const azFar=Math.PI/2+yawOff+(idx+sm)*(Math.PI*2/n);
-    const tgtFar=new V(0,1.2,0);
+    const A=L.line.anchors[idx],B=L.line.anchors[Math.min(n-1,idx+1)];
+    const outward=A.outward.clone().lerp(B.outward,sm).normalize();
+    const bc=L.line.bounds.center;
+    const azFar=Math.atan2(outward.z,outward.x)+yawOff;
+    const tgtFar=new V(bc.x,1.2,bc.z);
     const posFar=new V(
-      Math.cos(azFar)*Math.cos(tiltFar)*distFar,
+      tgtFar.x+Math.cos(azFar)*Math.cos(tiltFar)*distFar,
       tgtFar.y+Math.sin(tiltFar)*distFar,
-      Math.sin(azFar)*Math.cos(tiltFar)*distFar);
+      tgtFar.z+Math.sin(azFar)*Math.cos(tiltFar)*distFar);
 
     /* 工站特寫：站在工站外側低角度看進廠內（參考 3D 檢視器取景） */
-    const aStn=L.line.anchors[idx].angle+sm*(Math.PI*2/n)+yawOff;
-    const radial=new V(Math.cos(aStn),0,Math.sin(aStn));       // 圓心 → 工站
-    const stn=radial.clone().multiplyScalar(L.line.STATION_R);
-    const standBack=7.4/dolly;                                  // 退到工站外側
-    const eyeY=3.2;                                             // 低俯角視高
+    const yq=new (L.THREE.Quaternion)().setFromAxisAngle(new V(0,1,0),yawOff);
+    const radial=outward.clone().applyQuaternion(yq);          // 產線內側 → 工站
+    const stn=A.center.clone().lerp(B.center,sm);
+    const standBack=9.1/dolly;                                  // 退到工站外側（拉遠，整座工站入框）
+    const eyeY=3.5;                                             // 低俯角視高
     const posNear=stn.clone().add(radial.clone().multiplyScalar(standBack)).setY(eyeY);
-    const tgtNear=stn.clone().setY(1.85);
+    const tgtNear=stn.clone().setY(1.75);
     /* 工站推到畫面右側：把注視點沿相機右向左移 */
     const side=new V().crossVectors(new V(0,1,0),radial).normalize();
-    const shift=side.clone().multiplyScalar(-1.45);
+    const shift=side.clone().multiplyScalar(-2.5);
     tgtNear.add(shift); posNear.add(shift.clone().multiplyScalar(0.3));
 
     const tgt=tgtFar.clone().lerp(tgtNear,ease);
@@ -1356,10 +1389,9 @@ class Component extends DCLogic {
     const cards=Array.from(grid.querySelectorAll('[data-card]'));
     if(!cards.length)return;
     grid.__wired=true;
-    const claw=document.getElementById('claw');
     cards.forEach((c,i)=>{
       const inner=c.querySelector('[data-inner]');
-      const enter=()=>{ if(claw)claw.style.left=(12.5+i*25)+'%'; if(inner)inner.style.transform='rotateY(180deg)'; };
+      const enter=()=>{ if(inner)inner.style.transform='rotateY(180deg)'; };
       c.addEventListener('mouseenter',enter);
       c.addEventListener('focusin',enter);
       c.addEventListener('mouseleave',()=>{ if(inner)inner.style.transform='none'; });
@@ -1462,14 +1494,24 @@ class Component extends DCLogic {
       education:EDU, experience:EXP,
       recentPapers:PAPERS.slice().sort((a,b)=>a.y!==b.y?b.y-a.y:b.m-a.m).slice(0,6).map(fmt),
       profTags:PROF_TAGS.map(k=>({label:(TAGS[k]||[k,k])[zh?0:1]})),
+      labPhotos:LAB_PHOTOS.map((p,i)=>({src:p.src,alt:zh?p.zh:p.en,op:i===s.photo?1:0})),
+      labCaptionZh:LAB_PHOTOS[s.photo].zh, labCaptionEn:LAB_PHOTOS[s.photo].en,
+      labDots:LAB_PHOTOS.map((p,i)=>({go:this.goPhoto(i),label:(zh?'第 ':'Photo ')+(i+1)+(zh?' 張':''),
+        bg:i===s.photo?'var(--color-accent)':'var(--color-accent-200)'})),
+      nextPhoto:this.nextPhoto, prevPhoto:this.prevPhoto,
+      mYear:s.mYear,
+      yearOptions:[{v:'all',label:zh?'全部學年':'All years'}].concat([113,114,115].map(y=>({v:String(y),label:zh?y+' 學年入學':'Class of '+y}))),
+      setYear:this.setYear,
       memberGroups:['phd','master'].map(d=>{
-        const list=MEMBERS.filter(m=>m.deg===d);
+        let list=MEMBERS.filter(m=>m.deg===d);
+        if(d==='master'&&s.mYear!=='all')list=list.filter(m=>String(m.yr)===s.mYear);
         return {zh:d==='phd'?'博士班':'碩士班', en:d==='phd'?'Doctoral Students':'Master\u2019s Students',
+          showYear:d==='master', empty:!list.length,
           count:list.length+(zh?' 位':(list.length>1?' MEMBERS':' MEMBER')),
-          list:list.map(m=>({name:m.name,degLabel:DEG[m.deg][zh?'zh':'en'],
+          list:list.map(m=>({name:m.name,degLabel:DEG[m.deg][zh?'zh':'en'],photo:m.photo||'',
             hasThesis:!!m.thesis, thesis:m.thesis||'',
             tagList:m.tags.map(t=>({label:(TAGS[t]||[t,t])[zh?0:1]}))}))};
-      }).filter(g=>g.list.length),
+      }).filter(g=>g.list.length||g.showYear),
       mapSrc:MAP_SRC, campusLink:TRANSIT_LINK,
       transitTabs:TRANSIT.map(t=>({label:zh?t.zh:t.en,
         bg:s.transit===t.id?'var(--color-accent)':'transparent',
@@ -1523,10 +1565,8 @@ class Component extends DCLogic {
 <script>
 /* Patch: two template bindings ({{ mapSrc }} on the contact iframe,
    {{ gTransform }} on the publications graph <g>) never resolve inside
-   the exported dc-runtime -- likely a scope wiring dropped during editing
-   upstream. Rather than touch the generated/minified runtime, watch the
-   live DOM and rewrite these two attributes whenever they land as the
-   raw placeholder string. */
+   the exported dc-runtime. Watch the live DOM and rewrite these two
+   attributes whenever they land as the raw placeholder string. */
 (function(){
   var MAP_SRC='https://www.google.com/maps?q=24.981617,121.507716&hl=zh-TW&z=17&output=embed';
   function patch(){

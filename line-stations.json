@@ -66,6 +66,19 @@
       "papers": [
         "defect detection"
       ]
+    },
+    {
+      "num": "06",
+      "code": "IMPROVE",
+      "zh": "持續改善",
+      "en": "Continuous Improvement",
+      "deviceZh": "模型績效檢討白板（mAP / IoU）",
+      "deviceEn": "Model review whiteboard (mAP / IoU)",
+      "deviceNote": "員工向主管報告：白板上寫 mAP、IoU、Recall 等模型評估指標與收斂曲線，旁側安燈燈柱顯示現場狀態",
+      "papers": [
+        "lean production",
+        "standardized work"
+      ]
     }
   ]
 }

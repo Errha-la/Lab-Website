@@ -2,8 +2,8 @@
  *
  * 維護說明
  *   · 每座設備一個具名函式：sensorArray / visionStation / schedulingWall /
- *     plcCabinet / robotArm / spcBoard / ringConveyor / controlRoom / floorPlate。
- *     改外型只動那一個函式。
+ *     plcCabinet / robotArm / spcBoard / kaizenBoard / uConveyor / infeed /
+ *     outfeed / controlRoom / floorPlate。改外型只動那一個函式。
  *   · 尺寸集中在各函式頂端的 D 常數（datum），不要用臨時數字微調位置。
  *   · 工站文字（站名、設備名、對應論文）在 line-stations.json，不在這裡。
  *
@@ -24,9 +24,26 @@
  * 座標：公尺、y 軸向上、環心在原點。
  */
 
-export const RING_RADIUS = 3.0;
+export const RING_RADIUS = 3.0;        // U 形彎段半徑
 export const DECK_Y = 0.62;
-export const STATION_R = 4.55;
+export const STATION_R = 4.55;         // 彎段外側工站中心半徑（= RING_RADIUS + STATION_OFF）
+export const LEG_LEN = 6.0;            // 直線段長度：進料口 → 彎段
+export const STATION_OFF = 1.55;       // 工站基座離輸送帶中心線的外側距離
+export const PATH_LEN = 2 * LEG_LEN + Math.PI * RING_RADIUS;
+export const STATION_S = [0.6, 5.0, 7.8, 11.0, 14.2, 18.0];   // 六站沿線位置（弧長）；01↔02 拉開至 4.4 避免同框
+
+/* U 形中心線：s=0 進料口 → s=PATH_LEN 出料口。
+   左直線段 x=-R（往 +z 走）→ 彎段（以原點為心，z>0）→ 右直線段 x=+R（往 -z 走）。
+   回傳 t*=行進方向單位向量、o*=朝外法線（工站與相機都站在外側）。 */
+export function pathAt(s) {
+  const R = RING_RADIUS, bend = Math.PI * R;
+  if (s <= LEG_LEN) return { x: -R, z: -LEG_LEN + s, tx: 0, tz: 1, ox: -1, oz: 0 };
+  if (s <= LEG_LEN + bend) {
+    const phi = Math.PI - (s - LEG_LEN) / R, c = Math.cos(phi), sn = Math.sin(phi);
+    return { x: R * c, z: R * sn, tx: sn, tz: -c, ox: c, oz: sn };
+  }
+  return { x: R, z: -(s - LEG_LEN - bend), tx: 0, tz: -1, ox: 1, oz: 0 };
+}
 
 export function buildLine(THREE, opts = {}) {
   const accent = new THREE.Color(opts.accent || '#5980a6');
@@ -142,45 +159,152 @@ export function buildLine(THREE, opts = {}) {
     return g;
   }
 
-  /* ---------- 環形輸送帶 ---------- */
-  function ringConveyor() {
-    const R = RING_RADIUS, D = { half: 0.4, railR: 0.055, rollerR: 0.055, rollerL: 0.84 };
+  /* ---------- U 形輸送帶（進料 → 彎段 → 出料） ---------- */
+  /* 滾輪對位組：mount 管方向、tilt 把圓柱軸搔平，內層 mesh 只綕 rotation.y 自转 */
+  function rollerUnit(name, R, L, x, y, z, yaw) {
+    const mount = new THREE.Group(); mount.name = name + '_mount';
+    mount.position.set(x, y, z); mount.rotation.y = yaw || 0;
+    const tilt = new THREE.Group(); tilt.rotation.z = Math.PI / 2; mount.add(tilt);
+    const r = mesh(new THREE.CylinderGeometry(R, R, L, seg(14, 6)), M.accent, name);
+    tilt.add(r); anim.rollers.push(r);
+    return mount;
+  }
+
+  function uConveyor() {
+    const D = { half: 0.4, railR: 0.05, rollerR: 0.055, rollerL: 0.84 };
     const g = new THREE.Group(); g.name = 'conveyor';
-    const rail = (r, name) => {
-      const m = mesh(new THREE.TorusGeometry(r, D.railR, seg(14, 6), seg(120, 44)), M.frame, name);
-      m.rotation.x = Math.PI / 2; m.position.y = DECK_Y + 0.14; return m;
-    };
-    g.add(rail(R + D.half + 0.02, 'conveyor_rail_outer'));
-    g.add(rail(R - D.half - 0.02, 'conveyor_rail_inner'));
 
-    const wall = mesh(new THREE.CylinderGeometry(R + D.half, R + D.half, 0.1, seg(120, 44), 1, true), M.belt, 'conveyor_belt_wall');
-    wall.position.y = DECK_Y; g.add(wall);
-    const top = mesh(new THREE.RingGeometry(R - D.half, R + D.half, seg(120, 44)), M.belt, 'conveyor_belt_surface');
-    top.rotation.x = -Math.PI / 2; top.position.y = DECK_Y + 0.051; g.add(top);
-
-    const nRoll = seg(48, 16);
-    for (let i = 0; i < nRoll; i++) {
-      const a = (i / nRoll) * Math.PI * 2;
-      const r = mesh(new THREE.CylinderGeometry(D.rollerR, D.rollerR, D.rollerL, seg(14, 6)), M.accent, 'belt_roller_' + pad(i + 1));
-      r.rotation.z = Math.PI / 2; r.rotation.y = -a;
-      r.position.set(Math.cos(a) * R, DECK_Y - 0.02, Math.sin(a) * R);
-      g.add(r); anim.rollers.push(r);
+    /* 帶體：沿中心線鋪短節，彎段自然跟著轉 */
+    const nSeg = seg(64, 24), segLen = PATH_LEN / nSeg;
+    for (let i = 0; i < nSeg; i++) {
+      const p = pathAt((i + 0.5) * segLen);
+      const slab = mesh(new THREE.BoxGeometry(D.half * 2, 0.1, segLen * 1.06), M.belt, 'belt_segment_' + pad(i + 1));
+      slab.position.set(p.x, DECK_Y, p.z);
+      slab.rotation.y = Math.atan2(p.tx, p.tz);
+      g.add(slab);
     }
-    if (!low) for (let i = 0; i < 12; i++) {
-      const a = (i / 12) * Math.PI * 2 + Math.PI / 12, hLeg = DECK_Y - 0.14;
-      const leg = bbox(0.12, hLeg, 0.12, M.frame, 'conveyor_leg_' + pad(i + 1), { fillet: 0.016 });
-      leg.position.set(Math.cos(a) * R, hLeg / 2 + 0.14, Math.sin(a) * R); g.add(leg);
+    /* 側護軌：沿中心線 ±0.44 的曲線抽管 */
+    for (const s of [-1, 1]) {
+      const pts = [];
+      const nP = seg(90, 34);
+      for (let i = 0; i <= nP; i++) {
+        const p = pathAt((i / nP) * PATH_LEN);
+        pts.push(new THREE.Vector3(p.x + p.ox * s * (D.half + 0.04), DECK_Y + 0.14, p.z + p.oz * s * (D.half + 0.04)));
+      }
+      const curve = new THREE.CatmullRomCurve3(pts);
+      g.add(mesh(new THREE.TubeGeometry(curve, seg(150, 50), D.railR, seg(10, 5), false), M.frame,
+        'conveyor_rail_' + (s > 0 ? 'outer' : 'inner')));
+    }
+    /* 滾輪：軸線沒向外法線；旋轉實際作用在子節點的本體軸（避免 Euler 軸序造成翻面） */
+    const nRoll = seg(52, 18);
+    for (let i = 0; i < nRoll; i++) {
+      const p = pathAt(((i + 0.5) / nRoll) * PATH_LEN);
+      g.add(rollerUnit('belt_roller_' + pad(i + 1), D.rollerR, D.rollerL,
+        p.x, DECK_Y - 0.02, p.z, -Math.atan2(p.oz, p.ox)));
+    }
+    /* 支撐腳 */
+    if (!low) {
+      const nLeg = 14, hLeg = DECK_Y - 0.14;
+      for (let i = 0; i < nLeg; i++) {
+        const p = pathAt(((i + 0.5) / nLeg) * PATH_LEN);
+        const leg = bbox(0.12, hLeg, 0.12, M.frame, 'conveyor_leg_' + pad(i + 1), { fillet: 0.016 });
+        leg.position.set(p.x, hLeg / 2 + 0.14, p.z); g.add(leg);
+      }
     }
     return g;
   }
 
-  /* ---------- 工件 ---------- */
+  /* ---------- 端點標牌（進料 / 出料） ---------- */
+  function endPlate(name, big, sub) {
+    const cv = document.createElement('canvas'); cv.width = 384; cv.height = 168;
+    const c = cv.getContext('2d');
+    c.fillStyle = '#f2f2f3'; c.fillRect(0, 0, cv.width, cv.height);
+    c.fillStyle = '#' + accent.getHexString(); c.fillRect(0, 0, cv.width, 10);
+    c.strokeStyle = '#' + accent.getHexString(); c.lineWidth = 5; c.strokeRect(2.5, 2.5, cv.width - 5, cv.height - 5);
+    c.textAlign = 'center'; c.fillStyle = '#1d3a58';
+    c.font = '600 74px "Barlow Condensed", "Noto Sans TC", sans-serif';
+    c.fillText(big, cv.width / 2, 96);
+    c.fillStyle = '#5b6570';
+    c.font = '400 34px Barlow, "Noto Sans TC", sans-serif';
+    c.fillText(sub, cv.width / 2, 140);
+    const tex = new THREE.CanvasTexture(cv);
+    if (THREE.SRGBColorSpace) tex.colorSpace = THREE.SRGBColorSpace;
+    const m = new THREE.Mesh(keep(new THREE.PlaneGeometry(1.12, 0.49)),
+      new THREE.MeshBasicMaterial({ map: tex, toneMapped: false }));
+    m.name = name;
+    return m;
+  }
+
+  /* ---------- 進料端：門架 + 進料滑槽 + 待進工件 ---------- */
+  function infeed() {
+    const p = pathAt(0);
+    const g = new THREE.Group(); g.name = 'infeed';
+    g.position.set(p.x, 0, p.z); g.rotation.y = Math.atan2(p.tx, p.tz);   // 局部 +z = 行進方向
+    for (const s of [-1, 1]) {
+      const post = bbox(0.14, 2.0, 0.14, M.frame, 'infeed_post_' + (s > 0 ? 'r' : 'l'), { fillet: 0.018 });
+      post.position.set(s * 0.72, 1.14, -0.5); g.add(post);
+    }
+    const beam = bbox(1.72, 0.18, 0.24, M.accent, 'infeed_gate_beam', { fillet: 0.02 });
+    beam.position.set(0, 2.22, -0.5); g.add(beam);
+    const sign = endPlate('infeed_sign', 'IN 01', '進料 INFEED');
+    sign.position.set(0, 1.72, -0.62); sign.rotation.y = Math.PI; g.add(sign);
+    const signBack = bbox(1.2, 0.57, 0.06, M.deck, 'infeed_sign_board', { fillet: 0.02 });
+    signBack.position.set(0, 1.72, -0.6); g.add(signBack);
+
+    /* 滑槽：由高處斜下接上帶面 */
+    const chute = bbox(0.84, 1.5, 0.08, M.deck, 'infeed_chute', { fillet: 0.02 });
+    chute.position.set(0, DECK_Y + 0.42, -1.02); chute.rotation.x = -1.06; g.add(chute);
+    for (const s of [-1, 1]) {
+      const kerb = bbox(0.09, 1.5, 0.16, M.frame, 'infeed_chute_kerb_' + (s > 0 ? 'r' : 'l'), { fillet: 0.014 });
+      kerb.position.set(s * 0.42, DECK_Y + 0.48, -1.02); kerb.rotation.x = -1.06; g.add(kerb);
+      const leg = bbox(0.11, DECK_Y + 0.86, 0.11, M.frame, 'infeed_chute_leg_' + (s > 0 ? 'r' : 'l'), { fillet: 0.014 });
+      leg.position.set(s * 0.42, (DECK_Y + 0.86) / 2 + 0.14, -1.62); g.add(leg);
+    }
+    if (!low) for (let i = 0; i < 3; i++) {   // 待進工件排在滑槽上
+      const q = bbox(0.34, 0.2, 0.34, M.part, 'infeed_queue_' + (i + 1), { fillet: 0.03, bevel: 0.02 });
+      q.position.set(0, DECK_Y + 0.28 + i * 0.34, -0.72 - i * 0.58); q.rotation.x = -0.5; g.add(q);
+    }
+    return g;
+  }
+
+  /* ---------- 出料端：出料滾子台 + 棧板成品堆 ---------- */
+  function outfeed() {
+    const p = pathAt(PATH_LEN);
+    const g = new THREE.Group(); g.name = 'outfeed';
+    g.position.set(p.x, 0, p.z); g.rotation.y = Math.atan2(p.tx, p.tz);
+    const table = bbox(0.9, 1.5, 0.1, M.deck, 'outfeed_table', { fillet: 0.02 });
+    table.rotation.x = Math.PI / 2; table.position.set(0, DECK_Y, 0.86); g.add(table);
+    for (let i = 0; i < 5; i++) {
+      g.add(rollerUnit('outfeed_roller_' + (i + 1), 0.05, 0.86, 0, DECK_Y + 0.07, 0.3 + i * 0.28, 0));
+    }
+    for (const s of [-1, 1]) {
+      const leg = bbox(0.11, DECK_Y - 0.14, 0.11, M.frame, 'outfeed_leg_' + (s > 0 ? 'r' : 'l'), { fillet: 0.014 });
+      leg.position.set(s * 0.38, (DECK_Y - 0.14) / 2 + 0.14, 1.42); g.add(leg);
+    }
+    /* 棧板 + 成品堆 */
+    const pallet = bbox(1.24, 1.0, 0.14, M.frame, 'outfeed_pallet', { fillet: 0.02 });
+    pallet.rotation.x = Math.PI / 2; pallet.position.set(0, 0.21, 2.26); g.add(pallet);
+    const stack = [[-0.28, 0.4, 2.06], [0.28, 0.4, 2.06], [-0.28, 0.4, 2.5], [0.28, 0.4, 2.5], [0, 0.62, 2.28]];
+    stack.forEach((q, i) => {
+      const b = bbox(0.44, 0.28, 0.4, M.part, 'outfeed_carton_' + (i + 1), { fillet: 0.03, bevel: 0.02 });
+      b.position.set(q[0], q[1], q[2]); g.add(b);
+    });
+    const post = bbox(0.12, 1.9, 0.12, M.frame, 'outfeed_sign_post', { fillet: 0.016 });
+    post.position.set(-0.88, 1.09, 1.5); g.add(post);
+    const board = bbox(1.2, 0.57, 0.06, M.deck, 'outfeed_sign_board', { fillet: 0.02 });
+    board.position.set(-0.88, 1.86, 1.5); board.rotation.y = -0.5; g.add(board);
+    const sign = endPlate('outfeed_sign', 'OUT 02', '出料 OUTFEED');
+    sign.position.set(-0.88, 1.86, 1.5); sign.rotation.y = -0.5; sign.translateZ(0.04); g.add(sign);
+    return g;
+  }
+
+  /* ---------- 工件（沿 U 形線由進料走到出料） ---------- */
   function workpieces() {
     const g = new THREE.Group(); g.name = 'workpieces';
-    const n = seg(9, 6);
+    const n = seg(11, 7);
     for (let i = 0; i < n; i++) {
       const wp = bbox(0.34, 0.2, 0.34, M.part, 'workpiece_' + pad(i + 1), { fillet: 0.03, bevel: 0.02 });
-      wp.userData.phase = (i / n) * Math.PI * 2 + 0.22;
+      wp.userData.offset = (i / n) * PATH_LEN;
       g.add(wp); anim.parts.push(wp);
     }
     return g;
@@ -189,14 +313,17 @@ export function buildLine(THREE, opts = {}) {
   /* ---------- 工站底座 ---------- */
   function stationBase(i, tag) {
     const g = new THREE.Group();
-    const a = (i / 5) * Math.PI * 2 + Math.PI / 2;
-    g.position.set(Math.cos(a) * STATION_R, 0, Math.sin(a) * STATION_R);
-    g.rotation.y = -a + Math.PI / 2;              // 正面朝環心
+    const pt = pathAt(STATION_S[i]);
+    const cx = pt.x + pt.ox * STATION_OFF, cz = pt.z + pt.oz * STATION_OFF;
+    g.position.set(cx, 0, cz);
+    g.rotation.y = Math.atan2(pt.ox, pt.oz);        // 局部 -z 朝輸送帶（線內側）
     g.name = 'station_' + tag;
     const p = bbox(2.1, 1.7, 0.1, M.accent, 'station_' + tag + '_pad', { fillet: 0.04, bevel: 0.02 });
     p.rotation.x = Math.PI / 2; p.position.y = 0.19;
     g.add(p);
-    g.userData.angle = a;
+    g.userData.angle = Math.atan2(pt.oz, pt.ox);
+    g.userData.center = new THREE.Vector3(cx, 0, cz);
+    g.userData.outward = new THREE.Vector3(pt.ox, 0, pt.oz);
     return g;
   }
 
@@ -550,11 +677,120 @@ export function buildLine(THREE, opts = {}) {
     return g;
   }
 
+  /* ---------- 人形（員工 / 主管）：低面數塊體，僅供敘事用 ---------- */
+  function personFigure(name, opts2) {
+    const o = opts2 || {};
+    const skin = o.dark ? M.dark : M.frame;
+    const g = new THREE.Group(); g.name = name;
+    for (const s of [-1, 1]) {
+      const leg = bbox(0.15, 0.82, 0.19, M.dark, name + '_leg_' + (s > 0 ? 'r' : 'l'), { fillet: 0.03 });
+      leg.position.set(s * 0.11, 0.41, 0); g.add(leg);
+    }
+    const torso = bbox(0.46, 0.62, 0.26, o.accent ? M.accent : M.light, name + '_torso', { fillet: 0.06, bevel: 0.02 });
+    torso.position.y = 1.12; g.add(torso);
+    const neck = bbox(0.12, 0.09, 0.12, skin, name + '_neck', { fillet: 0.02 });
+    neck.position.y = 1.47; g.add(neck);
+    const head = mesh(new THREE.SphereGeometry(0.145, seg(20, 8), seg(16, 6)), skin, name + '_head');
+    head.position.y = 1.62; g.add(head);
+    /* 手臂：raise > 0 為抬手指板（報告者） */
+    const raise = o.raise || 0;
+    for (const s of [-1, 1]) {
+      const arm = bbox(0.11, 0.58, 0.13, o.accent ? M.accent : M.light, name + '_arm_' + (s > 0 ? 'r' : 'l'), { fillet: 0.025 });
+      arm.position.set(s * 0.29, 1.1, 0.02);
+      if (s > 0 && raise) { arm.rotation.z = -raise; arm.position.set(0.34, 1.2, 0.1); }
+      g.add(arm);
+    }
+    if (o.clipboard) {
+      const cb = bbox(0.3, 0.4, 0.03, M.deck, name + '_clipboard', { fillet: 0.01 });
+      cb.rotation.x = -0.5; cb.position.set(-0.24, 1.02, 0.22); g.add(cb);
+    }
+    return g;
+  }
+
+  /* ---------- 06 持續改善：模型績效檢討（員工向主管報告）---------- */
+  function kaizenBoard(tag) {
+    const D = { w: 2.0, h: 1.2, y: 1.5, tilt: -0.06, x: -0.24 };
+    const g = new THREE.Group(); g.name = 'improve_' + tag;
+    const carrier = bbox(D.w + 0.12, D.h + 0.12, 0.08, M.frame, 'improve_' + tag + '_board_frame', { fillet: 0.02 });
+    carrier.position.set(D.x, D.y, -0.1); carrier.rotation.x = D.tilt; g.add(carrier);
+    const face = bbox(D.w, D.h, 0.05, M.light, 'improve_' + tag + '_board_face', { fillet: 0.015, bevel: 0.01 });
+    face.position.set(D.x, D.y, -0.05); face.rotation.x = D.tilt; g.add(face);
+
+    /* 白板板面：手寫評估指標（mAP / IoU） */
+    if (!low) {
+      const cv = document.createElement('canvas'); cv.width = 1024; cv.height = 614;
+      const c = cv.getContext('2d'), W = cv.width, H = cv.height;
+      const ac = '#' + accent.getHexString();
+      c.fillStyle = '#fbfbfc'; c.fillRect(0, 0, W, H);
+      c.strokeStyle = ac; c.lineWidth = 5; c.strokeRect(4, 4, W - 8, H - 8);
+      c.textBaseline = 'alphabetic'; c.textAlign = 'left';
+      c.fillStyle = '#1d3a58';
+      c.font = '700 74px "Barlow Condensed", "Arial Narrow", sans-serif';
+      c.fillText('MODEL REVIEW', 52, 104);
+      c.strokeStyle = '#c9d3dd'; c.lineWidth = 3;
+      c.beginPath(); c.moveTo(52, 132); c.lineTo(W - 52, 132); c.stroke();
+      const rows = [['mAP', '0.912', 0.912], ['IoU', '0.874', 0.874], ['Recall', '0.938', 0.938]];
+      rows.forEach((r, i) => {
+        const y = 218 + i * 106;
+        c.fillStyle = '#1d3a58';
+        c.font = '700 62px "Barlow Condensed", "Arial Narrow", sans-serif';
+        c.fillText(r[0], 56, y);
+        c.fillStyle = ac;
+        c.font = '700 62px "Barlow Condensed", "Arial Narrow", sans-serif';
+        c.fillText(r[1], 300, y);
+        c.fillStyle = '#e2e8ee'; c.fillRect(460, y - 44, 500, 46);
+        c.fillStyle = ac; c.fillRect(460, y - 44, 500 * r[2], 46);
+      });
+      c.strokeStyle = ac; c.lineWidth = 6; c.beginPath();
+      const pts = [0.28, 0.42, 0.4, 0.58, 0.72, 0.79, 0.9];
+      pts.forEach((v, i) => {
+        const x = 560 + i * 68, y = H - 60 - v * 96;
+        i ? c.lineTo(x, y) : c.moveTo(x, y);
+      });
+      c.stroke();
+      c.fillStyle = '#5b6570';
+      c.font = '400 40px Barlow, "Noto Sans TC", sans-serif';
+      c.fillText('epoch 40 \u2192 120', 56, H - 62);
+      const tex = new THREE.CanvasTexture(cv);
+      if (THREE.SRGBColorSpace) tex.colorSpace = THREE.SRGBColorSpace;
+      const wb = new THREE.Mesh(keep(new THREE.PlaneGeometry(D.w - 0.1, D.h - 0.08)),
+        new THREE.MeshBasicMaterial({ map: tex, toneMapped: false }));
+      wb.name = 'improve_' + tag + '_board_writing';
+      wb.position.set(D.x, D.y, -0.02); wb.rotation.x = D.tilt; g.add(wb);
+    }
+
+    /* 報告者（員工，抬手指向指標）與聽取報告的主管 */
+    const emp = personFigure('improve_' + tag + '_employee', { raise: 1.15, accent: true });
+    emp.position.set(D.x - 1.34, 0, 0.62); emp.rotation.y = -0.62; g.add(emp);
+    const sup = personFigure('improve_' + tag + '_supervisor', { clipboard: true, dark: true });
+    sup.position.set(D.x + 1.3, 0, 0.9); sup.rotation.y = 0.7; g.add(sup);
+
+    for (const s of [-1, 1]) {
+      const leg = bbox(0.12, 1.44, 0.12, M.frame, 'improve_' + tag + '_board_leg_' + (s > 0 ? 'r' : 'l'), { fillet: 0.016 });
+      leg.position.set(D.x + s * (D.w / 2 - 0.12), 0.86, -0.1); g.add(leg);
+    }
+    const brace = bbox(D.w - 0.2, 0.1, 0.1, M.frame, 'improve_' + tag + '_board_brace', { fillet: 0.014 });
+    brace.position.set(D.x, 0.52, -0.1); g.add(brace);
+
+    /* 安燈燈柱 */
+    const apost = bbox(0.12, 1.5, 0.12, M.frame, 'improve_' + tag + '_andon_post', { fillet: 0.016 });
+    apost.position.set(1.16, 0.89, 0.1); g.add(apost);
+    const lampMat = [M.glow, M.light, M.dark];
+    for (let i = 0; i < 3; i++) {
+      const lamp = mesh(new THREE.CylinderGeometry(0.13, 0.13, 0.19, seg(22, 8)), lampMat[i], 'improve_' + tag + '_andon_lamp_' + (i + 1));
+      lamp.position.set(1.16, 1.98 - i * 0.2, 0.1); g.add(lamp);
+      if (i === 0) anim.andon = lamp;
+    }
+    const cap = mesh(new THREE.CylinderGeometry(0.06, 0.15, 0.1, seg(22, 8)), M.frame, 'improve_' + tag + '_andon_cap');
+    cap.position.set(1.16, 2.13, 0.1); g.add(cap);
+    return { g, anchorY: 2.44 };
+  }
+
   /* ---------- 組裝 ---------- */
-  group.add(floorPlate(), ringConveyor(), workpieces(), controlRoom());
-  const builders = [sensorArray, visionStation, schedulingWall, null, spcBoard];
+  group.add(floorPlate(), uConveyor(), infeed(), outfeed(), workpieces(), controlRoom());
+  const builders = [sensorArray, visionStation, schedulingWall, null, spcBoard, kaizenBoard];
   const anchors = [];
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < STATION_S.length; i++) {
     const tag = pad(i + 1);
     const base = stationBase(i, tag);
     let anchorY = 2.3;
@@ -562,28 +798,35 @@ export function buildLine(THREE, opts = {}) {
     else { const b = builders[i](tag); base.add(b.g); anchorY = b.anchorY; }
     base.add(signboard(i, tag));
     group.add(base);
-    const a = base.userData.angle;
+    const c = base.userData.center;
     anchors.push({
-      index: i, tag, angle: a,
-      position: new THREE.Vector3(Math.cos(a) * STATION_R, anchorY, Math.sin(a) * STATION_R)
+      index: i, tag, angle: base.userData.angle,
+      center: c.clone(), outward: base.userData.outward.clone(),
+      position: new THREE.Vector3(c.x, anchorY, c.z)
     });
   }
 
   /* 取景用邊界球（相機距離由此推導，不寫死數字） */
   const bb = new THREE.Box3().setFromObject(group);
   const sph = bb.getBoundingSphere(new THREE.Sphere());
-  const bounds = { center: sph.center.clone(), radius: sph.radius, contentRadius: STATION_R + 2.1, box: bb };
+  const bounds = {
+    center: sph.center.clone(), radius: sph.radius, box: bb,
+    contentRadius: 0.5 * Math.hypot(bb.max.x - bb.min.x, bb.max.z - bb.min.z) * 0.86
+  };
 
   /* ---------- 動態 ---------- */
   const speed = opts.speed == null ? 1 : opts.speed;
   function update(t) {
     const s = t * speed;
-    for (const r of anim.rollers) r.rotation.x = s * 3.4;
+    for (const r of anim.rollers) r.rotation.y = s * 3.4;
     for (const wp of anim.parts) {
-      const a = wp.userData.phase + s * 0.22;
-      wp.position.set(Math.cos(a) * RING_RADIUS, DECK_Y + 0.16, Math.sin(a) * RING_RADIUS);
-      wp.rotation.y = -a;
+      const u = (wp.userData.offset + s * 0.78) % PATH_LEN;
+      const p = pathAt(u);
+      wp.position.set(p.x, DECK_Y + 0.16, p.z);
+      wp.rotation.y = Math.atan2(p.tx, p.tz);
+      wp.visible = u > 0.3 && u < PATH_LEN - 0.3;     // 進料前／出料後不顯示
     }
+    if (anim.andon) anim.andon.material.emissiveIntensity = 0.6 + Math.sin(s * 2.6 + 1) * 0.3;
     if (anim.arm) armCycle(s);
     if (anim.beacon) anim.beacon.material.emissiveIntensity = 0.55 + Math.sin(s * 3.2) * 0.35;
     if (anim.ringLight) anim.ringLight.material.emissiveIntensity = 0.75 + Math.sin(s * 2.1) * 0.2;
@@ -654,5 +897,5 @@ export function buildLine(THREE, opts = {}) {
   /* 立牌文字外部覆寫（資料由 line-stations.json 帶入） */
   function setSignText(i, st) { if (signs[i]) signs[i].draw(st || {}); }
 
-  return { group, anchors, bounds, materials: M, update, dispose, setSignText, RING_RADIUS, STATION_R, DECK_Y, detail: low ? 'low' : 'high' };
+  return { group, anchors, bounds, materials: M, update, dispose, setSignText, pathAt, PATH_LEN, RING_RADIUS, STATION_R, DECK_Y, detail: low ? 'low' : 'high' };
 }

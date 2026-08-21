@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/industry-b2b80fb0-7acd-48a9-918c-f807f0870b36/styles.css">
+<script src="_ds/industry-b2b80fb0-7acd-48a9-918c-f807f0870b36/_ds_bundle.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:var(--color-bg);color:var(--color-text);font-family:"Barlow","Noto Sans TC",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:"Barlow Condensed","Noto Sans TC",system-ui,sans-serif}
+a{color:var(--color-accent-700);text-decoration:none}
+a:hover{color:var(--color-accent-900)}
+.l-en{display:none}
+html[data-lang="en"] .l-en{display:revert}
+html[data-lang="en"] .l-zh{display:none}
+*:focus-visible{outline:2px solid var(--color-accent);outline-offset:2px}
+@keyframes beltflow{to{stroke-dashoffset:-40}}
+@keyframes clawbob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+[data-reveal]{opacity:0;transform:translateY(18px)}
+[data-reveal].shown{opacity:1;transform:none}
+.btn-bp,.nav-a{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap}
+@media (max-width:1180px){.nav-a .l-en{display:none !important}}
+@media (max-width:1060px){#g-hero,#g-cta,#g-foot{grid-template-columns:1fr !important}#techgrid{grid-template-columns:repeat(2,1fr) !important}#g-feat{grid-template-columns:1fr !important}#g-graph{grid-template-columns:1fr !important}}
+@media (max-width:980px){.nav-a{padding:8px 7px !important;font-size:14px !important}}
+</style>
+</helmet>
+
+<div style="min-height:100vh">
+
+<header style="position:sticky;top:0;z-index:60;background:rgba(242,242,243,.93);backdrop-filter:blur(8px);border-bottom:1px solid var(--color-divider)">
+  <div style="max-width:1280px;margin:0 auto;padding:0 28px;height:66px;display:flex;align-items:center;gap:24px">
+    <a href="#home" style="display:flex;flex-direction:column;line-height:1.05;min-width:0;color:var(--color-text)">
+      <span style="font-family:'Barlow Condensed','Noto Sans TC',sans-serif;font-weight:700;font-size:19px;letter-spacing:-.01em;white-space:nowrap">先進製程與設備智能輔助實驗室</span>
+      <span style="font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--color-accent-700);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Advanced Process Control &amp; Intelligent Equipment Lab</span>
+    </a>
+    <nav aria-label="主導覽" style="display:flex;align-items:center;gap:2px;margin-left:auto">
+      <a href="#home" class="nav-a" style="padding:8px 11px;font-family:'Barlow Condensed','Noto Sans TC',sans-serif;font-weight:600;font-size:15px;color:var(--color-text)" style-hover="background:var(--color-accent-100)">首頁<span class="l-en"> Home</span></a>
+      <a href="#about" class="nav-a" style="padding:8px 11px;font-family:'Barlow Condensed','Noto Sans TC',sans-serif;font-weight:600;font-size:15px;color:var(--color-text)" style-hover="background:var(--color-accent-100)">關於我們<span class="l-en"> About</span></a>
+      <a href="#professor" class="nav-a" style="padding:8px 11px;font-family:'Barlow Condensed','Noto Sans TC',sans-serif;font-weight:600;font-size:15px;color:var(--color-neutral-500)" style-hover="background:var(--color-accent-100)">指導教授<span class="l-en"> Professor</span></a>
+      <a href="#team" class="nav-a" style="padding:8px 11px;font-family:'Barlow Condensed','Noto Sans TC',sans-serif;font-weight:600;font-size:15px;color:var(--color-neutral-500)" style-hover="background:var(--color-accent-100)">團隊成員<span class="l-en"> Team</span></a>
+      <a href="#publications" class="nav-a" style="padding:8px 11px;font-family:'Barlow Condensed','Noto Sans TC',sans-serif;font-weight:600;font-size:15px;color:var(--color-text)" style-hover="background:var(--color-accent-100)">研究成果<span class="l-en"> Publications</span></a>
+      <a href="#contact" class="blueprint btn-bp nav-a" style="position:relative;margin-left:10px;padding:9px 18px;background:var(--color-accent);color:#fff;font-family:'Barlow Condensed','Noto Sans TC',sans-serif;font-weight:700;font-size:15px;letter-spacing:.02em" style-hover="background:var(--color-accent-600)">聯絡我們<span class="l-en"> Contact</span><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i></a>
+      <button type="button" onClick="{{ toggleLang }}" aria-label="切換語言 Switch language" style="margin-left:12px;border:1px solid var(--color-divider);background:transparent;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:12px;letter-spacing:.1em;padding:7px 10px;color:var(--color-accent-700)" style-hover="background:var(--color-accent-100)">ZH / EN</button>
+    </nav>
+  </div>
+</header>
+
+<section id="home">
+  <div id="g-hero" style="max-width:1280px;margin:0 auto;padding:76px 28px 60px;display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center">
+    <div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
+        <span style="width:34px;height:1px;background:var(--color-accent)"></span>
+        <span style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--color-accent-700)">NTUST · Lab of Advanced Process Control</span>
+      </div>
+      <h1 style="font-size:52px;line-height:1.06;letter-spacing:-.02em;margin:0 0 10px">先進製程與設備<br>智能輔助實驗室</h1>
+      <p style="font-family:'Barlow Condensed',sans-serif;font-size:20px;letter-spacing:.01em;color:var(--color-accent-700);margin:0 0 22px">Advanced Process Control and Intelligent Equipment Laboratory</p>
+      <p style="font-size:16px;line-height:1.7;max-width:56ch;color:var(--color-neutral-800);margin:0 0 6px">本實驗室以 AI Agent 與數位雙生技術為核心，融合工業知識與先進控制，致力打造自主決策與人機協作的閉環智慧製造創新中心。</p>
+      <p class="l-en" style="font-size:14px;line-height:1.65;max-width:62ch;color:var(--color-neutral-600);margin:0">Centered on AI Agents and Digital Twins, driving closed-loop smart manufacturing through autonomous decision-making and human–AI collaboration.</p>
+      <div style="display:flex;gap:12px;margin-top:26px">
+        <a href="#contact" class="blueprint btn-bp" style="position:relative;padding:13px 26px;background:var(--color-accent);color:#fff;font-family:'Barlow Condensed','Noto Sans TC',sans-serif;font-weight:700;font-size:16px" style-hover="background:var(--color-accent-600)">加入我們<span class="l-en"> Join Us</span><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i></a>
+        <a href="#about" class="btn-bp" style="padding:13px 26px;border:1px solid var(--color-accent-500);color:var(--color-accent-800);font-family:'Barlow Condensed','Noto Sans TC',sans-serif;font-weight:700;font-size:16px" style-hover="background:var(--color-accent-100)">看研究方向<span class="l-en"> Research</span></a>
+      </div>
+    </div>
+    <figure class="blueprint" style="position:relative;aspect-ratio:4/3;display:grid;place-items:center;background:linear-gradient(var(--color-accent-100),transparent)">
+      <svg viewBox="0 0 200 150" style="width:100%;height:100%;color:var(--color-accent-400)" fill="none" stroke="currentColor" stroke-width=".7">
+        <g opacity=".55">
+          <path d="M0 20h200M0 45h200M0 70h200M0 95h200M0 120h200"></path>
+          <path d="M20 0v150M45 0v150M70 0v150M95 0v150M120 0v150M145 0v150M170 0v150"></path>
+        </g>
+        <g stroke="var(--color-accent-700)" stroke-width="1.2">
+          <rect x="44" y="52" width="46" height="34"></rect>
+          <rect x="110" y="44" width="50" height="26"></rect>
+          <path d="M30 100h140M30 108h140"></path>
+          <circle cx="52" cy="104" r="4"></circle><circle cx="86" cy="104" r="4"></circle><circle cx="120" cy="104" r="4"></circle><circle cx="154" cy="104" r="4"></circle>
+          <path d="M67 86v14M135 70v30"></path>
+          <path d="M96 30l14 8-14 8-14-8z"></path>
+        </g>
+      </svg>
+      <figcaption style="position:absolute;left:12px;bottom:10px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-accent-700)">Fig. 00 — 線稿示意，待替換實拍照 / render</figcaption>
+      <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+    </figure>
+  </div>
+
+  <div id="scrollwrap" style="position:relative;height:520vh;border-top:1px solid var(--color-divider);border-bottom:1px solid var(--color-divider);background:var(--color-neutral-100)">
+    <div id="stage" style="position:sticky;top:0;height:100vh;overflow:hidden;perspective:1500px;perspective-origin:50% 58%">
+
+      <div style="position:absolute;left:28px;top:26px;z-index:3;display:flex;align-items:baseline;gap:12px">
+        <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:.18em;color:var(--color-accent-700)">FIG. 01</span>
+        <h2 style="margin:0;font-size:22px;letter-spacing:-.01em">閉環智慧製造產線<span class="l-en" style="color:var(--color-accent-700)"> / Closed-loop Smart Production Line</span></h2>
+      </div>
+      <div id="viewmode" style="position:absolute;right:28px;top:28px;z-index:3;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:12px;letter-spacing:.16em;color:var(--color-accent-700);border:1px solid var(--color-divider);padding:5px 10px">2D PLAN VIEW</div>
+
+      <div id="cam" style="position:absolute;left:50%;top:56%;width:2600px;height:760px;margin-left:-1300px;margin-top:-430px;transform-style:preserve-3d;will-change:transform"><div id="track" style="position:absolute;left:0;top:0;width:2600px;height:760px;transform-style:preserve-3d;will-change:transform">
+        <svg viewBox="0 0 2600 760" style="position:absolute;left:0;top:0;width:2600px;height:760px;color:var(--color-accent-400)" fill="none" stroke="currentColor" stroke-width="1">
+          <g opacity=".5">
+            <path d="M40 380h2520M40 426h2520M40 472h2520M40 518h2520M40 564h2520M40 610h2520M40 656h2520M40 702h2520"></path>
+            <path d="M100 380v322M180 380v322M260 380v322M340 380v322M420 380v322M500 380v322M580 380v322M660 380v322M740 380v322M820 380v322M900 380v322M980 380v322M1060 380v322M1140 380v322M1220 380v322M1300 380v322M1380 380v322M1460 380v322M1540 380v322M1620 380v322M1700 380v322M1780 380v322M1860 380v322M1940 380v322M2020 380v322M2100 380v322M2180 380v322M2260 380v322M2340 380v322M2420 380v322M2500 380v322"></path>
+          </g>
+          <g stroke="var(--color-accent-700)" stroke-width="2">
+            <path d="M80 508h2440M80 552h2440M80 508v44M2520 508v44"></path>
+          </g>
+          <g stroke="var(--color-accent-600)" stroke-width="1.4">
+            <circle cx="140" cy="530" r="13"></circle><circle cx="240" cy="530" r="13"></circle><circle cx="340" cy="530" r="13"></circle><circle cx="440" cy="530" r="13"></circle><circle cx="540" cy="530" r="13"></circle><circle cx="640" cy="530" r="13"></circle><circle cx="740" cy="530" r="13"></circle><circle cx="840" cy="530" r="13"></circle><circle cx="940" cy="530" r="13"></circle><circle cx="1040" cy="530" r="13"></circle><circle cx="1140" cy="530" r="13"></circle><circle cx="1240" cy="530" r="13"></circle><circle cx="1340" cy="530" r="13"></circle><circle cx="1440" cy="530" r="13"></circle><circle cx="1540" cy="530" r="13"></circle><circle cx="1640" cy="530" r="13"></circle><circle cx="1740" cy="530" r="13"></circle><circle cx="1840" cy="530" r="13"></circle><circle cx="1940" cy="530" r="13"></circle><circle cx="2040" cy="530" r="13"></circle><circle cx="2140" cy="530" r="13"></circle><circle cx="2240" cy="530" r="13"></circle><circle cx="2340" cy="530" r="13"></circle><circle cx="2440" cy="530" r="13"></circle>
+          </g>
+          <path d="M80 530h2440" stroke="var(--color-accent)" stroke-width="2.5" stroke-dasharray="18 22" style="animation:beltflow 1.1s linear infinite"></path>
+          <path d="M2520 640C2520 700 2100 726 1300 726S80 700 80 640" stroke="var(--color-accent-600)" stroke-width="1.8" stroke-dasharray="14 12"></path>
+          <path d="M80 640l-9 22M80 640l9 22" stroke="var(--color-accent-600)" stroke-width="1.8"></path>
+          <text x="1300" y="716" text-anchor="middle" fill="var(--color-accent-700)" stroke="none" style="font:600 22px 'Barlow Condensed',sans-serif;letter-spacing:.2em">FEEDBACK LOOP</text>
+        </svg>
+
+        <div data-stw="0" style="position:absolute;left:0;top:0;width:2600px;height:760px;transform-style:preserve-3d;transform-origin:260px 530px;transition:transform .55s cubic-bezier(.4,0,.2,1),opacity .4s">
+          <svg viewBox="0 0 2600 760" style="position:absolute;left:0;top:0;width:2600px;height:760px;color:var(--color-accent-400);transform:translateZ(-30px);opacity:0;transition:opacity .4s" fill="none" stroke="currentColor" stroke-width="1.4">
+            <rect x="188" y="300" width="144" height="86"></rect>
+            <path d="M260 386v122M212 320h96M212 344h72"></path>
+            <g stroke-width="1.6" opacity=".9"><path d="M226 412c22 14 46 14 68 0M234 434c18 11 38 11 56 0M242 456c14 8 30 8 44 0"></path></g>
+            <rect x="236" y="486" width="48" height="22"></rect>
+            <text x="260" y="278" text-anchor="middle" fill="currentColor" stroke="none" style="font:700 26px 'Barlow Condensed',sans-serif;letter-spacing:.14em">SENSING</text>
+          </svg>
+          <svg viewBox="0 0 2600 760" style="position:absolute;left:0;top:0;width:2600px;height:760px;color:var(--color-accent-300);transform:translateZ(-15px);opacity:0;transition:opacity .4s" fill="none" stroke="currentColor" stroke-width="1.4">
+            <rect x="188" y="300" width="144" height="86"></rect>
+            <path d="M260 386v122M212 320h96M212 344h72"></path>
+            <g stroke-width="1.6" opacity=".9"><path d="M226 412c22 14 46 14 68 0M234 434c18 11 38 11 56 0M242 456c14 8 30 8 44 0"></path></g>
+            <rect x="236" y="486" width="48" height="22"></rect>
+            <text x="260" y="278" text-anchor="middle" fill="currentColor" stroke="none" style="font:700 26px 'Barlow Condensed',sans-serif;letter-spacing:.14em">SENSING</text>
+          </svg>
+          <svg viewBox="0 0 2600 760" style="position:absolute;left:0;top:0;width:2600px;height:760px;color:var(--color-accent-700)" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="188" y="300" width="144" height="86"></rect>
+            <path d="M260 386v122M212 320h96M212 344h72"></path>
+            <g stroke-width="1.6" opacity=".9"><path d="M226 412c22 14 46 14 68 0M234 434c18 11 38 11 56 0M242 456c14 8 30 8 44 0"></path></g>
+            <rect x="236" y="486" width="48" height="22"></rect>
+            <text x="260" y="278" text-anchor="middle" fill="currentColor" stroke="none" style="font:700 26px 'Barlow Condensed',sans-serif;letter-spacing:.14em">SENSING</text>
+          </svg>
+        </div>
+        <div data-stw="1" style="position:absolute;left:0;top:0;width:2600px;height:760px;transform-style:preserve-3d;transform-origin:780px 530px;transition:transform .55s cubic-bezier(.4,0,.2,1),opacity .4s">
+          <svg viewBox="0 0 2600 760" style="position:absolute;left:0;top:0;width:2600px;height:760px;color:var(--color-accent-400);transform:translateZ(-30px);opacity:0;transition:opacity .4s" fill="none" stroke="currentColor" stroke-width="1.4">
+            <rect x="690" y="266" width="180" height="130"></rect>
+            <rect x="710" y="286" width="140" height="90" stroke-width="1.3" opacity=".8"></rect>
+            <path d="M716 340l18-22 16 34 20-52 18 40 16-18 20 26 16-10" stroke-width="1.8"></path>
+            <path d="M780 396v112M736 508h88"></path>
+            <rect x="752" y="486" width="56" height="22"></rect>
+            <text x="780" y="244" text-anchor="middle" fill="currentColor" stroke="none" style="font:700 26px 'Barlow Condensed',sans-serif;letter-spacing:.14em">DIAGNOSIS</text>
+          </svg>
+          <svg viewBox="0 0 2600 760" style="position:absolute;left:0;top:0;width:2600px;height:760px;color:var(--color-accent-300);transform:translateZ(-15px);opacity:0;transition:opacity .4s" fill="none" stroke="currentColor" stroke-width="1.4">
+            <rect x="690" y="266" width="180" height="130"></rect>
+            <rect x="710" y="286" width="140" height="90" stroke-width="1.3" opacity=".8"></rect>
+            <path d="M716 340l18-22 16 34 20-52 18 40 16-18 20 26 16-10" stroke-width="1.8"></path>
+            <path d="M780 396v112M736 508h88"></path>
+            <rect x="752" y="486" width="56" height="22"></rect>
+            <text x="780" y="244" text-anchor="middle" fill="currentColor" stroke="none" style="font:700 26px 'Barlow Condensed',sans-serif;letter-spacing:.14em">DIAGNOSIS</text>
+          </svg>
+          <svg viewBox="0 0 2600 760" style="position:absolute;left:0;top:0;width:2600px;height:760px;color:var(--color-accent-700)" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="690" y="266" width="180" height="130"></rect>
+            <rect x="710" y="286" width="140" height="90" stroke-width="1.3" opacity=".8"></rect>
+            <path d="M716 340l18-22 16 34 20-52 18 40 16-18 20 26 16-10" stroke-width="1.8"></path>
+            <path d="M780 396v112M736 508h88"></path>
+            <rect x="752" y="486" width="56" height="22"></rect>
+            <text x="780" y="244" text-anchor="middle" fill="currentColor" stroke="none" style="font:700 26px 'Barlow Condensed',sans-serif;letter-spacing:.14em">DIAGNOSIS</text>
+          </svg>
+        </div>
+        <div data-stw="2" style="position:absolute;left:0;top:0;width:2600px;height:760px;transform-style:preserve-3d;transform-origin:1300px 530px;transition:transform .55s cubic-bezier(.4,0,.2,1),opacity .4s">
+          <svg viewBox="0 0 2600 760" style="position:absolute;left:0;top:0;width:2600px;height:760px;color:var(--color-accent-400);transform:translateZ(-30px);opacity:0;transition:opacity .4s" fill="none" stroke="currentColor" stroke-width="1.4">
+            <path d="M1300 246l78 45v90l-78 45-78-45v-90z"></path>
+            <path d="M1300 288l40 23v46l-40 23-40-23v-46z" stroke-width="1.3" opacity=".8"></path>
+            <text x="1300" y="342" text-anchor="middle" fill="currentColor" stroke="none" style="font:700 24px 'Barlow Condensed',sans-serif;letter-spacing:.1em">AGENT</text>
+            <g stroke-width="1.4" stroke-dasharray="8 7" opacity=".95"><path d="M1222 291l-92-34M1378 291l92-34M1222 381l-92 34M1378 381l92 34"></path></g>
+            <g stroke-width="1.6"><circle cx="1122" cy="254" r="14"></circle><circle cx="1478" cy="254" r="14"></circle><circle cx="1122" cy="418" r="14"></circle><circle cx="1478" cy="418" r="14"></circle></g>
+            <path d="M1300 426v82"></path>
+            <text x="1300" y="224" text-anchor="middle" fill="currentColor" stroke="none" style="font:700 26px 'Barlow Condensed',sans-serif;letter-spacing:.14em">DECISION</text>
+          </svg>
+          <svg viewBox="0 0 2600 760" style="position:absolute;left:0;top:0;width:2600px;height:760px;color:var(--color-accent-300);transform:translateZ(-15px);opacity:0;transition:opacity .4s" fill="none" stroke="currentColor" stroke-width="1.4">
+            <path d="M1300 246l78 45v90l-78 45-78-45v-90z"></path>
+            <path d="M1300 288l40 23v46l-40 23-40-23v-46z" stroke-width="1.3" opacity=".8"></path>
+            <text x="1300" y="342" text-anchor="middle" fill="currentColor" stroke="none" style="font:700 24px 'Barlow Condensed',sans-serif;letter-spacing:.1em">AGENT</text>
+            <g stroke-width="1.4" stroke-dasharray="8 7" opacity=".95"><path d="M1222 291l-92-34M1378 291l92-34M1222 381l-92 34M1378 381l92 34"></path></g>
+            <g stroke-width="1.6"><circle cx="1122" cy="254" r="14"></circle><circle cx="1478" cy="254" r="14"></circle><circle cx="1122" cy="418" r="14"></circle><circle cx="1478" cy="418" r="14"></circle></g>
+            <path d="M1300 426v82"></path>
+            <text x="1300" y="224" text-anchor="middle" fill="currentColor" stroke="none" style="font:700 26px 'Barlow Condensed',sans-serif;letter-spacing:.14em">DECISION</text>
+          </svg>
+          <svg viewBox="0 0 2600 760" style="position:absolute;left:0;top:0;width:2600px;height:760px;color:var(--color-accent-700)" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1300 246l78 45v90l-78 45-78-45v-90z"></path>
+            <path d="M1300 288l40 23v46l-40 23-40-23v-46z" stroke-width="1.3" opacity=".8"></path>
+            <text x="1300" y="342" text-anchor="middle" fill="currentColor" stroke="none" style="font:700 24px 'Barlow Condensed',sans-serif;letter-spacing:.1em">AGENT</text>
+            <g stroke-width="1.4" stroke-dasharray="8 7" opacity=".95"><path d="M1222 291l-92-34M1378 291l92-34M1222 381l-92 34M1378 381l92 34"></path></g>
+            <g stroke-width="1.6"><circle cx="1122" cy="254" r="14"></circle><circle cx="1478" cy="254" r="14"></circle><circle cx="1122" cy="418" r="14"></circle><circle cx="1478" cy="418" r="14"></circle></g>
+            <path d="M1300 426v82"></path>
+            <text x="1300" y="224" text-anchor="middle" fill="currentColor" stroke="none" style="font:700 26px 'Barlow Condensed',sans-serif;letter-spacing:.14em">DECISION</text>
+          </svg>
+        </div>
+        <div data-stw="3" style="position:absolute;left:0;top:0;width:2600px;height:760px;transform-style:preserve-3d;transform-origin:1820px 530px;transition:transform .55s cubic-bezier(.4,0,.2,1),opacity .4s">
+          <svg viewBox="0 0 2600 760" style="position:absolute;left:0;top:0;width:2600px;height:760px;color:var(--color-accent-400);transform:translateZ(-30px);opacity:0;transition:opacity .4s" fill="none" stroke="currentColor" stroke-width="1.4">
+            <path d="M1700 250h240M1700 250v258M1940 250v258"></path>
+            <rect x="1780" y="250" width="80" height="34"></rect>
+            <path d="M1820 284v70"></path>
+            <path d="M1794 354h52v26h-52z"></path>
+            <path d="M1802 380l-12 40M1838 380l12 40" stroke-width="2.4" style="animation:clawbob 2.4s ease-in-out infinite"></path>
+            <rect x="1796" y="486" width="48" height="22"></rect>
+            <text x="1820" y="226" text-anchor="middle" fill="currentColor" stroke="none" style="font:700 26px 'Barlow Condensed',sans-serif;letter-spacing:.14em">CONTROL</text>
+          </svg>
+          <svg viewBox="0 0 2600 760" style="position:absolute;left:0;top:0;width:2600px;height:760px;color:var(--color-accent-300);transform:translateZ(-15px);opacity:0;transition:opacity .4s" fill="none" stroke="currentColor" stroke-width="1.4">
+            <path d="M1700 250h240M1700 250v258M1940 250v258"></path>
+            <rect x="1780" y="250" width="80" height="34"></rect>
+            <path d="M1820 284v70"></path>
+            <path d="M1794 354h52v26h-52z"></path>
+            <path d="M1802 380l-12 40M1838 380l12 40" stroke-width="2.4" style="animation:clawbob 2.4s ease-in-out infinite"></path>
+            <rect x="1796" y="486" width="48" height="22"></rect>
+            <text x="1820" y="226" text-anchor="middle" fill="currentColor" stroke="none" style="font:700 26px 'Barlow Condensed',sans-serif;letter-spacing:.14em">CONTROL</text>
+          </svg>
+          <svg viewBox="0 0 2600 760" style="position:absolute;left:0;top:0;width:2600px;height:760px;color:var(--color-accent-700)" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1700 250h240M1700 250v258M1940 250v258"></path>
+            <rect x="1780" y="250" width="80" height="34"></rect>
+            <path d="M1820 284v70"></path>
+            <path d="M1794 354h52v26h-52z"></path>
+            <path d="M1802 380l-12 40M1838 380l12 40" stroke-width="2.4" style="animation:clawbob 2.4s ease-in-out infinite"></path>
+            <rect x="1796" y="486" width="48" height="22"></rect>
+            <text x="1820" y="226" text-anchor="middle" fill="currentColor" stroke="none" style="font:700 26px 'Barlow Condensed',sans-serif;letter-spacing:.14em">CONTROL</text>
+          </svg>
+        </div>
+        <div data-stw="4" style="position:absolute;left:0;top:0;width:2600px;height:760px;transform-style:preserve-3d;transform-origin:2350px 530px;transition:transform .55s cubic-bezier(.4,0,.2,1),opacity .4s">
+          <svg viewBox="0 0 2600 760" style="position:absolute;left:0;top:0;width:2600px;height:760px;color:var(--color-accent-400);transform:translateZ(-30px);opacity:0;transition:opacity .4s" fill="none" stroke="currentColor" stroke-width="1.4">
+            <path d="M2280 300h140M2280 300v96h140v-96"></path>
+            <path d="M2280 332h140M2280 364h140" stroke-width="1.3" opacity=".8"></path>
+            <path d="M2350 396v112"></path>
+            <g stroke-width="1.8"><path d="M2422 260a76 76 0 10-144 0"></path><path d="M2278 260l-16-18M2278 260l20-12"></path></g>
+            <text x="2350" y="216" text-anchor="middle" fill="currentColor" stroke="none" style="font:700 26px 'Barlow Condensed',sans-serif;letter-spacing:.14em">FEEDBACK</text>
+          </svg>
+          <svg viewBox="0 0 2600 760" style="position:absolute;left:0;top:0;width:2600px;height:760px;color:var(--color-accent-300);transform:translateZ(-15px);opacity:0;transition:opacity .4s" fill="none" stroke="currentColor" stroke-width="1.4">
+            <path d="M2280 300h140M2280 300v96h140v-96"></path>
+            <path d="M2280 332h140M2280 364h140" stroke-width="1.3" opacity=".8"></path>
+            <path d="M2350 396v112"></path>
+            <g stroke-width="1.8"><path d="M2422 260a76 76 0 10-144 0"></path><path d="M2278 260l-16-18M2278 260l20-12"></path></g>
+            <text x="2350" y="216" text-anchor="middle" fill="currentColor" stroke="none" style="font:700 26px 'Barlow Condensed',sans-serif;letter-spacing:.14em">FEEDBACK</text>
+          </svg>
+          <svg viewBox="0 0 2600 760" style="position:absolute;left:0;top:0;width:2600px;height:760px;color:var(--color-accent-700)" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M2280 300h140M2280 300v96h140v-96"></path>
+            <path d="M2280 332h140M2280 364h140" stroke-width="1.3" opacity=".8"></path>
+            <path d="M2350 396v112"></path>
+            <g stroke-width="1.8"><path d="M2422 260a76 76 0 10-144 0"></path><path d="M2278 260l-16-18M2278 260l20-12"></path></g>
+            <text x="2350" y="216" text-anchor="middle" fill="currentColor" stroke="none" style="font:700 26px 'Barlow Condensed',sans-serif;letter-spacing:.14em">FEEDBACK</text>
+          </svg>
+        </div>
+        </div>
+        </div>
+
+      <div style="position:absolute;left:0;right:0;bottom:0;height:56%;z-index:2;pointer-events:none;background:linear-gradient(to top,var(--color-neutral-100) 12%,rgba(245,245,248,.92) 34%,rgba(245,245,248,.55) 62%,rgba(245,245,248,0) 100%)"></div>
+      <div style="position:absolute;left:0;bottom:0;width:min(620px,58vw);height:70%;z-index:2;pointer-events:none;background:linear-gradient(to top right,var(--color-neutral-100) 8%,rgba(245,245,248,.88) 40%,rgba(245,245,248,0) 78%)"></div>
+      <div style="position:absolute;left:28px;bottom:36px;z-index:4;width:min(500px,44vw)">
+        <div data-panel="0" style="transition:opacity .35s,transform .35s">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:.2em;color:var(--color-accent-700);margin-bottom:6px">STATION 01</div>
+          <h3 style="font-size:34px;margin:0 0 8px">感測<span class="l-en" style="color:var(--color-accent-700)"> Sensing</span></h3>
+          <p style="margin:0 0 12px;font-size:15px;line-height:1.65;color:var(--color-neutral-800)">多感測器資訊融合，蒐集設備振動、溫度、電流與影像訊號，構成產線的第一手狀態。</p>
+          <p class="l-en" style="margin:0 0 12px;font-size:13px;line-height:1.6;color:var(--color-neutral-600)">Multi-sensor information fusion — vibration, temperature, current, and imaging signals form the line's first-hand state.</p>
+          <span class="tag tag-accent">研究方向 · 設備健康監測與預測性維修</span>
+        </div>
+        <div data-panel="1" style="transition:opacity .35s,transform .35s">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:.2em;color:var(--color-accent-700);margin-bottom:6px">STATION 02</div>
+          <h3 style="font-size:34px;margin:0 0 8px">診斷<span class="l-en" style="color:var(--color-accent-700)"> Diagnosis</span></h3>
+          <p style="margin:0 0 12px;font-size:15px;line-height:1.65;color:var(--color-neutral-800)">以注意力機制深度學習判讀晶圓圖樣與表面瑕疵，將訊號轉為可解釋的異常判斷。</p>
+          <p class="l-en" style="margin:0 0 12px;font-size:13px;line-height:1.6;color:var(--color-neutral-600)">Attention-based deep learning reads wafer bin maps and surface defects, turning signals into explainable anomaly calls.</p>
+          <span class="tag tag-accent">研究方向 · 電腦視覺與晶圓影像識別</span>
+        </div>
+        <div data-panel="2" style="transition:opacity .35s,transform .35s">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:.2em;color:var(--color-accent-700);margin-bottom:6px">STATION 03</div>
+          <h3 style="font-size:34px;margin:0 0 8px">決策<span class="l-en" style="color:var(--color-accent-700)"> Decision · AI Agent</span></h3>
+          <p style="margin:0 0 12px;font-size:15px;line-height:1.65;color:var(--color-neutral-800)">大型語言模型與知識圖譜構成 AI Agent，執行任務分解、工具調度、推理驗證與人機協作。</p>
+          <p class="l-en" style="margin:0 0 12px;font-size:13px;line-height:1.6;color:var(--color-neutral-600)">LLMs and knowledge graphs form an AI agent that decomposes tasks, orchestrates tools, verifies reasoning, and collaborates with operators.</p>
+          <span class="tag tag-accent">研究方向 · 生成式 AI 與 LLM 智慧製造應用</span>
+        </div>
+        <div data-panel="3" style="transition:opacity .35s,transform .35s">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:.2em;color:var(--color-accent-700);margin-bottom:6px">STATION 04</div>
+          <h3 style="font-size:34px;margin:0 0 8px">控制<span class="l-en" style="color:var(--color-accent-700)"> Control</span></h3>
+          <p style="margin:0 0 12px;font-size:15px;line-height:1.65;color:var(--color-neutral-800)">啟發式演算法與佇列理論動態調度產線資源，讓決策落回設備的實際動作。</p>
+          <p class="l-en" style="margin:0 0 12px;font-size:13px;line-height:1.6;color:var(--color-neutral-600)">Meta-heuristics and queueing theory dynamically schedule line resources, turning decisions back into machine motion.</p>
+          <span class="tag tag-accent">研究方向 · 系統最佳化與智慧排程</span>
+        </div>
+        <div data-panel="4" style="transition:opacity .35s,transform .35s">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:.2em;color:var(--color-accent-700);margin-bottom:6px">STATION 05</div>
+          <h3 style="font-size:34px;margin:0 0 8px">回饋<span class="l-en" style="color:var(--color-accent-700)"> Feedback</span></h3>
+          <p style="margin:0 0 12px;font-size:15px;line-height:1.65;color:var(--color-neutral-800)">結果回寫知識庫並重新訓練模型，閉環持續收斂 —— 這是整條產線的核心命題。</p>
+          <p class="l-en" style="margin:0 0 12px;font-size:13px;line-height:1.6;color:var(--color-neutral-600)">Outcomes are written back to the knowledge base and models retrain — the loop keeps converging.</p>
+          <span class="tag tag-accent">研究方向 · 先進控制與閉環智慧製造</span>
+        </div>
+      </div>
+
+      <ol id="rail" style="position:absolute;right:28px;top:50%;transform:translateY(-50%);z-index:4;margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:18px">
+        <li data-dot="0" style="display:flex;align-items:center;gap:10px;justify-content:flex-end;font-family:'Barlow Condensed','Noto Sans TC',sans-serif;font-weight:600;font-size:14px;color:var(--color-neutral-500);transition:color .3s"><span>感測</span><span data-mark style="width:11px;height:11px;border:1.5px solid var(--color-accent-500);transition:background .3s,transform .3s"></span></li>
+        <li data-dot="1" style="display:flex;align-items:center;gap:10px;justify-content:flex-end;font-family:'Barlow Condensed','Noto Sans TC',sans-serif;font-weight:600;font-size:14px;color:var(--color-neutral-500);transition:color .3s"><span>診斷</span><span data-mark style="width:11px;height:11px;border:1.5px solid var(--color-accent-500);transition:background .3s,transform .3s"></span></li>
+        <li data-dot="2" style="display:flex;align-items:center;gap:10px;justify-content:flex-end;font-family:'Barlow Condensed','Noto Sans TC',sans-serif;font-weight:600;font-size:14px;color:var(--color-neutral-500);transition:color .3s"><span>決策</span><span data-mark style="width:11px;height:11px;border:1.5px solid var(--color-accent-500);transition:background .3s,transform .3s"></span></li>
+        <li data-dot="3" style="display:flex;align-items:center;gap:10px;justify-content:flex-end;font-family:'Barlow Condensed','Noto Sans TC',sans-serif;font-weight:600;font-size:14px;color:var(--color-neutral-500);transition:color .3s"><span>控制</span><span data-mark style="width:11px;height:11px;border:1.5px solid var(--color-accent-500);transition:background .3s,transform .3s"></span></li>
+        <li data-dot="4" style="display:flex;align-items:center;gap:10px;justify-content:flex-end;font-family:'Barlow Condensed','Noto Sans TC',sans-serif;font-weight:600;font-size:14px;color:var(--color-neutral-500);transition:color .3s"><span>回饋</span><span data-mark style="width:11px;height:11px;border:1.5px solid var(--color-accent-500);transition:background .3s,transform .3s"></span></li>
+      </ol>
+
+      <div id="hintscroll" style="position:absolute;left:50%;bottom:22px;transform:translateX(-50%);z-index:4;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:11px;letter-spacing:.22em;color:var(--color-accent-700);transition:opacity .4s">↓ SCROLL</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width:1280px;margin:0 auto;padding:72px 28px">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:28px">
+      <h2 style="font-size:32px;margin:0">精選論文<span class="l-en" style="color:var(--color-accent-700)"> Featured Publications</span></h2>
+      <a href="#publications" style="font-family:'Barlow Condensed','Noto Sans TC',sans-serif;font-weight:600;font-size:15px">查看全部<span class="l-en"> View All</span> →</a>
+    </div>
+    <div id="g-feat" style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px">
+      <sc-for list="{{ featured }}" as="p" hint-placeholder-count="4">
+        <article class="blueprint" data-reveal style="position:relative;padding:22px 24px;background:transparent;transition:opacity .6s ease,transform .6s ease">
+          <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px">
+            <span class="tag tag-outline">{{ p.typeLabel }}</span>
+            <span style="font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:.12em;color:var(--color-neutral-600)">{{ p.date }}</span>
+          </div>
+          <h3 style="font-size:19px;line-height:1.25;margin:0 0 8px">{{ p.title }}</h3>
+          <p style="margin:0 0 4px;font-size:13px;color:var(--color-neutral-700)">{{ p.authorLine }}</p>
+          <p style="margin:0 0 12px;font-size:12.5px;color:var(--color-neutral-600);font-style:italic">{{ p.venue }}</p>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <sc-for list="{{ p.tagList }}" as="t" hint-placeholder-count="3"><span class="tag tag-neutral">{{ t.label }}</span></sc-for>
+          </div>
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        </article>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="border-top:1px solid var(--color-divider);background:var(--color-accent-900);color:#f2f2f3">
+    <div id="g-cta" style="max-width:1280px;margin:0 auto;padding:64px 28px;display:grid;grid-template-columns:1.2fr .8fr;gap:48px;align-items:center">
+      <div>
+        <h2 style="font-size:36px;margin:0 0 12px;color:#fff">準備好加入我們了嗎？<span class="l-en" style="opacity:.7"> Ready to Join Us?</span></h2>
+        <p style="margin:0;font-size:15px;line-height:1.7;opacity:.82;max-width:58ch">我們持續招募對 AI Agent、數位雙生與智慧製造有熱忱的研究生與專題生，歡迎與我們聯繫。</p>
+        <p class="l-en" style="margin:8px 0 0;font-size:13px;line-height:1.6;opacity:.6;max-width:62ch">We are always looking for motivated students interested in AI agents, digital twins, and smart manufacturing. Get in touch with us.</p>
+      </div>
+      <div style="display:flex;justify-content:flex-end">
+        <a href="#contact" class="blueprint btn-bp" style="position:relative;padding:15px 30px;background:#f2f2f3;color:var(--color-accent-900);font-family:'Barlow Condensed','Noto Sans TC',sans-serif;font-weight:700;font-size:17px" style-hover="background:#fff">聯絡我們<span class="l-en"> Contact Us</span><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about" style="border-top:1px solid var(--color-divider)">
+  <div style="max-width:1280px;margin:0 auto;padding:76px 28px 40px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">
+      <span style="width:34px;height:1px;background:var(--color-accent)"></span>
+      <span style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--color-accent-700)">Page 02</span>
+    </div>
+    <h2 style="font-size:44px;margin:0 0 24px">關於我們<span class="l-en" style="color:var(--color-accent-700)"> About Us</span></h2>
+    <p style="font-size:16px;line-height:1.8;max-width:78ch;color:var(--color-neutral-800);margin:0 0 14px">本實驗室整合了製程控制理論、智能設備設計與 AI 技術，致力於解決現代製造業對高精度、高效率的挑戰。並進一步導入 AI Agent（智慧代理人）概念，將大型語言模型（LLM）、最佳化與工業知識（SOP／規範／設備參數）融合為可執行的決策單元，透過任務分解、工具調度、推理驗證與人機協作，實現從「被動分析」走向「主動決策支援」的閉環式智慧製造。我們透過與業界的緊密合作，將數位雙生、流程優化與多代理協作等研究成果導入真實場域，旨在成為先進控制與智慧製造的頂尖創新中心。</p>
+    <p class="l-en" style="font-size:14px;line-height:1.75;max-width:84ch;color:var(--color-neutral-600);margin:0">Our laboratory focuses on developing AI agent applications that integrate large language models (LLMs), optimization methods, and industrial information systems to enable autonomous decision-making and collaborative problem solving. Our research encompasses agent architectures, multi-agent coordination, task planning, tool integration, and human–AI collaboration, with applications in intelligent scheduling, defect detection, predictive maintenance, and knowledge-based management using real-time data from MES, ERP, PLM, and IoT platforms.</p>
+  </div>
+
+  <div style="max-width:1280px;margin:0 auto;padding:24px 28px 84px">
+    <h3 style="font-size:32px;margin:0">核心技術與應用<span class="l-en" style="color:var(--color-accent-700)"> Core Techniques &amp; Applications</span></h3>
+    <div style="display:flex;align-items:center;gap:12px;margin:18px 0 0">
+      <span style="font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:11px;letter-spacing:.18em;color:var(--color-neutral-600)">機械爪定位 · 滑鼠移入翻面 · 技術 ⇄ 應用</span>
+      <span style="flex:1;height:1px;background:var(--color-divider)"></span>
+    </div>
+
+    <div style="position:relative;height:54px;margin-top:14px">
+      <div style="position:absolute;left:0;right:0;top:16px;border-top:2px solid var(--color-accent-500)"></div>
+      <div style="position:absolute;left:0;top:10px;width:2px;height:14px;background:var(--color-accent-500)"></div>
+      <div style="position:absolute;right:0;top:10px;width:2px;height:14px;background:var(--color-accent-500)"></div>
+      <div id="claw" style="position:absolute;top:14px;left:12.5%;transform:translateX(-50%);transition:left .5s cubic-bezier(.4,0,.2,1)">
+        <svg viewBox="0 0 60 40" style="width:56px;height:38px;color:var(--color-accent-700)" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="18" y="2" width="24" height="12"></rect>
+          <path d="M22 14l-8 20M38 14l8 20" stroke-width="2.4"></path>
+        </svg>
+      </div>
+    </div>
+
+    <div id="techgrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px" data-g="tech">
+      <sc-for list="{{ techCards }}" as="c" hint-placeholder-count="4">
+        <div data-card style="position:relative;height:470px;perspective:1400px">
+          <div data-inner style="position:absolute;inset:0;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.4,0,.2,1)">
+            <div class="blueprint" style="position:absolute;inset:0;backface-visibility:hidden;transform:translateZ(2px);padding:22px 20px;background:transparent;display:flex;flex-direction:column;overflow:hidden">
+              <span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;background:var(--color-accent);color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:17px;flex:none">{{ c.n }}</span>
+              <h4 style="font-size:20px;line-height:1.2;margin:16px 0 4px">{{ c.titleZh }}</h4>
+              <p style="margin:0 0 16px;font-size:12px;line-height:1.45;color:var(--color-accent-700)">{{ c.titleEn }}</p>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:.16em;color:var(--color-neutral-600);margin-bottom:10px">核心技術與方法 / CORE TECHNIQUES</div>
+              <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px">
+                <sc-for list="{{ c.techniques }}" as="t" hint-placeholder-count="4">
+                  <li style="display:flex;gap:8px;font-size:13.5px;line-height:1.45;color:var(--color-neutral-800)"><span style="color:var(--color-accent);flex:none">—</span><span>{{ t }}</span></li>
+                </sc-for>
+              </ul>
+              <div style="margin-top:auto;padding-top:14px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.14em;color:var(--color-accent-700)">↻ 翻面看應用</div>
+              <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+            </div>
+            <div class="blueprint" style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(180deg);padding:22px 20px;background:var(--color-accent-900);color:#f2f2f3;display:flex;flex-direction:column;overflow:hidden">
+              <span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border:1px solid rgba(242,242,243,.45);color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:17px;flex:none">{{ c.n }}</span>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:.16em;opacity:.65;margin:16px 0 12px">關鍵應用與效益 / KEY APPLICATIONS</div>
+              <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:14px">
+                <sc-for list="{{ c.applications }}" as="a" hint-placeholder-count="3">
+                  <li style="font-size:14px;line-height:1.5">{{ a }}</li>
+                </sc-for>
+              </ul>
+              <div style="margin-top:auto;padding-top:14px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.14em;opacity:.6">{{ c.titleEn }}</div>
+              <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="display:flex;gap:28px;margin-top:44px">
+      <a href="#publications" style="font-family:'Barlow Condensed','Noto Sans TC',sans-serif;font-weight:600;font-size:15px">查看完整論文列表 →</a>
+      <a href="#team" style="font-family:'Barlow Condensed','Noto Sans TC',sans-serif;font-weight:600;font-size:15px">認識我們的團隊 →</a>
+    </div>
+  </div>
+</section>
+
+<section id="publications" style="border-top:1px solid var(--color-divider);background:var(--color-neutral-100)">
+  <div style="max-width:1280px;margin:0 auto;padding:76px 28px 90px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">
+      <span style="width:34px;height:1px;background:var(--color-accent)"></span>
+      <span style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--color-accent-700)">Page 03</span>
+    </div>
+    <h2 style="font-size:44px;margin:0 0 18px">研究成果<span class="l-en" style="color:var(--color-accent-700)"> Publications</span></h2>
+    <p style="font-size:16px;line-height:1.75;margin:0 0 6px;max-width:100%;color:var(--color-neutral-800)">實驗室歷年發表之期刊與研討會論文，可切換「清單模式」瀏覽完整內容，或透過「關聯圖」探索論文之間共享的研究方法、主題與技術。</p>
+    <p class="l-en" style="font-size:14px;line-height:1.7;margin:0;color:var(--color-neutral-600)">Journal and conference publications from our lab. Switch to List Mode for the full text-based view, or Graph View to explore how papers connect through shared methods, topics, and technologies.</p>
+
+    <div class="seg" style="margin-top:28px">
+      <button type="button" class="seg-opt" onClick="{{ setList }}" style="cursor:pointer;background: {{ listBg }};color: {{ listFg }}">清單模式<span class="l-en"> List</span></button>
+      <button type="button" class="seg-opt" onClick="{{ setGraph }}" style="cursor:pointer;background: {{ graphBg }};color: {{ graphFg }}">關聯圖<span class="l-en"> Graph</span></button>
+    </div>
+
+    <div class="blueprint" style="position:relative;margin-top:20px;padding:18px 20px;background:transparent">
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:18px">
+        <label style="display:flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-600)">類別 Type
+          <select class="input" onChange="{{ onType }}" style="width:auto;padding:6px 10px;font-size:13px">
+            <option value="all">全部 All</option><option value="journal">期刊 Journal</option><option value="conference">研討會 Conference</option><option value="other">其他 Other</option>
+          </select>
+        </label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-600)">每頁 Per page
+          <select class="input" onChange="{{ onPerPage }}" style="width:auto;padding:6px 10px;font-size:13px">
+            <option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="9999">全部 All</option>
+          </select>
+        </label>
+        <button type="button" class="btn btn-secondary" onClick="{{ toggleSort }}" style="font-size:13px">{{ sortLabel }}</button>
+        <button type="button" class="btn btn-ghost" onClick="{{ resetAll }}" style="font-size:13px">清除篩選 Clear</button>
+        <span style="margin-left:auto;font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:.1em;color:var(--color-neutral-600)">{{ countLabel }}</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:14px">
+        <sc-for list="{{ chips }}" as="c" hint-placeholder-count="12">
+          <button type="button" onClick="{{ c.onClick }}" style="cursor:pointer;border:1px solid var(--color-accent-300);padding:4px 11px;font-size:12px;background: {{ c.bg }};color: {{ c.fg }}">{{ c.label }}</button>
+        </sc-for>
+      </div>
+      <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+    </div>
+
+    <sc-if value="{{ isList }}" hint-placeholder-val="{{ true }}">
+      <div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px;margin-top:24px;align-items:start">
+          <sc-for list="{{ pagePapers }}" as="p" hint-placeholder-count="10">
+            <article class="blueprint" data-reveal style="position:relative;padding:20px 22px;background:var(--color-bg);transition:opacity .6s ease,transform .6s ease">
+              <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px">
+                <span class="tag tag-outline">{{ p.typeLabel }}</span>
+                <span style="font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:.12em;color:var(--color-neutral-600)">{{ p.date }}</span>
+              </div>
+              <h3 style="font-size:17px;line-height:1.3;margin:0 0 8px">{{ p.title }}</h3>
+              <p style="margin:0 0 4px;font-size:13px;color:var(--color-neutral-700)">{{ p.authorLine }}</p>
+              <p style="margin:0 0 12px;font-size:12.5px;color:var(--color-neutral-600);font-style:italic">{{ p.venue }}</p>
+              <div style="display:flex;flex-wrap:wrap;gap:6px">
+                <sc-for list="{{ p.tagList }}" as="t" hint-placeholder-count="3"><span class="tag tag-neutral">{{ t.label }}</span></sc-for>
+              </div>
+              <a href="{{ p.doi }}" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:14px;font-family:'Barlow Condensed','Noto Sans TC',sans-serif;font-weight:600;font-size:14px">查看論文 View Paper →</a>
+              <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+            </article>
+          </sc-for>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:34px">
+          <button type="button" class="btn btn-secondary" onClick="{{ prevPage }}" style="font-size:13px">← 上一頁</button>
+          <sc-for list="{{ pageBtns }}" as="b" hint-placeholder-count="2">
+            <button type="button" onClick="{{ b.onClick }}" style="cursor:pointer;min-width:34px;padding:7px 9px;border:1px solid var(--color-accent-300);font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:14px;background: {{ b.bg }};color: {{ b.fg }}">{{ b.n }}</button>
+          </sc-for>
+          <button type="button" class="btn btn-secondary" onClick="{{ nextPage }}" style="font-size:13px">下一頁 →</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isGraph }}" hint-placeholder-val="{{ false }}">
+      <div id="g-graph" style="display:grid;grid-template-columns:1fr 336px;gap:18px;margin-top:24px;align-items:start">
+        <div class="blueprint" style="position:relative;background:var(--color-bg);overflow:hidden">
+          <div style="display:flex;align-items:center;gap:14px;padding:14px 18px;border-bottom:1px solid var(--color-divider);flex-wrap:wrap">
+            <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:.18em;color:var(--color-accent-700)">FIG. 02 — 研究領域共現圖</span>
+            <div style="display:flex;gap:14px;margin-left:auto;align-items:center;flex-wrap:wrap">
+              <sc-for list="{{ legendCats }}" as="g" hint-placeholder-count="4">
+                <span style="display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--color-neutral-700)"><span style="width:10px;height:10px;border-radius:50%;background: {{ g.color }}"></span>{{ g.label }}</span>
+              </sc-for>
+            </div>
+          </div>
+          <svg id="graphsvg" viewBox="0 0 900 620" style="display:block;width:100%;height:620px;touch-action:none;cursor:grab">
+            <g transform="{{ gTransform }}">
+              <sc-for list="{{ edges }}" as="e" hint-placeholder-count="30">
+                <line x1="{{ e.x1 }}" y1="{{ e.y1 }}" x2="{{ e.x2 }}" y2="{{ e.y2 }}" stroke="{{ e.stroke }}" stroke-width="{{ e.w }}"></line>
+              </sc-for>
+              <sc-for list="{{ nodes }}" as="n" hint-placeholder-count="20">
+                <g data-node="{{ n.slug }}" onClick="{{ n.onClick }}" style="cursor:pointer">
+                  <circle cx="{{ n.x }}" cy="{{ n.y }}" r="{{ n.r }}" fill="{{ n.fill }}" stroke="{{ n.stroke }}" stroke-width="{{ n.sw }}"></circle>
+                </g>
+              </sc-for>
+              {{ labelLayer }}
+            </g>
+          </svg>
+          <div style="display:flex;align-items:center;gap:16px;padding:12px 18px;border-top:1px solid var(--color-divider);flex-wrap:wrap">
+            <span style="display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--color-neutral-700)">
+              <svg viewBox="0 0 78 28" style="width:78px;height:28px" fill="none" stroke="var(--color-accent-500)"><circle cx="9" cy="14" r="6"></circle><circle cx="32" cy="14" r="10"></circle><circle cx="61" cy="14" r="13"></circle></svg>
+              節點大小 = 該領域論文數
+            </span>
+            <span style="display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--color-neutral-700)"><span style="width:26px;border-top:3px solid var(--color-accent-400)"></span>連線粗細 = 共同出現篇數</span>
+            <span style="display:flex;gap:8px;margin-left:auto">
+              <button type="button" class="btn btn-secondary" onClick="{{ zoomOut }}" style="font-size:14px;min-width:34px">−</button>
+              <button type="button" class="btn btn-secondary" onClick="{{ zoomIn }}" style="font-size:14px;min-width:34px">＋</button>
+              <button type="button" class="btn btn-secondary" onClick="{{ resetView }}" style="font-size:13px">重置 Reset</button>
+            </span>
+          </div>
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        </div>
+
+        <aside class="blueprint" style="position:relative;background:var(--color-bg);padding:20px;max-height:756px;overflow:auto">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:.18em;color:var(--color-accent-700);margin-bottom:10px">SELECTED FIELD</div>
+          <h4 style="font-size:24px;margin:0 0 2px">{{ selTitle }}</h4>
+          <p style="margin:0 0 14px;font-size:12.5px;color:var(--color-neutral-600)">{{ selSub }}</p>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ selPapers }}" as="p" hint-placeholder-count="4">
+              <div style="border-top:1px solid var(--color-divider);padding-top:11px">
+                <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:.1em;color:var(--color-accent-700);margin-bottom:3px">{{ p.date }} · {{ p.venue }}</div>
+                <p style="margin:0;font-size:13.5px;line-height:1.4">{{ p.title }}</p>
+              </div>
+            </sc-for>
+          </div>
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        </aside>
+      </div>
+    </sc-if>
+  </div>
+</section>
+
+<footer id="contact" style="border-top:1px solid var(--color-divider);background:var(--color-bg)">
+  <div id="g-foot" style="max-width:1280px;margin:0 auto;padding:56px 28px;display:grid;grid-template-columns:1.3fr .7fr;gap:48px">
+    <div>
+      <h3 style="font-size:24px;margin:0 0 12px">先進製程與設備智能輔助實驗室</h3>
+      <p style="margin:0 0 4px;font-size:14px;color:var(--color-neutral-700)">235307 新北市中和區工專路111號 臺灣科技大學 華夏校區教學大樓2樓C219</p>
+      <p style="margin:0;font-size:13px;color:var(--color-neutral-600)">General Education Building 2F C2, No. 111, Gongzhuan Rd., Zhonghe Dist., New Taipei City 235307, Taiwan</p>
+    </div>
+    <div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:.18em;color:var(--color-accent-700);margin-bottom:8px">EMAIL</div>
+      <a href="mailto:zaira4edu@gmail.com" style="font-size:15px">zaira4edu@gmail.com</a>
+      <p style="margin:18px 0 0;font-size:12px;color:var(--color-neutral-500)">聯絡我們（地圖／交通分頁）、指導教授、團隊成員頁面於下一輪製作</p>
+    </div>
+  </div>
+</footer>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440},&quot;graphMinPapers&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:1,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:1,&quot;max&quot;:4,&quot;step&quot;:1,&quot;unit&quot;:&quot;篇&quot;,&quot;section&quot;:&quot;關聯圖 Graph&quot;}}">
+const TAGS={'smart-manufacturing':['智慧製造','Smart Manufacturing','domain'],'defect-detection':['瑕疵檢測','Defect Detection','domain'],'predictive-maintenance':['預測性維修','Predictive Maintenance','domain'],'equipment-health-monitoring':['設備健康監測','Equipment Health Monitoring','domain'],'digital-twin':['數位雙生','Digital Twin','domain'],'plant-biology':['植物生物學','Plant Biology','domain'],'deep-learning':['深度學習','Deep Learning','method'],'machine-learning':['機器學習','Machine Learning','method'],'optimization':['最佳化','Optimization','method'],'attention-mechanism':['注意力機制','Attention Mechanism','method'],'knowledge-distillation':['知識蒸餾','Knowledge Distillation','method'],'meta-heuristics':['啟發式演算法','Meta-heuristics','method'],'single-cell-genomics':['單細胞基因體學','Single-Cell Genomics','method'],'ai-agent':['AI Agent','AI Agent','topic'],'scheduling':['排程','Scheduling','topic'],'anomaly-detection':['異常偵測','Anomaly Detection','topic'],'llm':['大型語言模型','LLM','topic'],'rag':['檢索增強生成','RAG','topic'],'generative-ai':['生成式 AI','Generative AI','topic'],'yolo':['YOLO','YOLO','tech'],'knowledge-graph':['知識圖譜','Knowledge Graph','tech'],'multi-agent-system':['多代理系統','Multi-Agent System','tech'],'gan':['生成對抗網路','GAN','tech'],'image-recognition':['影像識別','Image Recognition','tech'],'web-development':['網頁設計','Web Development','tech'],'database-management':['資料庫管理','Database Management','tech'],'spatial-transcriptomics':['空間轉錄體學','Spatial Transcriptomics','tech']};
+
+const CAT={domain:{label:'研究領域 Domain',color:'#2c455d'},method:{label:'研究方法 Method',color:'#5980a6'},topic:{label:'主題 Topic',color:'#94bce3'},tech:{label:'技術 Tech',color:'#7a7a7d'}};
+const CAT_ORDER=['domain','method','topic','tech'];
+
+const PAPERS=[
+{t:'A closed-loop cGAN-based framework for surface defect detection in industrial LPG rubber hoses',a:['Dang, Jr-Fong','Tzu-Li Chen','Bing-Yi Lin'],y:2026,m:8,v:'International Journal of Advanced Manufacturing Technology',ty:'journal',f:true,doi:'',g:['defect-detection','smart-manufacturing','deep-learning','anomaly-detection','gan']},
+{t:'Intelligent defect-detection framework integrating a modified YOLO algorithm, a domain knowledge graph, and RAG-enabled large language model',a:['Dang, Jr-Fong','Li-Na Wang','Tzu-Li Chen'],y:2026,m:4,v:'Advanced Engineering Informatics',ty:'journal',f:true,doi:'',g:['defect-detection','smart-manufacturing','deep-learning','llm','rag','yolo','knowledge-graph']},
+{t:'The intelligent wafer bin map pattern recognition framework integrating attention-based deep learning network with information fusion',a:['Dang, Jr-Fong','Cheng-Chien Wu'],y:2026,m:3,v:'International Journal of Pattern Recognition and Artificial Intelligence',ty:'journal',f:true,doi:'https://www.worldscientific.com/doi/abs/10.1142/S0218001426500230',g:['defect-detection','smart-manufacturing','deep-learning','attention-mechanism','anomaly-detection','image-recognition']},
+{t:'From product specifications to smart manufacturing: Generative AI-driven process innovation for BOM digitization and its applications',a:['Lin, Yu-Chi','Jr-Fong Dang'],y:2026,m:2,v:'Advanced Engineering Informatics',ty:'journal',f:false,doi:'https://www.sciencedirect.com/science/article/pii/S1474034626001436',g:['smart-manufacturing','deep-learning','generative-ai','llm','rag']},
+{t:'Thick walls, hidden stories: Integrating scRNA-seq and snRNA-seq with spatial transcriptomics to complete the xylem puzzle',a:['Wei, Mingke','Jo-Wei Allison Hsieh','Jr-Fong Dang','Botong Tong','Hui Li','Ronald Sederof','Ying-Chung Jimmy Lin','Quanzi Li'],y:2026,m:2,v:'Genome Biology',ty:'journal',f:false,doi:'https://link.springer.com/article/10.1186/s13059-026-04007-z',g:['plant-biology','single-cell-genomics','spatial-transcriptomics']},
+{t:'Fulfilling a smart scheduling system prototype based on an Industry 4.0 framework: A case study',a:['Chen, Ping-Shun','Jr-Fong Dang','Yu-Chieh Chuang','Dah-Chuan Gong'],y:2025,m:11,v:'Journal of the Chinese Institute of Engineers',ty:'journal',f:false,doi:'https://www.tandfonline.com/doi/full/10.1080/02533839.2026.2626274',g:['smart-manufacturing','optimization','scheduling']},
+{t:'Single cell and spatial multi-omics reveal mechanical stress driving heterogeneous xylem development in populus',a:['Hsieh, J.-W. A.','P.-C. Liou','C.-C. Lin','X. Dai','C.-W. Hu','I-F. Wang','J.-F. Dang','Y.-C. Ho','K.-W. Cheng','W. Xu'],y:2025,m:6,v:'Developmental Cell',ty:'journal',f:false,doi:'https://www.cell.com/developmental-cell/abstract/S1534-5807(25)00436-8',g:['plant-biology','single-cell-genomics','spatial-transcriptomics']},
+{t:'The human-centric framework integrating knowledge distillation architecture with fine-tuning mechanism for equipment health monitoring',a:['Dang, Jr-Fong','Tzu-Li Chen','Hung-Yi Huang'],y:2025,m:1,v:'Advanced Engineering Informatics',ty:'journal',f:true,doi:'https://www.sciencedirect.com/science/article/pii/S1474034625000606',g:['equipment-health-monitoring','smart-manufacturing','deep-learning','knowledge-distillation']},
+{t:'Constructing modified variable neighborhood search approaches to solve a nurse scheduling problem',a:['Chen, Ping-Shun','Wen-Tso Huang','Gary Yu-Hsin Chen','Jr-Fong Dang','Erh-Chun Yeh'],y:2024,m:5,v:'International Journal of Production Research',ty:'journal',f:false,doi:'https://www.tandfonline.com/doi/abs/10.1080/00207543.2024.2320707',g:['meta-heuristics','optimization','scheduling']},
+{t:'The multisensor information fusion-based deep learning model for equipment health monitor integrating subject matter expert knowledge',a:['Dang, Jr-Fong'],y:2024,m:3,v:'Journal of Intelligent Manufacturing',ty:'journal',f:false,doi:'https://link.springer.com/article/10.1007/s10845-024-02338-x',g:['equipment-health-monitoring','smart-manufacturing','deep-learning']},
+{t:'The deep learning-based equipment health monitoring model adopting subject matter expert',a:['Dang, Jr-Fong'],y:2024,m:1,v:'International Journal of Computer Integrated Manufacturing',ty:'journal',f:false,doi:'https://www.tandfonline.com/doi/abs/10.1080/0951192X.2023.2257665',g:['equipment-health-monitoring','smart-manufacturing','deep-learning']},
+{t:'Optimal analysis of a multi-server queue with preprocessing time and replenishment inventory',a:['Wu, Chia-Huang','Wen-Tso Huang','Jr-Fong Dang','Ming-Yang Yeh'],y:2024,m:1,v:'Journal of the Chinese Institute of Engineers',ty:'journal',f:false,doi:'https://www.tandfonline.com/doi/full/10.1080/02533839.2023.2274089',g:['optimization']},
+{t:'Using simplified drum-buffer-rope method for identifying bottleneck ports in the north American line',a:['Huang, Wen-Tso','Jr-Fong Dang','Tzu-Yun Chang'],y:2023,m:9,v:'Journal of Technology',ty:'journal',f:false,doi:'https://www.airitilibrary.com/Article/Detail/10123407-N202309220008-00004',g:['optimization','scheduling']},
+{t:'The dynamic flow shop scheduling problem with JIT philosophy and common due-date',a:['Huang, Wen-Tso','Ping-Shun Chen','Gary Yu-Hsin Chen','Jr-Fong Dang'],y:2022,m:12,v:'Mathematical Problems in Engineering',ty:'journal',f:false,doi:'https://onlinelibrary.wiley.com/doi/full/10.1155/2022/9970988',g:['smart-manufacturing','optimization','scheduling']},
+{t:'Applying meta-heuristics algorithm to solve assembly line balancing problem with labor skill level in garment industry',a:['Chen, Gary Yu-Hsin','Ping-Shun Chen','Jr-Fong Dang','Sung-Lien Kang','Li-Jen Cheng'],y:2021,m:4,v:'International Journal of Computational Intelligence Systems',ty:'journal',f:false,doi:'https://www.atlantis-press.com/journals/ijcis/125955859',g:['smart-manufacturing','meta-heuristics','optimization','scheduling']},
+{t:'The equilibrium contract rent and reward money under incomplete information in reverse supply chains: A game theoretical approach and computational study',a:['Hong, I-Husan','Jr-Fong Dang','Kuan-Wen Lin'],y:2016,m:12,v:'Computers & Industrial Engineering',ty:'journal',f:false,doi:'https://www.sciencedirect.com/science/article/pii/S0360835216303710',g:['optimization']}];
+
+const TECH=[
+{n:'1',titleZh:'生成式 AI 與 LLM 智慧製造應用',titleEn:'Generative AI & LLM Applications in Smart Manufacturing',techniques:['大型語言模型（LLM）','RAG 檢索增強生成','知識圖譜（Knowledge Graph）','改進型 YOLO / cGAN 生成模型'],applications:['結合 SME 領域知識進行智慧瑕疵檢測','自動將規格書轉化為 BOM 數位化','具任務分解與人機協作能力之 AI Agent']},
+{n:'2',titleZh:'設備健康監測與預測性維修（EHM & PdM）',titleEn:'Equipment Health Monitoring & Predictive Maintenance',techniques:['多感測器資訊融合','知識蒸餾（Knowledge Distillation）','微調（Fine-tuning）機制','閉環式條件生成對抗網路'],applications:['即時設備狀態監控與異常診測','以人為本（human-centric）輕量化模型落地','工業組件（如 LPG 軟管）表面瑕疵辨識']},
+{n:'3',titleZh:'電腦視覺與晶圓影像識別',titleEn:'Computer Vision & Wafer Image Recognition',techniques:['注意力機制深度學習（Attention-based DL）','巨量資料與影像資訊融合','自動化影像處理演算法'],applications:['高精確度晶圓圖樣（Wafer Bin Map）識別','複雜生產線之產品品質分類與智慧監控']},
+{n:'4',titleZh:'系統最佳化與智慧排程',titleEn:'System Optimization & Smart Scheduling',techniques:['變異鄰域搜尋法（VNS）/ 超啟發式演算法','佇列理論與動態排程','賽局理論與合約模型'],applications:['工業 4.0 智慧排程與動態流程車間','複雜資源排班（如護理排班）與裝配線平衡','供應鏈庫存、租約與服務系統最佳化']}];
+
+const TYPE_LABEL={journal:'期刊 Journal',conference:'研討會 Conference',other:'其他 Other'};
+const STATION_X=[260,780,1300,1820,2350];
+const pad=n=>String(n).padStart(2,'0');
+
+function fmt(p){
+  const shown=p.a.length>6?p.a.slice(0,3):p.a;
+  const extra=p.a.length-shown.length;
+  return {
+    title:p.t, venue:p.v, date:p.y+'/'+pad(p.m), typeLabel:TYPE_LABEL[p.ty]||p.ty,
+    authorLine:shown.join('、')+(extra>0?' 等 '+extra+' 位 et al.':''),
+    doi:p.doi||'#',
+    tagList:p.g.map(s=>({label:(TAGS[s]||[s,s,'tech'])[0]}))
+  };
+}
+
+class Component extends DCLogic {
+  state={view:'list',type:'all',tag:null,perPage:10,page:1,asc:false,nodes:[],sel:null,zoom:1,px:0,py:0};
+
+  componentDidMount(){
+    document.documentElement.dataset.lang='zh';
+    this.buildGraph();
+    this.wireScroll();
+    this.wireGantry();
+    this.wireReveal();
+    requestAnimationFrame(()=>this.wireGraphInput());
+  }
+  componentDidUpdate(){ this.wireReveal(); this.wireGraphInput(); this.wireScroll(); }
+
+  toggleLang=()=>{const d=document.documentElement;d.dataset.lang=d.dataset.lang==='en'?'zh':'en';};
+
+  /* ---- graph: keyword co-occurrence (VOSviewer-style) ---- */
+  buildGraph(){
+    const counts={},co={};
+    PAPERS.forEach(p=>{
+      p.g.forEach(s=>{counts[s]=(counts[s]||0)+1;});
+      for(let i=0;i<p.g.length;i++)for(let j=i+1;j<p.g.length;j++){
+        const k=[p.g[i],p.g[j]].sort().join('|'); co[k]=(co[k]||0)+1;
+      }
+    });
+    const min=this.props.graphMinPapers??1;
+    const slugs=Object.keys(counts).filter(s=>counts[s]>=min);
+    const W=900,H=620,N=slugs.length;
+    const nodes=slugs.map((s,i)=>{
+      const ang=(i/N)*Math.PI*2;
+      return {slug:s,count:counts[s],x:W/2+Math.cos(ang)*210,y:H/2+Math.sin(ang)*180,vx:0,vy:0};
+    });
+    const byId={}; nodes.forEach(n=>{byId[n.slug]=n;});
+    const edges=Object.keys(co).filter(k=>{const p=k.split('|');return byId[p[0]]&&byId[p[1]];})
+      .map(k=>{const p=k.split('|');return {a:p[0],b:p[1],w:co[k]};});
+    for(let it=0;it<700;it++){
+      const cool=1-it/700;
+      nodes.forEach(a=>{
+        nodes.forEach(b=>{
+          if(a===b)return;
+          const dx=a.x-b.x,dy=a.y-b.y,d2=Math.max(dx*dx+dy*dy,25),d=Math.sqrt(d2);
+          const rep=34000/d2;
+          a.vx+=dx/d*rep; a.vy+=dy/d*rep;
+        });
+        a.vx+=(W/2-a.x)*0.014; a.vy+=(H/2-a.y)*0.014;
+      });
+      edges.forEach(e=>{
+        const a=byId[e.a],b=byId[e.b];
+        const dx=b.x-a.x,dy=b.y-a.y,d=Math.max(Math.sqrt(dx*dx+dy*dy),0.5);
+        const target=160-Math.min(e.w,5)*16;
+        const f=(d-target)*0.022*Math.min(e.w,4);
+        a.vx+=dx/d*f; a.vy+=dy/d*f; b.vx-=dx/d*f; b.vy-=dy/d*f;
+      });
+      nodes.forEach(n=>{
+        n.x+=Math.max(-16,Math.min(16,n.vx))*cool*0.5;
+        n.y+=Math.max(-16,Math.min(16,n.vy))*cool*0.5;
+        n.vx*=0.5; n.vy*=0.5;
+        n.x=Math.max(72,Math.min(W-72,n.x)); n.y=Math.max(58,Math.min(H-42,n.y));
+      });
+    }
+    this._edges=edges;
+    this._home=nodes.map(n=>({slug:n.slug,x:n.x,y:n.y}));
+    const top=nodes.slice().sort((a,b)=>b.count-a.count)[0];
+    this.setState({nodes,sel:top?top.slug:null});
+  }
+
+  wireGraphInput(){
+    const svg=document.getElementById('graphsvg');
+    if(!svg||svg.__wired)return; svg.__wired=true;
+    let drag=null,pan=null;
+    const pt=e=>{const r=svg.getBoundingClientRect();return{x:(e.clientX-r.left)/r.width*900,y:(e.clientY-r.top)/r.height*620};};
+    svg.addEventListener('pointerdown',e=>{
+      const g=e.target.closest&&e.target.closest('[data-node]');
+      if(g){drag=g.getAttribute('data-node');}
+      else{pan={cx:e.clientX,cy:e.clientY,px:this.state.px,py:this.state.py};svg.style.cursor='grabbing';}
+      try{svg.setPointerCapture(e.pointerId);}catch(_){}
+    });
+    svg.addEventListener('pointermove',e=>{
+      if(drag){
+        const p=pt(e),z=this.state.zoom;
+        this.setState({nodes:this.state.nodes.map(n=>n.slug===drag?Object.assign({},n,{x:(p.x-this.state.px)/z,y:(p.y-this.state.py)/z}):n)});
+      }else if(pan){
+        const r=svg.getBoundingClientRect();
+        this.setState({px:pan.px+(e.clientX-pan.cx)/r.width*900,py:pan.py+(e.clientY-pan.cy)/r.height*620});
+      }
+    });
+    svg.addEventListener('pointerup',()=>{drag=null;pan=null;svg.style.cursor='grab';});
+    svg.addEventListener('wheel',e=>{
+      e.preventDefault();
+      this.setState({zoom:Math.max(0.5,Math.min(2.6,this.state.zoom*(e.deltaY<0?1.12:0.89)))});
+    },{passive:false});
+  }
+
+  /* ---- home: scroll-driven 2D -> 3D walk down the line ---- */
+  wireScroll(){
+    if(window.__lineTimer)clearInterval(window.__lineTimer);
+    if(window.__lineOff)window.__lineOff();
+    let last=-1,lastProg=-1;
+    const ease=t=>t*t*(3-2*t);
+    const tick=()=>{
+      const wrap=document.getElementById('scrollwrap');
+      if(!wrap)return;
+      const cam=document.getElementById('cam');
+      const vm=document.getElementById('viewmode');
+      const hint=document.getElementById('hintscroll');
+      const panels=Array.from(document.querySelectorAll('[data-panel]'));
+      const dots=Array.from(document.querySelectorAll('[data-dot]'));
+      const groups=Array.from(document.querySelectorAll('[data-stw]'));
+      if(!cam)return;
+      const r=wrap.getBoundingClientRect();
+      const vh=window.innerHeight||800;
+      const total=Math.max(1,wrap.offsetHeight-vh);
+      const prog=Math.max(0,Math.min(1,-r.top/total));
+      if(Math.abs(prog-lastProg)<0.0004&&last>=0)return;
+      lastProg=prog;
+      const tilt=ease(Math.min(1,prog/0.16));
+      const seg=1/STATION_X.length;
+      const raw=Math.min(STATION_X.length-0.0001,prog/seg);
+      const idx=Math.min(4,Math.floor(raw));
+      const frac=ease(Math.max(0,Math.min(1,((raw-idx)-0.58)/0.38)));
+      const cx=STATION_X[idx]+(STATION_X[Math.min(idx+1,4)]-STATION_X[idx])*frac;
+      const scale=1+tilt*0.1;
+      cam.style.transform='rotateX('+(tilt*48).toFixed(2)+'deg) rotateZ('+(tilt*-1.2).toFixed(2)+'deg) scale('+scale.toFixed(3)+')';
+      const track=document.getElementById('track');
+      if(track)track.style.transform='translateX('+(1300-cx).toFixed(1)+'px)';
+      groups.forEach((g,i)=>{
+        const on=i===idx;
+        g.style.opacity=on?'1':'0.2';
+        g.style.transform=on
+          ? 'rotateX('+(tilt*-48).toFixed(2)+'deg) translateZ('+(tilt*52).toFixed(1)+'px) scale('+(1+tilt*0.06).toFixed(3)+')'
+          : 'none';
+        const g1=g.children[0],g2=g.children[1];
+        if(g1)g1.style.opacity=on?(tilt*0.5).toFixed(2):'0';
+        if(g2)g2.style.opacity=on?(tilt*0.75).toFixed(2):'0';
+      });
+      if(vm)vm.textContent=tilt>0.5?'3D ISOMETRIC VIEW':'2D PLAN VIEW';
+      if(hint)hint.style.opacity=prog>0.03?'0':'1';
+      if(idx!==last){
+        last=idx;
+        panels.forEach((p,i)=>{
+          const on=i===idx;
+          p.style.opacity=on?'1':'0';
+          p.style.transform=on?'none':'translateY(14px)';
+          p.style.position=on?'relative':'absolute';
+          p.style.pointerEvents=on?'auto':'none';
+          p.style.bottom=on?'auto':'0';
+        });
+        dots.forEach((d,i)=>{
+          const on=i===idx;
+          d.style.color=on?'var(--color-accent-900)':'var(--color-neutral-500)';
+          const m=d.querySelector('[data-mark]');
+          if(m){m.style.background=on?'var(--color-accent)':'transparent';m.style.transform=on?'scale(1.35)':'none';}
+        });
+      }
+    };
+    const req=()=>{ try{tick();}catch(err){console.error('line-anim',err);} };
+    const targets=[window,document,document.scrollingElement,document.documentElement,document.body];
+    let node=document.getElementById('scrollwrap');
+    while(node&&node!==document.body){ if(node.scrollHeight>node.clientHeight+8)targets.push(node); node=node.parentElement; }
+    const seen=[];
+    targets.forEach(t=>{ if(!t||seen.indexOf(t)>=0)return; seen.push(t); t.addEventListener('scroll',req,{passive:true,capture:true}); });
+    window.addEventListener('resize',req);
+    window.addEventListener('wheel',req,{passive:true});
+    window.addEventListener('touchmove',req,{passive:true});
+    window.__lineOff=()=>{ seen.forEach(t=>t.removeEventListener('scroll',req,{capture:true})); };
+    window.__lineTimer=setInterval(req,80);
+    req();
+  }
+
+  /* ---- about: gantry claw + card flip ---- */
+  wireGantry(){
+    const grid=document.getElementById('techgrid');
+    if(!grid||grid.__wired)return;
+    const cards=Array.from(grid.querySelectorAll('[data-card]'));
+    if(!cards.length){requestAnimationFrame(()=>this.wireGantry());return;}
+    grid.__wired=true;
+    const claw=document.getElementById('claw');
+    cards.forEach((c,i)=>{
+      const inner=c.querySelector('[data-inner]');
+      const enter=()=>{
+        if(claw)claw.style.left=(12.5+i*25)+'%';
+        if(inner)inner.style.transform='rotateY(180deg)';
+      };
+      const leave=()=>{ if(inner)inner.style.transform='none'; };
+      c.addEventListener('mouseenter',enter);
+      c.addEventListener('mouseleave',leave);
+      c.addEventListener('focusin',enter);
+    });
+  }
+
+  wireReveal(){
+    const els=Array.from(document.querySelectorAll('[data-reveal]')).filter(e=>!e.__rev);
+    if(!els.length)return;
+    if(!this._io){
+      this._io=new IntersectionObserver(ents=>{
+        ents.forEach(en=>{ if(en.isIntersecting){en.target.classList.add('shown');this._io.unobserve(en.target);} });
+      },{rootMargin:'0px 0px -8% 0px',threshold:0.08});
+    }
+    els.forEach((e,i)=>{e.__rev=true;e.style.transitionDelay=(i%6)*60+'ms';this._io.observe(e);});
+  }
+
+  /* ---- handlers ---- */
+  setList=()=>this.setState({view:'list'});
+  setGraph=()=>this.setState({view:'graph'});
+  onType=e=>this.setState({type:e.target.value,page:1});
+  onPerPage=e=>this.setState({perPage:parseInt(e.target.value,10),page:1});
+  toggleSort=()=>this.setState({asc:!this.state.asc,page:1});
+  resetAll=()=>this.setState({type:'all',tag:null,page:1});
+  prevPage=()=>this.setState({page:Math.max(1,this.state.page-1)});
+  nextPage=()=>{const t=this.totalPages();this.setState({page:Math.min(t,this.state.page+1)});};
+  zoomIn=()=>this.setState({zoom:Math.min(2.6,this.state.zoom*1.2)});
+  zoomOut=()=>this.setState({zoom:Math.max(0.5,this.state.zoom/1.2)});
+  resetView=()=>this.setState({zoom:1,px:0,py:0,nodes:this.state.nodes.map(n=>{const h=this._home.find(x=>x.slug===n.slug);return Object.assign({},n,{x:h.x,y:h.y});})});
+
+  filtered(){
+    const s=this.state;
+    let list=PAPERS.filter(p=>(s.type==='all'||p.ty===s.type)&&(!s.tag||p.g.indexOf(s.tag)>=0));
+    list=list.slice().sort((a,b)=>a.y!==b.y?b.y-a.y:b.m-a.m);
+    if(s.asc)list.reverse();
+    return list;
+  }
+  totalPages(){return Math.max(1,Math.ceil(this.filtered().length/this.state.perPage));}
+
+  renderVals(){
+    const s=this.state;
+    const list=this.filtered();
+    const total=this.totalPages();
+    const page=Math.min(s.page,total);
+    const start=(page-1)*s.perPage;
+    const usedTags={};
+    PAPERS.forEach(p=>p.g.forEach(t=>{usedTags[t]=1;}));
+    const chipSlugs=CAT_ORDER.flatMap(c=>Object.keys(TAGS).filter(k=>TAGS[k][2]===c&&usedTags[k]));
+
+    const byId={}; s.nodes.forEach(n=>{byId[n.slug]=n;});
+    const maxCount=Math.max.apply(null,s.nodes.map(n=>n.count).concat([1]));
+    const radius=n=>11+Math.sqrt(n.count/maxCount)*23;
+
+    const nodes=s.nodes.map(n=>{
+      const cat=(TAGS[n.slug]||['','','tech'])[2];
+      const r=radius(n);
+      const on=s.sel===n.slug;
+      return {
+        slug:n.slug,count:n.count,x:n.x.toFixed(1),y:n.y.toFixed(1),r:r.toFixed(1),
+        cy:(n.y+4).toFixed(1), ty:(n.y-r-8).toFixed(1),
+        label:TAGS[n.slug]?TAGS[n.slug][0]:n.slug,
+        fill:CAT[cat].color, stroke:on?'#1d2d3d':'rgba(29,45,61,.25)', sw:on?3:1,
+        textFill:on?'#1d2d3d':'#5d5d60',
+        onClick:()=>this.setState({sel:n.slug})
+      };
+    });
+
+    const edges=(this._edges||[]).map(e=>{
+      const a=byId[e.a],b=byId[e.b];
+      if(!a||!b)return null;
+      const hot=s.sel===e.a||s.sel===e.b;
+      return {x1:a.x.toFixed(1),y1:a.y.toFixed(1),x2:b.x.toFixed(1),y2:b.y.toFixed(1),
+        w:(0.8+Math.min(e.w,6)*0.75).toFixed(2),
+        stroke:hot?'rgba(65,97,128,.85)':'rgba(148,188,227,.5)'};
+    }).filter(Boolean);
+
+    const selPapers=s.sel?PAPERS.filter(p=>p.g.indexOf(s.sel)>=0).sort((a,b)=>a.y!==b.y?b.y-a.y:b.m-a.m).map(fmt):[];
+    const selT=s.sel?TAGS[s.sel]:null;
+
+    return {
+      featured:PAPERS.filter(p=>p.f).map(fmt),
+      techCards:TECH,
+      toggleLang:this.toggleLang,
+      isList:s.view==='list', isGraph:s.view==='graph',
+      listBg:s.view==='list'?'var(--color-accent)':'transparent',
+      listFg:s.view==='list'?'#fff':'var(--color-neutral-700)',
+      graphBg:s.view==='graph'?'var(--color-accent)':'transparent',
+      graphFg:s.view==='graph'?'#fff':'var(--color-neutral-700)',
+      setList:this.setList, setGraph:this.setGraph,
+      onType:this.onType, onPerPage:this.onPerPage,
+      toggleSort:this.toggleSort, resetAll:this.resetAll,
+      sortLabel:s.asc?'舊到新 Oldest First':'新到舊 Newest First',
+      countLabel:'共 '+list.length+' 篇 / '+PAPERS.length+' 篇 · 第 '+page+' / '+total+' 頁',
+      chips:chipSlugs.map(k=>({
+        label:TAGS[k][0]+' '+TAGS[k][1],
+        bg:s.tag===k?'var(--color-accent)':'transparent',
+        fg:s.tag===k?'#fff':'var(--color-neutral-700)',
+        onClick:()=>this.setState({tag:s.tag===k?null:k,page:1})
+      })),
+      pagePapers:list.slice(start,start+s.perPage).map(fmt),
+      pageBtns:Array.from({length:total},(_,i)=>({
+        n:i+1, bg:page===i+1?'var(--color-accent)':'transparent',
+        fg:page===i+1?'#fff':'var(--color-neutral-700)',
+        onClick:()=>this.setState({page:i+1})
+      })),
+      prevPage:this.prevPage, nextPage:this.nextPage,
+      zoomIn:this.zoomIn, zoomOut:this.zoomOut, resetView:this.resetView,
+      gTransform:'translate('+s.px.toFixed(1)+','+s.py.toFixed(1)+') scale('+s.zoom.toFixed(3)+')',
+      nodes, edges,
+      labelLayer:React.createElement('g',{style:{pointerEvents:'none'}},nodes.flatMap(n=>[
+        React.createElement('text',{key:n.slug+'-c',x:n.x,y:n.cy,textAnchor:'middle',fill:'#fff',style:{fontFamily:"'Barlow Condensed',sans-serif",fontWeight:700,fontSize:'12px'}},String(n.count)),
+        React.createElement('text',{key:n.slug+'-l',x:n.x,y:n.ty,textAnchor:'middle',fill:n.textFill,style:{fontFamily:"'Barlow Condensed','Noto Sans TC',sans-serif",fontWeight:600,fontSize:'13px'}},n.label)
+      ])),
+      legendCats:CAT_ORDER.map(c=>({label:CAT[c].label,color:CAT[c].color})),
+      selTitle:selT?selT[0]:'—',
+      selSub:selT?selT[1]+' · '+selPapers.length+' 篇論文 / '+CAT[selT[2]].label:'點選圖上任一節點',
+      selPapers
+    };
+  }
+}
+</script>
+</body>
+</html>
