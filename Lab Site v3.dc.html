@@ -50,22 +50,112 @@ html.rev-on [data-reveal].shown{opacity:1;transform:none}
 .navlink:hover{background:var(--color-accent-100);color:var(--color-text)}
 .navlink[data-on="1"]{color:var(--color-accent-900);box-shadow:inset 0 -2px 0 var(--color-accent)}
 .cta{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;position:relative}
+.mobile-menu-button{display:none}
+.mobile-nav-panel{position:absolute;left:0;right:0;top:100%;padding:10px 16px 16px;background:rgba(242,242,243,.98);backdrop-filter:blur(14px);border-bottom:1px solid var(--color-divider);box-shadow:0 12px 24px rgba(29,45,61,.12)}
+.mobile-nav-panel .navlink{width:100%;justify-content:flex-start;min-height:44px;padding:10px 12px}
+.mobile-nav-panel .mobile-lang{width:100%;min-height:44px;margin:8px 0 0 !important;text-align:left}
+html,body{max-width:100%;overflow-x:hidden}
+button,a,select{touch-action:manipulation}
+#worldBox{touch-action:pan-y;overscroll-behavior-x:none}
+#lineCanvas{touch-action:pan-y}
+#graphsvg{max-width:100%;overscroll-behavior:contain}
+@media (prefers-reduced-motion:reduce){
+  *,*:before,*:after{animation-duration:.001ms !important;animation-iteration-count:1 !important;scroll-behavior:auto !important;transition-duration:.001ms !important}
+}
 @media (max-width:1120px){#g-tech{grid-template-columns:repeat(2,1fr) !important}#g-graph{flex-direction:column !important}#g-graph > aside{width:100% !important;height:auto !important;max-height:520px !important}#g-contact{grid-template-columns:1fr !important}#g-feat{grid-template-columns:1fr !important}#g-foot{grid-template-columns:1fr !important}}
+@media (max-width:760px){
+  header{position:sticky !important}
+  .site-header-inner{height:64px !important;min-height:64px;padding:8px 16px !important;gap:10px !important}
+  .site-brand{min-width:0;max-width:calc(100vw - 116px)}
+  .site-brand img{width:auto;max-width:100%;height:auto !important;max-height:42px;object-fit:contain}
+  .desktop-nav{display:none !important}
+  .mobile-menu-button{display:inline-grid;place-items:center;flex:none;width:44px;height:44px;margin-left:auto;border:1px solid var(--color-divider);background:transparent;color:var(--color-accent-900);cursor:pointer;font-size:20px;line-height:1}
+  .mobile-nav-panel{z-index:70}
+  #scrollwrap{height:560vh !important;min-height:100dvh}
+  #heroTitle{height:42% !important;padding:0 18px !important}
+  #heroTitle h1{font-size:clamp(31px,9vw,52px) !important;line-height:1.08 !important}
+  #heroTitle .hero-kicker{gap:7px !important;margin-bottom:14px !important}
+  #heroTitle .hero-kicker span:not(.hero-kicker-text){width:22px !important}
+  #heroTitle .hero-kicker-text{font-size:9px !important;letter-spacing:.13em !important}
+  #heroTitle .hero-subtitle{white-space:normal !important;max-width:34ch !important;font-size:13px !important;line-height:1.65 !important}
+  #heroFrame{top:42% !important}
+  #heroFrame > span{font-size:8px !important;letter-spacing:.12em !important}
+  #heroFrame > span:first-child{left:16px !important}
+  #heroFrame > span:last-child{right:16px !important;text-align:right}
+  #worldBox{clip-path:inset(42% 0 0 0);}
+  #lineLabels{display:none !important}
+  #stationUI{inset:auto 0 0 0 !important;top:auto !important;height:min(58dvh,460px) !important;min-height:270px;opacity:0;pointer-events:none;overflow:visible !important}
+  #stationUI .station-title{top:12px !important;left:16px !important;right:16px !important;justify-content:space-between;gap:8px !important}
+  #stationUI .station-title h2{font-size:16px !important;text-align:right}
+  #stationUI .station-mode{top:42px !important;right:16px !important;font-size:10px !important}
+  #stationUI .station-hint{display:none !important}
+  #stationUI .station-panel{position:absolute !important;inset:0 !important;width:auto !important;max-width:none !important;min-height:0 !important;padding:74px 18px calc(18px + env(safe-area-inset-bottom)) !important;background:linear-gradient(to bottom,rgba(242,242,243,.98),rgba(242,242,243,.92)) !important;overflow-y:auto !important;overscroll-behavior:contain}
+  #stationUI .station-panel h3{font-size:30px !important}
+  #stationUI .station-panel p{font-size:14px !important}
+  #stationUI .station-panel ol{margin-bottom:18px !important}
+  #g-feat,#g-tech,#g-pubs,#g-recent{grid-template-columns:1fr !important}
+  #g-pubs,#g-recent{grid-auto-rows:auto !important;row-gap:18px !important}
+  #g-pubs > *,#g-recent > *{grid-row-end:auto !important;margin-bottom:0 !important}
+  #g-graph{gap:12px !important}
+  #g-graph > div:first-child{width:100% !important;min-width:0 !important}
+  #g-graph > div:first-child svg{height:min(92vw,520px) !important}
+  #g-graph > aside{width:100% !important;height:auto !important;max-height:440px !important}
+  #g-contact{grid-template-columns:1fr !important}
+  #g-contact figure,#g-contact > .blueprint{min-height:420px !important}
+  #g-contact figure iframe{min-height:320px}
+  .prof-intro{grid-template-columns:1fr !important;gap:24px !important}
+  .prof-intro figure{order:0 !important;max-width:320px;width:100%;margin:0 auto !important}
+  .prof-intro figure img{aspect-ratio:3/4}
+  .prof-education{grid-template-columns:1fr !important}
+  .exp-list{padding-left:26px !important}
+  .exp-list > #expLine{left:5px !important}
+  #teamWrap{padding:56px 16px 72px !important}
+  #teamWrap > sc-for > div > div:first-child{align-items:flex-start !important;flex-wrap:wrap}
+  #teamWrap select{min-height:44px !important;max-width:100%}
+  .member-grid{grid-template-columns:1fr !important}
+  #teamWrap article[data-reveal]{height:auto !important;min-height:260px;padding:16px !important}
+  #teamWrap article[data-reveal] > div:first-child{align-items:flex-start !important}
+  #teamWrap article[data-reveal] img{width:92px !important;height:124px !important}
+  .about-photo{height:auto !important;aspect-ratio:4/3}
+  .page-gutter{padding-left:16px !important;padding-right:16px !important}
+  .touch-target{min-width:44px !important;min-height:44px !important}
+  #stick{display:none !important}
+}
+@media (max-width:420px){
+  .site-brand{max-width:calc(100vw - 104px)}
+  .site-brand img{max-height:36px}
+  #heroTitle{padding:0 14px !important}
+  #heroTitle h1{font-size:clamp(28px,9.8vw,42px) !important}
+  #heroTitle .hero-subtitle{max-width:29ch !important;font-size:12.5px !important}
+  #stationUI{height:min(62dvh,430px) !important}
+  #stationUI .station-panel{padding-left:16px !important;padding-right:16px !important}
+  #stationUI .station-panel h3{font-size:27px !important}
+}
+@media (min-width:761px){.mobile-nav-panel{display:none !important}}
 </style>
 </helmet>
 
 <div style="min-height:100vh">
 
 <header style="position:sticky;top:0;z-index:60;background:rgba(242,242,243,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--color-divider)">
-  <div style="max-width:1320px;margin:0 auto;padding:0 28px;height:66px;display:flex;align-items:center;gap:20px">
-    <button type="button" onClick="{{ goHome }}" aria-label="先進製程與設備智能輔助實驗室 Advanced Process Control and Intelligent Equipment Laboratory" style="display:flex;align-items:center;background:transparent;border:0;padding:0;cursor:pointer;color:var(--color-text)">
+  <div class="site-header-inner" style="max-width:1320px;margin:0 auto;padding:0 28px;height:66px;display:flex;align-items:center;gap:20px">
+    <button type="button" class="site-brand" onClick="{{ goHome }}" aria-label="先進製程與設備智能輔助實驗室 Advanced Process Control and Intelligent Equipment Laboratory" style="display:flex;align-items:center;background:transparent;border:0;padding:0;cursor:pointer;color:var(--color-text)">
       <img src="photos/head-banner.png" alt="Advanced Process Control and Intelligent Equipment Laboratory" style="height:44px;width:auto;display:block">
     </button>
-    <nav aria-label="主導覽" style="display:flex;align-items:center;gap:2px;margin-left:auto">
+    <nav class="desktop-nav" aria-label="主導覽" style="display:flex;align-items:center;gap:2px;margin-left:auto">
       <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
         <button type="button" class="navlink" data-on="{{ n.on }}" onClick="{{ n.go }}"><span class="l-zh">{{ n.zh }}</span><span class="l-en">{{ n.en }}</span></button>
       </sc-for>
       <button type="button" onClick="{{ toggleLang }}" aria-label="切換語言 Switch language" style="margin-left:12px;border:1px solid var(--color-divider);background:transparent;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:12px;letter-spacing:.1em;padding:7px 10px;color:var(--color-accent-700)" style-hover="background:var(--color-accent-100)">{{ langLabel }}</button>
+    </nav>
+    <button type="button" class="mobile-menu-button" onClick="{{ toggleMobileMenu }}" aria-controls="mobileNavPanel" aria-expanded="{{ mobileMenuExpanded }}" aria-label="{{ mobileMenuLabel }}">{{ mobileMenuIcon }}</button>
+  </div>
+  <div id="mobileNavPanel" class="mobile-nav-panel" style="display:{{ mobileMenuDisplay }}" aria-hidden="{{ mobileMenuHidden }}">
+    <nav aria-label="手機主導覽">
+      <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
+        <button type="button" class="navlink" data-on="{{ n.on }}" onClick="{{ n.go }}"><span class="l-zh">{{ n.zh }}</span><span class="l-en">{{ n.en }}</span></button>
+      </sc-for>
+      <button type="button" class="mobile-lang" onClick="{{ toggleLang }}" aria-label="切換語言 Switch language" style="border:1px solid var(--color-divider);background:transparent;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:12px;letter-spacing:.1em;padding:7px 10px;color:var(--color-accent-700)" style-hover="background:var(--color-accent-100)">{{ langLabel }}</button>
     </nav>
   </div>
 </header>
@@ -90,28 +180,28 @@ html.rev-on [data-reveal].shown{opacity:1;transform:none}
 
       <div id="heroTitle" style="position:absolute;left:0;right:0;top:0;height:44%;z-index:5;display:grid;align-content:center;justify-items:center;text-align:center;pointer-events:none;padding:0 28px">
         <div>
-          <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:20px">
+          <div class="hero-kicker" style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:20px">
             <span style="width:40px;height:1px;background:var(--color-accent)"></span>
-            <span style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--color-accent-700)">National Taiwan University of Science and Technology</span>
+            <span class="hero-kicker-text" style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--color-accent-700)">National Taiwan University of Science and Technology</span>
             <span style="width:40px;height:1px;background:var(--color-accent)"></span>
           </div>
           <h1 class="l-zh" style="font-size:clamp(38px,5vw,76px);line-height:1.04;letter-spacing:-.02em;margin:0 0 16px">先進製程與設備智能輔助實驗室</h1>
           <h1 class="l-en" style="font-size:clamp(32px,4vw,62px);line-height:1.06;letter-spacing:-.02em;margin:0 0 16px">Advanced Process Control &amp; Intelligent Equipment Lab</h1>
-          <p class="l-zh" style="font-size:clamp(13px,1.35vw,17px);line-height:1.7;white-space:nowrap;max-width:none;margin:0 auto;color:var(--color-neutral-800)">以 AI Agent 與數位雙生為核心，打造自主決策與人機協作的閉環智慧製造。</p>
-          <p class="l-en" style="font-size:16px;line-height:1.75;max-width:60ch;margin:0 auto;color:var(--color-neutral-800)">Closed-loop smart manufacturing built on AI agents and digital twins, for autonomous decisions and human–AI collaboration.</p>
+          <p class="hero-subtitle l-zh" style="font-size:clamp(13px,1.35vw,17px);line-height:1.7;white-space:nowrap;max-width:none;margin:0 auto;color:var(--color-neutral-800)">以 AI Agent 與數位雙生為核心，打造自主決策與人機協作的閉環智慧製造。</p>
+          <p class="hero-subtitle l-en" style="font-size:16px;line-height:1.75;max-width:60ch;margin:0 auto;color:var(--color-neutral-800)">Closed-loop smart manufacturing built on AI agents and digital twins, for autonomous decisions and human–AI collaboration.</p>
           <div style="margin-top:26px;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:11px;letter-spacing:.24em;color:var(--color-accent-700)">↓ <span class="l-zh">向下捲動展開產線</span><span class="l-en">SCROLL TO EXPAND THE LINE</span></div>
         </div>
       </div>
 
       <div id="stationUI" style="position:absolute;inset:0;z-index:6;opacity:0;pointer-events:none">
-        <div style="position:absolute;right:28px;top:26px;display:flex;align-items:baseline;gap:12px">
+        <div class="station-title" style="position:absolute;right:28px;top:26px;display:flex;align-items:baseline;gap:12px">
           <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:.18em;color:var(--color-accent-700)">FIG. 01</span>
           <h2 style="margin:0;font-size:20px"><span class="l-zh">閉環智慧製造產線</span><span class="l-en">Closed-loop Smart Production Line</span></h2>
         </div>
-        <div id="viewmode" style="position:absolute;right:28px;top:62px;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:11px;letter-spacing:.16em;color:var(--color-accent-700);border:1px solid var(--color-divider);padding:4px 9px">ORBIT 0°</div>
-        <div style="position:absolute;right:28px;bottom:28px;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:11px;letter-spacing:.14em;color:var(--color-neutral-600)"><span class="l-zh">拖曳畫面可自由旋轉檢視</span><span class="l-en">DRAG TO ORBIT FREELY</span></div>
+        <div id="viewmode" class="station-mode" style="position:absolute;right:28px;top:62px;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:11px;letter-spacing:.16em;color:var(--color-accent-700);border:1px solid var(--color-divider);padding:4px 9px">ORBIT 0°</div>
+        <div class="station-hint" style="position:absolute;right:28px;bottom:28px;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:11px;letter-spacing:.14em;color:var(--color-neutral-600)"><span class="l-zh">拖曳畫面可自由旋轉檢視</span><span class="l-en">DRAG TO ORBIT FREELY</span></div>
 
-        <div style="position:absolute;left:0;top:0;bottom:0;width:min(700px,58vw);pointer-events:auto;display:flex;flex-direction:column;justify-content:center;padding:0 240px 0 32px;background:linear-gradient(to right,var(--color-neutral-100) 0%,var(--color-neutral-100) 52%,rgba(245,245,248,.94) 68%,rgba(245,245,248,.62) 84%,rgba(245,245,248,0) 100%)">
+        <div class="station-panel" style="position:absolute;left:0;top:0;bottom:0;width:min(700px,58vw);pointer-events:auto;display:flex;flex-direction:column;justify-content:center;padding:0 240px 0 32px;background:linear-gradient(to right,var(--color-neutral-100) 0%,var(--color-neutral-100) 52%,rgba(245,245,248,.94) 68%,rgba(245,245,248,.62) 84%,rgba(245,245,248,0) 100%)">
           <ol id="rail" style="margin:0 0 26px;padding:0;list-style:none;display:flex;gap:8px">
             <sc-for list="{{ stations }}" as="s" hint-placeholder-count="5">
               <li data-dot="{{ s.i }}" style="flex:1;height:3px;background:var(--color-accent-200);transition:background .35s"></li>
@@ -176,7 +266,7 @@ html.rev-on [data-reveal].shown{opacity:1;transform:none}
     <p class="l-en" style="font-size:16px;line-height:1.8;color:var(--color-neutral-800);margin:0">Our laboratory focuses on developing AI agent applications that integrate large language models, optimization methods, and industrial information systems to enable autonomous decision-making and collaborative problem solving. Our research encompasses agent architectures, multi-agent coordination, task planning, tool integration, and human–AI collaboration, with applications in intelligent scheduling, defect detection, predictive maintenance, and knowledge-based management using real-time data from MES, ERP, PLM, and IoT platforms.</p>
     </div>
 
-    <figure class="blueprint" style="position:relative;margin:0;height:294px;background:transparent;display:flex;flex-direction:column">
+    <figure class="blueprint about-photo" style="position:relative;margin:0;height:294px;background:transparent;display:flex;flex-direction:column">
       <div style="position:relative;flex:1;min-height:0;border-bottom:1px solid var(--color-divider);overflow:hidden;background:var(--color-neutral-200)">
         <sc-for list="{{ labPhotos }}" as="ph" hint-placeholder-count="4">
           <img src="{{ ph.src }}" alt="{{ ph.alt }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:opacity .6s ease;opacity: {{ ph.op }}">
@@ -373,7 +463,7 @@ html.rev-on [data-reveal].shown{opacity:1;transform:none}
       <span style="width:34px;height:1px;background:var(--color-accent)"></span>
       <span style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--color-accent-700)">Professor</span>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 268px;gap:34px;align-items:start">
+    <div class="prof-intro" style="display:grid;grid-template-columns:1fr 268px;gap:34px;align-items:start">
       <figure class="blueprint" style="position:relative;order:2;margin:0;background:transparent;display:flex;flex-direction:column">
         <div style="flex:1;aspect-ratio:3/4;border-bottom:1px solid var(--color-divider);overflow:hidden">
           <img src="photos/prof.jpg" alt="鄧志峰 Jr-Fong Dang" style="width:100%;height:100%;object-fit:cover;object-position:center 22%;display:block">
@@ -407,7 +497,7 @@ html.rev-on [data-reveal].shown{opacity:1;transform:none}
 
   <div style="max-width:1320px;margin:0 auto;padding:36px 28px 0">
     <h3 style="font-size:30px;margin:0 0 8px"><span class="l-zh">學歷</span><span class="l-en">Education</span></h3>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:20px">
+    <div class="prof-education" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:20px">
       <sc-for list="{{ education }}" as="e" hint-placeholder-count="3">
         <div class="blueprint" data-reveal="" style="position:relative;padding:20px;background:transparent">
           <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:26px;letter-spacing:.04em;color:var(--color-accent);margin-bottom:10px">{{ e.y }}</div>
@@ -421,7 +511,7 @@ html.rev-on [data-reveal].shown{opacity:1;transform:none}
   <div style="max-width:1320px;margin:0 auto;padding:56px 28px 0">
     <h3 style="font-size:30px;margin:0 0 6px"><span class="l-zh">經歷</span><span class="l-en">Experience</span></h3>
     <div style="height:26px"></div>
-    <ol id="exp" style="position:relative;margin:0;padding:0 0 0 34px;list-style:none;display:flex;flex-direction:column;gap:18px">
+    <ol id="exp" class="exp-list" style="position:relative;margin:0;padding:0 0 0 34px;list-style:none;display:flex;flex-direction:column;gap:18px">
       <span id="expLine" style="position:absolute;left:6px;top:6px;width:1px;background:var(--color-accent-400);height:0;transition:height .8s cubic-bezier(.4,0,.2,1)"></span>
       <sc-for list="{{ experience }}" as="x" hint-placeholder-count="5">
         <li data-exp="" style="position:relative;opacity:0;transform:translateX(26px);transition:opacity .55s ease,transform .55s ease">
@@ -516,7 +606,7 @@ html.rev-on [data-reveal].shown{opacity:1;transform:none}
         <sc-if value="{{ g.empty }}" hint-placeholder-val="{{ false }}">
           <p style="margin:0 0 4px;font-size:14.5px;color:var(--color-neutral-600)"><span class="l-zh">此學年尚無成員。</span><span class="l-en">No members for this class year yet.</span></p>
         </sc-if>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(286px,1fr));gap:18px;align-items:stretch">
+        <div class="member-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(286px,1fr));gap:18px;align-items:stretch">
           <sc-for list="{{ g.list }}" as="m" hint-placeholder-count="4">
             <article class="blueprint" data-reveal="" style="position:relative;height:280px;padding:20px;background:transparent;display:flex;flex-direction:column">
               <div style="display:flex;gap:16px;align-items:center">
@@ -795,12 +885,15 @@ function fmt(p){
 
 class Component extends DCLogic {
   state={page:'home',lang:'zh',view:'list',type:'all',tag:null,perPage:10,pg:1,asc:false,
-    nodes:[],sel:null,hover:null,zoom:1,px:0,py:0,tick:0,transit:'mrt',mYear:'all',photo:0};
+    nodes:[],sel:null,hover:null,zoom:1,px:0,py:0,tick:0,transit:'mrt',mYear:'all',photo:0,mobileMenuOpen:false};
 
   setYear=e=>{ this.setState({mYear:e.target.value}); };
   goPhoto=i=>()=>{ this.setState({photo:i}); };
   nextPhoto=()=>{ this.setState(s=>({photo:(s.photo+1)%LAB_PHOTOS.length})); };
   prevPhoto=()=>{ this.setState(s=>({photo:(s.photo+LAB_PHOTOS.length-1)%LAB_PHOTOS.length})); };
+  toggleMobileMenu=()=>{ this.setState(s=>({mobileMenuOpen:!s.mobileMenuOpen})); };
+  closeMobileMenu=()=>{ if(this.state.mobileMenuOpen)this.setState({mobileMenuOpen:false}); };
+  onKeyDown=e=>{ if(e.key==='Escape')this.closeMobileMenu(); };
 
   componentDidMount(){
     document.documentElement.dataset.lang='zh';
@@ -809,6 +902,10 @@ class Component extends DCLogic {
     this.startLoop();
     this.wireReveal();
     this.wireGantry();
+    this._onKeyDown=this.onKeyDown;
+    window.addEventListener('keydown',this._onKeyDown);
+    this._onVisibility=()=>{ this._pageHidden=document.hidden; };
+    document.addEventListener('visibilitychange',this._onVisibility);
     this.__photoTimer=setInterval(()=>{ if(this.state.page==='about')this.nextPhoto(); },6000);
     setTimeout(()=>this.wireMasonry(),0);
     setTimeout(()=>this.wireMasonry(),600);
@@ -820,6 +917,13 @@ class Component extends DCLogic {
     const gap=18;
     ['g-pubs','g-recent'].forEach(id=>{
       const grid=document.getElementById(id); if(!grid)return;
+      if(window.innerWidth<=760){
+        grid.style.gridAutoRows='auto';
+        grid.style.rowGap=gap+'px';
+        grid.style.alignItems='stretch';
+        Array.from(grid.children).forEach(el=>{el.style.gridRowEnd='auto';el.style.marginBottom='0';});
+        return;
+      }
       grid.style.gridAutoRows='1px';
       grid.style.rowGap='0px';
       grid.style.alignItems='start';
@@ -852,17 +956,17 @@ class Component extends DCLogic {
       });
     },90);
   }
-  componentWillUnmount(){ if(this._timer)clearInterval(this._timer); if(this.__photoTimer)clearInterval(this.__photoTimer); if(window.__labOff)window.__labOff(); this.disposeLine(); }
+  componentWillUnmount(){ if(this._timer)clearInterval(this._timer); if(this.__photoTimer)clearInterval(this.__photoTimer); if(window.__labOff)window.__labOff(); if(this._onKeyDown)window.removeEventListener('keydown',this._onKeyDown); if(this._onVisibility)document.removeEventListener('visibilitychange',this._onVisibility); this.disposeLine(); }
 
   toggleLang=()=>{
     const next=this.state.lang==='zh'?'en':'zh';
     document.documentElement.dataset.lang=next;
-    this.setState({lang:next});
+    this.setState({lang:next,mobileMenuOpen:false});
   };
   go=p=>()=>{
     const ol=document.getElementById('exp'); if(ol)ol.__wired=false;
     this._sd=null; this._sdFor=null;
-    this.setState({page:p}); window.scrollTo(0,0);
+    this.setState({page:p,mobileMenuOpen:false}); window.scrollTo(0,0);
   };
   goHome=this.go('home'); goContact=this.go('contact'); goPubs=this.go('publications');
 
@@ -1003,7 +1107,7 @@ class Component extends DCLogic {
       const ground=new THREE.Mesh(new THREE.PlaneGeometry(60,60),new THREE.ShadowMaterial({opacity:shadows?0.17:0}));
       ground.rotation.x=-Math.PI/2; ground.position.y=0.002; ground.receiveShadow=shadows; scene.add(ground);
 
-      const camera=new THREE.PerspectiveCamera(38,1,0.1,260);
+      const camera=new THREE.PerspectiveCamera(low?44:38,1,0.1,260);
       this._L={THREE:THREE,renderer:renderer,scene:scene,camera:camera,line:line,ground:ground,
         cam:{pos:new THREE.Vector3(),tgt:new THREE.Vector3()},t0:performance.now(),size:{w:0,h:0}};
       this.loadSignText();
@@ -1112,13 +1216,14 @@ class Component extends DCLogic {
     const yq=new (L.THREE.Quaternion)().setFromAxisAngle(new V(0,1,0),yawOff);
     const radial=outward.clone().applyQuaternion(yq);          // 產線內側 → 工站
     const stn=A.center.clone().lerp(B.center,sm);
-    const standBack=9.1/dolly;                                  // 退到工站外側（拉遠，整座工站入框）
-    const eyeY=3.5;                                             // 低俯角視高
+    const mobile=window.innerWidth<760;
+    const standBack=(mobile?11.8:9.1)/dolly;                    // 手機拉遠，避免工站被裁切
+    const eyeY=mobile?4.2:3.5;                                  // 低俯角視高
     const posNear=stn.clone().add(radial.clone().multiplyScalar(standBack)).setY(eyeY);
     const tgtNear=stn.clone().setY(1.75);
     /* 工站推到畫面右側：把注視點沿相機右向左移 */
     const side=new V().crossVectors(new V(0,1,0),radial).normalize();
-    const shift=side.clone().multiplyScalar(-2.5);
+    const shift=side.clone().multiplyScalar(mobile?-1.4:-2.5);
     tgtNear.add(shift); posNear.add(shift.clone().multiplyScalar(0.3));
 
     const tgt=tgtFar.clone().lerp(tgtNear,ease);
@@ -1133,7 +1238,8 @@ class Component extends DCLogic {
     const frame=document.getElementById('heroFrame');
     const ui=document.getElementById('stationUI');
     const k=Math.min(1,prog/0.14);
-    if(box)box.style.clipPath='inset('+(44*(1-k)).toFixed(2)+'% 0% 0% 0%)';
+    const clipTop=window.innerWidth<760?42:44;
+    if(box)box.style.clipPath='inset('+(clipTop*(1-k)).toFixed(2)+'% 0% 0% 0%)';
     if(hero){
       const f=Math.max(0,1-prog/0.10);
       hero.style.opacity=f.toFixed(3);
@@ -1193,6 +1299,7 @@ class Component extends DCLogic {
     const g=window.gsap;
     if(g&&window.ScrollTrigger){ g.registerPlugin(window.ScrollTrigger); g.ticker.lagSmoothing(0); }
     const step=()=>{
+      if(document.hidden||this._pageHidden)return;
       const wrap=document.getElementById('scrollwrap');
       if(wrap){
         if(document.getElementById('lineCanvas')&&!this._L)this.initLine();
@@ -1203,8 +1310,12 @@ class Component extends DCLogic {
         this.renderLine();
       } else if(this._L){ this.disposeLine(); }
       this.releaseReveals();
-      this.walkStick();
-      if(document.getElementById('graphsvg')){
+      if(window.innerWidth>760&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches)this.walkStick();
+      else { const stick=document.getElementById('stick'); if(stick)stick.style.opacity='0'; }
+      const graphSvg=document.getElementById('graphsvg');
+      const graphRect=graphSvg&&graphSvg.getBoundingClientRect();
+      const graphVisible=!!(graphRect&&graphRect.bottom>0&&graphRect.top<(window.innerHeight||800));
+      if(graphSvg&&graphVisible&&(!window.matchMedia('(prefers-reduced-motion: reduce)').matches||this._sim)){
         if(this._sim){
           const moved=this.relax(0.55);
           this.setState({nodes:this._nodes.map(n=>({...n})),tick:this.state.tick+1});
@@ -1239,10 +1350,21 @@ class Component extends DCLogic {
   wireOrbitDrag(){
     const box=document.getElementById('worldBox');
     if(!box||box.__wired)return; box.__wired=true;
-    let sx=null,base=0;
-    box.addEventListener('pointerdown',e=>{sx=e.clientX;base=this._dragTheta;box.style.cursor='grabbing';try{box.setPointerCapture(e.pointerId);}catch(_){}});
-    box.addEventListener('pointermove',e=>{ if(sx!=null)this._dragTheta=base+(e.clientX-sx)*0.35; });
-    const up=()=>{sx=null;box.style.cursor='grab';};
+    let sx=null,sy=null,base=0,dragging=false,pid=null;
+    box.addEventListener('pointerdown',e=>{sx=e.clientX;sy=e.clientY;base=this._dragTheta;dragging=false;pid=e.pointerId;});
+    box.addEventListener('pointermove',e=>{
+      if(sx==null)return;
+      const dx=e.clientX-sx,dy=e.clientY-sy;
+      if(!dragging){
+        if(Math.abs(dy)>Math.abs(dx)+6)return;
+        if(Math.abs(dx)<8)return;
+        dragging=true; box.style.cursor='grabbing';
+        try{box.setPointerCapture(e.pointerId);}catch(_){}
+      }
+      e.preventDefault();
+      this._dragTheta=base+dx*0.35;
+    });
+    const up=()=>{sx=null;sy=null;dragging=false;pid=null;box.style.cursor='grab';};
     box.addEventListener('pointerup',up); box.addEventListener('pointercancel',up);
   }
 
@@ -1391,10 +1513,16 @@ class Component extends DCLogic {
     grid.__wired=true;
     cards.forEach((c,i)=>{
       const inner=c.querySelector('[data-inner]');
+      const hoverCapable=()=>window.matchMedia?window.matchMedia('(hover:hover) and (pointer:fine)').matches:true;
       const enter=()=>{ if(inner)inner.style.transform='rotateY(180deg)'; };
+      const toggle=()=>{ if(!inner)return; const on=inner.style.transform==='rotateY(180deg)'; inner.style.transform=on?'none':'rotateY(180deg)'; c.setAttribute('data-flipped',on?'0':'1'); };
+      c.setAttribute('tabindex','0');
+      c.setAttribute('role','button');
+      c.addEventListener('click',()=>{ if(!hoverCapable())toggle(); });
+      c.addEventListener('keydown',e=>{ if((e.key==='Enter'||e.key===' ')&&!hoverCapable()){e.preventDefault();toggle();} });
       c.addEventListener('mouseenter',enter);
-      c.addEventListener('focusin',enter);
-      c.addEventListener('mouseleave',()=>{ if(inner)inner.style.transform='none'; });
+      c.addEventListener('focusin',()=>{ if(hoverCapable())enter(); });
+      c.addEventListener('mouseleave',()=>{ if(inner&&hoverCapable())inner.style.transform='none'; });
     });
   }
 
@@ -1474,6 +1602,7 @@ class Component extends DCLogic {
       const on=s.sel===n.slug, lit=near(n.slug);
       return React.createElement('g',{key:n.slug,'data-node':n.slug,style:{cursor:'pointer'},
         opacity:lit?1:0.16,onClick:()=>this.setState({sel:n.slug})},
+        React.createElement('circle',{cx:n.x,cy:n.y,r:Math.max(r+16,24),fill:'transparent',stroke:'transparent',pointerEvents:'all'}),
         React.createElement('circle',{cx:n.x,cy:n.y,r:r,fill:CAT[cat].color,
           stroke:on?'#1d2d3d':'rgba(29,45,61,.25)',strokeWidth:on?3:1}),
         React.createElement('text',{x:n.x,y:n.y+4,textAnchor:'middle',fill:'#fff',pointerEvents:'none',
@@ -1505,7 +1634,7 @@ class Component extends DCLogic {
       memberGroups:['phd','master'].map(d=>{
         let list=MEMBERS.filter(m=>m.deg===d);
         if(d==='master')list=list.slice().sort((a,b)=>(Number(b.yr)||0)-(Number(a.yr)||0));
-        if(d==='master'&&s.mYear!=='all')list=list.filter(m=>String(m.yr)===s.mYear);
+            if(d==='master'&&s.mYear!=='all')list=list.filter(m=>String(m.yr)===s.mYear);
         return {zh:d==='phd'?'博士班':'碩士班', en:d==='phd'?'Doctoral Students':'Master\u2019s Students',
           showYear:d==='master', empty:!list.length,
           count:list.length+(zh?' 位':(list.length>1?' MEMBERS':' MEMBER')),
@@ -1524,6 +1653,12 @@ class Component extends DCLogic {
       transitLinkZh:tmode.link?tmode.link.zh:'',
       transitLinkEn:tmode.link?tmode.link.en:'',
       navItems:NAV.map(([k,z,e])=>({zh:z,en:e,on:s.page===k?'1':'0',go:this.go(k)})),
+      mobileMenuDisplay:s.mobileMenuOpen?'block':'none',
+      mobileMenuHidden:s.mobileMenuOpen?'false':'true',
+      mobileMenuExpanded:s.mobileMenuOpen?'true':'false',
+      mobileMenuIcon:s.mobileMenuOpen?'×':'☰',
+      mobileMenuLabel:s.mobileMenuOpen?(zh?'關閉選單 Close menu':'Close menu'):(zh?'開啟選單 Open menu':'Open menu'),
+      toggleMobileMenu:this.toggleMobileMenu,
       goHome:this.goHome, goContact:this.goContact, goPubs:this.goPubs,
       toggleLang:this.toggleLang, langLabel:zh?'EN':'中文',
       atHome:s.page==='home', atAbout:s.page==='about',
@@ -1580,4 +1715,3 @@ class Component extends DCLogic {
 </script>
 </body>
 </html>
-
