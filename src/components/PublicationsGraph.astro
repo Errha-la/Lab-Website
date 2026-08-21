@@ -75,13 +75,13 @@ const graphData = papers.map((p) => ({
     </span>
   </p>
 
-  <div class="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-[1fr_280px]">
+  <div class="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-[1fr_280px]" data-pub-graph-root>
     <div class="w-full overflow-hidden rounded-xl border border-brand-100 bg-white p-2">
       <svg
         id="pub-graph-svg"
         viewBox="0 0 800 560"
         preserveAspectRatio="xMidYMid meet"
-        class="h-auto w-full"
+        class="h-auto w-full aspect-square md:aspect-auto"
         role="img"
         aria-label="論文關聯圖 Publications relationship graph"
       >
@@ -114,8 +114,8 @@ const graphData = papers.map((p) => ({
   const NEUTRAL_HEX = '#94a3b8';
   const CATEGORY_ORDER = ['domain', 'method', 'topic', 'tech'];
   const SVG_NS = 'http://www.w3.org/2000/svg';
-  const WIDTH = 800;
-  const HEIGHT = 560;
+  const DESKTOP_WIDTH = 800;
+  const DESKTOP_HEIGHT = 560;
 
   interface GraphPaper {
     title: string;
@@ -168,6 +168,24 @@ const graphData = papers.map((p) => ({
     const papers: GraphPaper[] = JSON.parse(dataEl.textContent || '[]');
     if (papers.length === 0) return;
 
+    const svgEl = document.getElementById('pub-graph-svg') as SVGSVGElement | null;
+    const graphRoot = document.querySelector('[data-pub-graph-root]') as HTMLElement | null;
+    let compactLayout = typeof window.matchMedia === 'function' && window.matchMedia('(max-width: 767px)').matches;
+    let WIDTH = compactLayout ? 480 : DESKTOP_WIDTH;
+    let HEIGHT = compactLayout ? 480 : DESKTOP_HEIGHT;
+    svgEl?.setAttribute('viewBox', `0 0 ${WIDTH} ${HEIGHT}`);
+
+    const syncGraphViewport = () => {
+      if (!svgEl || !graphRoot) return;
+      const containerWidth = graphRoot.getBoundingClientRect().width;
+      if (compactLayout) {
+        svgEl.style.height = `${Math.max(300, Math.min(480, Math.round(containerWidth)))}px`;
+      } else {
+        svgEl.style.height = '';
+      }
+    };
+    syncGraphViewport();
+
     // Picks one representative tag to both color and *label* a node with, so the
     // graph shows what research topic each paper belongs to at a glance (rather
     // than a year, which says nothing about the knowledge clusters).
@@ -179,8 +197,8 @@ const graphData = papers.map((p) => ({
       return null;
     }
 
-    const cx = WIDTH / 2;
-    const cy = HEIGHT / 2;
+    let cx = WIDTH / 2;
+    let cy = HEIGHT / 2;
 
     // Seed positions on a ring around the center so the simulation starts
     // spread out rather than from a single overlapping point.
@@ -233,14 +251,14 @@ const graphData = papers.map((p) => ({
 
     // --- Live force-directed simulation (Obsidian-style: an ongoing rAF loop
     // with an alpha/cooling schedule, à la d3-force) ---
-    const REPULSION = 14000; // Coulomb-like push, tuned for ~16 nodes on an 800x560 canvas
+    let REPULSION = compactLayout ? 9000 : 14000; // scale force constants with the logical graph viewport
     const SPRING_K = 0.02;
-    const BASE_LEN = 170;
-    const LEN_PER_WEIGHT = 22; // more shared tags -> shorter rest length -> tighter clustering
-    const MIN_LEN = 46;
+    let BASE_LEN = compactLayout ? 120 : 170;
+    let LEN_PER_WEIGHT = compactLayout ? 16 : 22; // more shared tags -> shorter rest length -> tighter clustering
+    let MIN_LEN = compactLayout ? 34 : 46;
     const CENTER_K = 0.012;
     const DAMPING = 0.82;
-    const MARGIN = 34;
+    let MARGIN = compactLayout ? 24 : 34;
     const SETTLE_ITERATIONS = 300; // used only for the reduced-motion one-shot settle
 
     const reducedMotion =
@@ -320,7 +338,7 @@ const graphData = papers.map((p) => ({
     }
 
     // --- Render ---
-    const NODE_R = 20;
+    let NODE_R = compactLayout ? 17 : 20;
 
     const edgeEls = edges.map((edge) => {
       const line = document.createElementNS(SVG_NS, 'line');
@@ -364,7 +382,7 @@ const graphData = papers.map((p) => ({
       const label = document.createElementNS(SVG_NS, 'text');
       label.setAttribute('text-anchor', 'middle');
       label.setAttribute('dy', '3.5');
-      label.setAttribute('font-size', '9');
+      label.setAttribute('font-size', compactLayout ? '12' : '9');
       label.setAttribute('fill', '#ffffff');
       label.setAttribute('font-weight', '600');
       (label.style as CSSStyleDeclaration).pointerEvents = 'none';
@@ -377,7 +395,7 @@ const graphData = papers.map((p) => ({
 
       nodesLayer.appendChild(g);
 
-      return { el: g, circle, node };
+      return { el: g, circle, label, node };
     });
 
     // Pushes the current node/edge x,y values out to the SVG DOM. Called once
@@ -397,6 +415,54 @@ const graphData = papers.map((p) => ({
         el.setAttribute('transform', `translate(${node.x}, ${node.y})`);
       });
     }
+
+    function applyResponsiveLayout() {
+      const nextCompactLayout =
+        typeof window.matchMedia === 'function' && window.matchMedia('(max-width: 767px)').matches;
+      if (nextCompactLayout === compactLayout) {
+        syncGraphViewport();
+        return;
+      }
+
+      const previousWidth = WIDTH;
+      const previousHeight = HEIGHT;
+      const previousCx = cx;
+      const previousCy = cy;
+      compactLayout = nextCompactLayout;
+      WIDTH = compactLayout ? 480 : DESKTOP_WIDTH;
+      HEIGHT = compactLayout ? 480 : DESKTOP_HEIGHT;
+      cx = WIDTH / 2;
+      cy = HEIGHT / 2;
+      REPULSION = compactLayout ? 9000 : 14000;
+      BASE_LEN = compactLayout ? 120 : 170;
+      LEN_PER_WEIGHT = compactLayout ? 16 : 22;
+      MIN_LEN = compactLayout ? 34 : 46;
+      MARGIN = compactLayout ? 24 : 34;
+      NODE_R = compactLayout ? 17 : 20;
+
+      svgEl?.setAttribute('viewBox', `0 0 ${WIDTH} ${HEIGHT}`);
+      nodes.forEach((node) => {
+        node.x = cx + (node.x - previousCx) * (WIDTH / previousWidth);
+        node.y = cy + (node.y - previousCy) * (HEIGHT / previousHeight);
+        node.vx *= WIDTH / previousWidth;
+        node.vy *= HEIGHT / previousHeight;
+        node.x = Math.min(WIDTH - MARGIN, Math.max(MARGIN, node.x));
+        node.y = Math.min(HEIGHT - MARGIN, Math.max(MARGIN, node.y));
+      });
+      nodeEls.forEach(({ circle, label }) => {
+        circle.setAttribute('r', String(NODE_R));
+        label.setAttribute('font-size', compactLayout ? '12' : '9');
+      });
+      syncGraphViewport();
+      render();
+      reheat(0.4);
+    }
+
+    const graphResizeObserver = typeof ResizeObserver === 'function' && graphRoot
+      ? new ResizeObserver(applyResponsiveLayout)
+      : null;
+    if (graphResizeObserver && graphRoot) graphResizeObserver.observe(graphRoot);
+    window.addEventListener('resize', applyResponsiveLayout);
 
     // --- Alpha-cooled simulation loop (D3-force-style) ---
     // Runs as an ongoing requestAnimationFrame loop so the graph feels "alive"
@@ -435,7 +501,6 @@ const graphData = papers.map((p) => ({
     }
 
     // --- Dragging (pointer-based: works for mouse, touch, and pen alike) ---
-    const svgEl = document.getElementById('pub-graph-svg') as SVGSVGElement | null;
     const DRAG_THRESHOLD = 4; // px of pointer travel before a press counts as a drag, not a click
     let dragState: DragState | null = null;
 
