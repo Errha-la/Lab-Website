@@ -36,7 +36,7 @@
  * Usage:
  *   <style>three-d-stage:not(:defined){visibility:hidden}</style>
  *   <three-d-stage name="rocket"></three-d-stage>
- *   <script src="three-d-stage.js"></script>
+ *   <script src="assets/js/three-d-stage.js"></script>
  *   <script type="module">
  *     const stage = document.querySelector('three-d-stage');
  *     const { THREE } = await stage.ready;
