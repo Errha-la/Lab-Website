@@ -1,0 +1,78 @@
+{
+  "completeness": "complete",
+  "deferred": [],
+  "documentType": "codex-security.coverage",
+  "excludePaths": [],
+  "explicitExclusions": [],
+  "includePaths": [
+    "."
+  ],
+  "inventoryStrategy": "repository",
+  "mode": "repository",
+  "openQuestions": [
+    {
+      "followUpPrompt": "Inspect the actual hosting configuration or response headers for CSP, frame-ancestors, HSTS, Referrer-Policy, Permissions-Policy, and nosniff.",
+      "question": "What HTTP security headers and platform controls are applied by the production host?"
+    },
+    {
+      "followUpPrompt": "Run an authorized current advisory scan against package-lock.json in an environment with a trusted vulnerability database.",
+      "question": "Do the locked dependency versions have current public security advisories?"
+    },
+    {
+      "followUpPrompt": "Confirm GitHub roles, branch protections, deployment workflows, and any CMS or automated content imports; if present, re-evaluate raw JSON script serialization as stored XSS.",
+      "question": "Does any out-of-repository workflow grant content-only publication authority?"
+    }
+  ],
+  "scanId": "59f116ae-ba1a-4917-b7db-320fd4d889b9",
+  "schemaVersion": "1.0",
+  "surfaces": [
+    {
+      "disposition": "no_issue_found",
+      "id": "surface_browser_input_dom",
+      "label": "Browser URL input and client-side DOM interactions",
+      "notes": "The publications tag query is accepted only after an exact match against statically rendered allowlisted chips and reaches no HTML or execution sink.",
+      "receiptRefs": [],
+      "riskArea": "DOM injection and client-side input handling"
+    },
+    {
+      "disposition": "rejected",
+      "id": "surface_content_serialization",
+      "label": "Build-time content serialization and rendering",
+      "notes": "Raw JSON script serialization and generic URL schemas are defense-in-depth gaps, but current content is benign and no lower-trust content publisher or runtime content source is established.",
+      "receiptRefs": [],
+      "riskArea": "Stored XSS and unsafe URL schemes"
+    },
+    {
+      "disposition": "no_issue_found",
+      "id": "surface_external_embed_navigation",
+      "label": "Google Maps embed and external navigation",
+      "notes": "The embed origin is fixed and query-encoded; every target=_blank link uses noopener noreferrer; all populated content URLs are HTTPS.",
+      "receiptRefs": [],
+      "riskArea": "Cross-origin isolation, opener abuse, and navigation safety"
+    },
+    {
+      "disposition": "no_issue_found",
+      "id": "surface_build_supply_chain",
+      "label": "npm build tooling and dependency provenance",
+      "notes": "All 513 resolved lockfile artifacts use HTTPS registry.npmjs.org sources with integrity hashes; project scripts are standard Astro commands. Version-specific advisory exposure was not assessed offline.",
+      "receiptRefs": [],
+      "riskArea": "Build-time supply-chain execution"
+    },
+    {
+      "disposition": "no_issue_found",
+      "id": "surface_secrets_configuration",
+      "label": "Tracked secrets and security-relevant configuration",
+      "notes": "No tracked credential, private-key, token, or environment file pattern was found. Effective deployment headers cannot be established because hosting configuration is absent.",
+      "receiptRefs": [],
+      "riskArea": "Credential exposure and unsafe deployment configuration"
+    },
+    {
+      "disposition": "not_applicable",
+      "id": "surface_server_privileged_operations",
+      "label": "Server endpoints and privileged operations",
+      "notes": "No server adapter, API route, authentication flow, database, upload, filesystem access, command execution, or runtime server state exists in the reviewed source.",
+      "receiptRefs": [],
+      "riskArea": "Authentication, authorization, injection, upload, filesystem, database, and command execution"
+    }
+  ]
+}

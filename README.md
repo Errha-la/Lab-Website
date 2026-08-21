@@ -1,69 +1,103 @@
-# NTUST 智慧製造 AI Agent Lab — 官網 Redesign v2
+# NTUST 先進製程與設備智能輔助實驗室網站
 
-國立臺灣科技大學智慧製造 AI Agent Lab 實驗室官網的第二版重新設計。相較於初版（Astro 架構的傳統多頁網站），這版改走「單頁互動式技術簡報」的方向：用可捲動的敘事線，把實驗室的閉環智慧製造研究，做成一個會動的 3D 產線展示。
+國立臺灣科技大學先進製程與設備智能輔助實驗室的雙語互動式官方網站。專案以純靜態檔案運作，主頁結合 Three.js 3D 產線、研究成果、團隊資訊、交通方式與中英文切換，可直接部署到 GitHub Pages。
 
-## 設計方向
+## 快速開始
 
-整體視覺套用的是一套自訂的 **Industry 設計系統**——工程藍圖 / wireframe 美學：
+1. 在專案根目錄啟動本機 HTTP 伺服器：
 
-- **色彩**：淺灰技術感底色（`#f2f2f3`）配單一鋼藍色主色（`#5980a6`），每個色彩角色都用 OKLCH 產生 100–900 的色階，確保同一階數在不同色彩上視覺重量一致。刻意只用一個強調色，不做多彩裝飾。
-- **字體**：標題用 Barlow Condensed（壓縮體，工程感），內文用 Barlow，中文字則搭 Noto Sans TC，三者透過 `--font-heading` / `--font-body` token 統一管理。
-- **卡片與圖框**：不用圓角、不用實色底——卡片、圖片、主要按鈕都畫成「藍圖物件」：直角、細線邊框，四角加上 `+` 十字校準記號（`.blueprint` class）。這是整套設計語言裡最明顯的識別特徵。
-- **圖像處理**：人像與活動照片保留原色（照片牆刻意不做染色，以真實紀錄為主），其餘裝飾性圖框沿用藍圖線稿語彙。
-- **圖示**：Lucide icon set，統一 1.5px 線寬，維持工程製圖的細線調性。
-- **互動狀態**：不用瀏覽器預設樣式——hover / pressed 都吃色階漸層，鍵盤 focus 用 2px 主色外框（`:focus-visible`），而不是預設藍框。
+   ```bash
+   python -m http.server 8000
+   ```
 
-這套系統被封裝成獨立的 design token + component 套件放在 [`_ds/`](_ds/)，理論上可以套用到其他頁面或未來的子站，不用每次重新定義色彩／字體／間距。
+2. 開啟 [http://localhost:8000](http://localhost:8000)。
 
-## 頁面敘事與互動設計
+網站會使用 ES modules 與 `fetch()` 載入 3D 模型和工站資料，因此請勿以 `file://` 直接雙擊開啟。
 
-主頁（[`Lab Site v3.dc.html`](Lab%20Site%20v3.dc.html)）是一鏡到底的捲動敘事：
+## 主要功能
 
-1. **Hero** — 頁首換成實驗室標頭圖（`photos/head-banner.png`），捲動時 3D 產線由遠景逐步推近。
-2. **閉環智慧製造 3D 產線**（`#lineCanvas` / `#worldBox`）— 用 Three.js 現場建出一條 U 形產線：感測、故障診斷、決策優化、製程控制、品質回饋、持續改善六座工站，加上環形輸送帶、機械手臂、控制室與地板。幾何在 [`line-model.js`](line-model.js)，站點文案在 [`line-stations.json`](line-stations.json)，改文字不用動 3D 模型。捲動到各站時鏡頭固定為同一個低角度取景，工站置於畫面右側，左側留給文字。
-3. **研究圖譜**（`#graphsvg`）— 論文以節點圖呈現，依研究主題分類，可切換卡片 / 清單 / 關聯圖三種檢視。
-4. **團隊、技術重點、聯絡方式**（`#teamWrap` / `#g-tech` / `#g-contact`）— 沿用同一套藍圖卡片語彙；碩士生可依入學學年（113 / 114 / 115）篩選，聯絡區塊嵌入地圖（已鎖定互動，避免誤點其他地點）。
-5. **雙語切換** — 用 `data-lang="zh|en"` 搭配 `.l-zh` / `.l-en` class 做顯示切換，不重新載頁；論文標籤、作者分隔符號一併跟著語言變化。
+- 以捲動敘事呈現六站式閉環智慧製造 3D 產線
+- 行動版導覽、觸控操作、響應式卡片與較大的互動目標
+- 中文／英文即時切換
+- 研究成果的卡片、清單與關聯圖檢視
+- 團隊成員與入學學年篩選
+- 實驗室照片輪播、教授介紹與交通資訊
+- 支援鍵盤操作、降低動態效果偏好與分頁隱藏時暫停動畫
 
-整體是把「實驗室做什麼」從條列式介紹，改成用一條可以捲動探索的產線動線去講故事，3D 場景是整版設計的核心錨點。
+## 專案結構
 
-## 檔案結構
-
+```text
+.
+├─ index.html                 # 正式網站入口與內容資料
+├─ assets/
+│  ├─ data/
+│  │  └─ line-stations.json  # 六座工站的中英文資料
+│  ├─ design-system/         # 色彩、字體與元件設計系統
+│  ├─ images/                # 教授、成員、實驗室與活動照片
+│  └─ js/
+│     ├─ line-model.js       # Three.js 產線幾何
+│     ├─ runtime.js          # 宣告式頁面執行環境（產生檔）
+│     └─ three-d-stage.js    # 3D 檢視器 Web Component
+├─ archive/
+│  └─ lab-site-v2.html       # 舊版網站，保留供比對
+├─ docs/
+│  ├─ GITHUB-PAGES.md        # GitHub Pages 維護與部署說明
+│  └─ screens/               # 設計與畫面參考
+├─ security-reports/
+│  └─ 2026-08-20/            # 歷史安全掃描產物
+├─ tools/
+│  └─ production-line-3d.html # 3D 產線開發／匯出工具
+└─ .nojekyll                 # 讓 GitHub Pages 原樣提供靜態資源
 ```
-index.html               入口（轉址到主頁）
-Lab Site v3.dc.html      主頁（目前版本，內容最完整）
-Lab Site v2.dc.html      上一版（保留供比對，功能較陽春）
-Production Line 3D.html  3D 產線模型的獨立開發／檢測頁（含 OBJ / GLTF 匯出）
-line-model.js            3D 產線的幾何建模（各設備一個具名函式）
-line-stations.json       六座工站的中英文文案與對應論文
-support.js               頁面執行期（dc-runtime 編譯輸出，不要手動改）
-three-d-stage.js         <three-d-stage> 3D 檢視器元件（含 orbit controls、匯出）
-photos/                  照片：教授、成員、實驗室現場與活動、導覽列標頭
-_ds/                     Industry 設計系統（token、component 樣式、使用說明）
-```
 
-## 內容維護
+## 日常內容維護
 
-- 論文、成員、學歷經歷、交通方式、照片輪播：`Lab Site v3.dc.html` 下半段的資料常數
-  （`PAPERS`、`MEMBERS`、`EDU`、`EXP`、`TRANSIT`、`LAB_PHOTOS`）。
-- 成員照片：`MEMBERS` 每筆的 `photo` 欄位指向 `photos/`；碩士生學年為 `yr`（113 / 114 / 115）。
-- 工站文字：`line-stations.json`。
-- 3D 幾何：`line-model.js`，每座設備一個具名函式，尺寸集中在函式頂端的 `D` 常數。
+| 要修改的內容 | 檔案／位置 |
+| --- | --- |
+| 論文與研究成果 | `index.html` 的 `PAPERS` |
+| 教授學歷與經歷 | `index.html` 的 `EDU`、`EXP` |
+| 成員、照片與入學學年 | `index.html` 的 `MEMBERS`、`assets/images/` |
+| 實驗室照片輪播 | `index.html` 的 `LAB_PHOTOS` |
+| 交通方式與地圖 | `index.html` 的 `TRANSIT`、`TRANSIT_LINK`、`MAP_SRC` |
+| 工站名稱、設備與論文對應 | `assets/data/line-stations.json` |
+| 3D 設備造型與尺寸 | `assets/js/line-model.js` |
+| 色彩、字體與元件樣式 | `assets/design-system/` |
 
-## 技術棧
+`assets/js/runtime.js` 是產生的執行環境檔案，除非同步更新產生來源，否則不建議手動編輯。
 
-- 無建置工具、無框架安裝——純靜態檔案，直接開瀏覽器（或部署到任何靜態主機／GitHub Pages）
-- **GSAP 3.12.5 + ScrollTrigger**（CDN）：捲動動畫
-- **Three.js 0.184**（CDN，透過 import map）：3D 產線模型與檢視器
-- **Google Fonts**：Barlow / Barlow Condensed / Noto Sans TC
-- 頁面本體用一種宣告式模板語法（`{{ 變數 }}` 綁定、`x-dc` 自訂元素），由 `support.js`（dc-runtime）在瀏覽器端解讀渲染
+## 3D 開發工具
 
-## ⚠️ 已知限制
+啟動本機伺服器後，開啟 [http://localhost:8000/tools/production-line-3d.html](http://localhost:8000/tools/production-line-3d.html)。工具支援：
 
-`Lab Site v3.dc.html` 的模板語法需要 `window.React` / `window.ReactDOM` 已存在才能由 `support.js` 渲染，而匯出的檔案本身沒有附上 React／ReactDOM 的載入。直接雙擊開啟、或部署到純靜態環境時畫面可能無法完整渲染；獨立部署需額外補上 React/ReactDOM 的 CDN script。另外 3D 模型與設計系統以模組載入，需以 HTTP 伺服器開啟（例如 `python -m http.server 8000`），`file://` 直接開啟會失敗。`Production Line 3D.html` 是純 Three.js + 原生 JS 的獨立頁面，不受此限制。
+- 六個工站與全線鏡頭切換
+- 線架、法線、動畫與低細節模式
+- OBJ／GLB 匯出
 
-## 版本說明
+## 技術組成
 
-- **v3**：目前主要版本，內容與互動最完整
-- **v2**：較早的迭代，保留作為設計演進的紀錄
-- **Production Line 3D.html**：3D 產線模型的開發／除錯用獨立頁面，用來單獨檢視、調整、匯出模型，不是給訪客看的正式頁面
+- 純 HTML、CSS、JavaScript，無本機套件安裝與建置步驟
+- Three.js 0.184（ES module CDN）
+- GSAP 3.12.5 與 ScrollTrigger
+- React／ReactDOM 18.3.1（供自訂頁面執行環境使用）
+- Google Fonts：Barlow、Barlow Condensed、Noto Sans TC
+- 自訂宣告式模板與 `runtime.js`
+
+## GitHub Pages 部署
+
+正式入口已是根目錄 `index.html`，不需要轉址。合併到 `main` 後，將 GitHub Pages 設為從 `main` 分支根目錄部署即可。詳細檢查清單請見 [docs/GITHUB-PAGES.md](docs/GITHUB-PAGES.md)。
+
+## 後續改進方向
+
+- **優先移除核心 CDN 依賴**：將 React／ReactDOM 18.3.1 從 CDN 下載至 `assets/vendor/`，再把 `index.html` 與 `archive/lab-site-v2.html` 改為載入本機檔案。React 載入失敗會使整個 `runtime.js` 無法渲染頁面，因此優先級最高。
+- **視需求移植其他前端依賴**：若網站需要離線使用、校園網路限制下穩定開啟，再將 Three.js、GSAP／ScrollTrigger 與 Google Fonts 一併本機化。
+- **保留外部服務備援**：Google Maps 可維持 iframe，但應提供地址文字與地圖連結，避免地圖服務不可用時聯絡資訊消失。
+- **建立依賴更新流程**：本機化後由專案自行負責版本更新、安全修補、授權檔案與檔案大小管理；每次更新後需重新執行本機 HTTP 與 GitHub Pages 檢查。
+- **評估內容與程式分離**：將 `index.html` 內的論文、成員與履歷常數逐步移到 JSON 或 Markdown，再加入格式驗證，降低直接修改大型 HTML 的風險。
+
+## 安全掃描
+
+[2026-08-20 安全報告](security-reports/2026-08-20/report.md)記錄了歷史版本的離線靜態掃描，當時沒有可回報的發現。該報告針對提交 `30aea51`，不代表目前分支的即時安全狀態。
+
+## 授權
+
+此儲存庫目前未宣告開源授權。網站內容、照片與程式碼的使用權仍由專案擁有者保留。

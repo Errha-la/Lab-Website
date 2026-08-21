@@ -1,0 +1,91 @@
+{
+  "documentType": "codex-security.scan-manifest",
+  "scan": {
+    "artifacts": [
+      {
+        "mediaType": "application/json",
+        "path": "findings.json",
+        "sha256": "45be263be793dbc96bbc6af5f6b35b5c3047106e4ea31ecc5f208e519a56ef1d"
+      },
+      {
+        "mediaType": "application/json",
+        "path": "coverage.json",
+        "sha256": "8db49ca8859ba9bed7e2c5a20a62b4efe8975dfd624842aa6d985e11c73b57b8"
+      }
+    ],
+    "completedAt": "2026-08-20T14:34:44.209625Z",
+    "coverageRef": "coverage.json",
+    "findingsRef": "findings.json",
+    "id": "59f116ae-ba1a-4917-b7db-320fd4d889b9",
+    "producer": {
+      "name": "codex-security-plugin",
+      "version": "0.1.21"
+    },
+    "scope": {
+      "artifactsReviewed": [
+        "62 tracked repository files",
+        "Astro pages, layouts, components, client scripts, content schemas, and Markdown collections",
+        "package.json and package-lock.json",
+        "astro.config.mjs, tsconfig.json, .gitignore, and public assets"
+      ],
+      "context": "Public static Astro laboratory website. The authorized scope was the entire current Git revision.",
+      "excludePaths": [],
+      "includePaths": [
+        "."
+      ],
+      "limitations": [
+        "No deployment or hosting configuration exists in the repository, so effective HTTP response headers could not be verified.",
+        "Dependency advisory databases were not queried; version-specific CVE exposure was not assessed.",
+        "No runtime application execution or production deployment was available; validation was source-backed and offline."
+      ],
+      "runtimeStatus": "Astro default static output; no server adapter, API routes, authentication, database, uploads, or server-side state found.",
+      "summary": "Complete source-backed static security audit of the whole Lab-Website repository at revision 30aea51167ffd1f680f4fb6eacbced677131a226.",
+      "validationMode": "Offline static source review with one independent complete baseline audit, two focused investigations, repository-wide searches, and parent validation."
+    },
+    "sealedAt": "2026-08-20T14:34:44.209625Z",
+    "startedAt": "2026-08-20T14:24:36.208592Z",
+    "status": "completed",
+    "target": {
+      "displayName": "Lab-Website",
+      "kind": "git_revision",
+      "revision": "30aea51167ffd1f680f4fb6eacbced677131a226",
+      "targetId": "target_sha256_f6030475b2d5cd5d5b2a532a7aaecf0f404c975ea497dc499a10295895faffc3"
+    },
+    "threatModel": {
+      "assets": [
+        "Integrity of generated pages and same-origin JavaScript execution for visitors",
+        "Confidentiality and integrity of the build environment",
+        "Integrity and provenance of generated deployment artifacts",
+        "Visitor navigation integrity and privacy",
+        "Published laboratory contact and research metadata"
+      ],
+      "assumptions": [
+        "Deployment serves the generated static artifact without unpublished server endpoints.",
+        "Only repository-authorized editors can publish src/content changes; no external CMS or automated untrusted content feed is active.",
+        "Public names, publications, email address, and campus address are intended for publication.",
+        "Builds consume the committed lockfile using a frozen-lock workflow or equivalent."
+      ],
+      "attackerCapabilities": [
+        "A remote unauthenticated visitor can select paths, supply query parameters, click links, and interact with client-side controls.",
+        "A compromised external destination or embed can control its own cross-origin response but is constrained by browser same-origin protections.",
+        "A dependency supply-chain adversary may execute code during installation only if an integrity-pinned package itself is compromised.",
+        "Repository content modifiers are assumed to have authority comparable to template-code modifiers because no lower-privilege content publication path is established."
+      ],
+      "securityObjectives": [
+        "Prevent visitor-controlled values from reaching HTML, URL navigation, or script execution without effective validation or encoding.",
+        "Prevent checked-in content from unexpectedly becoming executable across template and serialization contexts.",
+        "Keep external navigation and embeds isolated and free of opener-based privilege transfer.",
+        "Keep secrets and credentials out of tracked source and generated public artifacts.",
+        "Keep dependency sources deterministic and integrity-pinned."
+      ],
+      "summary": "The application is a build-time generated public Astro site. Remote visitors can choose paths and query strings and interact with client-side DOM code, but no server-side privileged operation exists. Security-sensitive boundaries are checked-in content entering raw script/DOM contexts, npm dependencies executing during builds, and visitor navigation or embedding of third-party origins.",
+      "trustBoundaries": [
+        "Remote visitor URL and query input to static browser-side scripts",
+        "Version-controlled Markdown/content fields and template code entering the Astro build",
+        "npm registry packages and lifecycle scripts entering the build environment",
+        "The static site origin embedding Google Maps and linking to external HTTPS origins"
+      ]
+    }
+  },
+  "schemaVersion": "1.0"
+}
