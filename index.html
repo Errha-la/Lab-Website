@@ -904,13 +904,14 @@ class Component extends DCLogic {
     document.documentElement.dataset.lang='zh';
     document.documentElement.classList.add('rev-on');
     this.buildGraph();
+    this._onKeyDown=this.onKeyDown;
+    window.addEventListener('keydown',this._onKeyDown);
+    this._pageHidden=document.hidden;
+    this._onVisibility=()=>{ this._pageHidden=document.hidden; };
+    document.addEventListener('visibilitychange',this._onVisibility);
     this.startLoop();
     this.wireReveal();
     this.wireGantry();
-    this._onKeyDown=this.onKeyDown;
-    window.addEventListener('keydown',this._onKeyDown);
-    this._onVisibility=()=>{ this._pageHidden=document.hidden; };
-    document.addEventListener('visibilitychange',this._onVisibility);
     this.__photoTimer=setInterval(()=>{ if(this.state.page==='about')this.nextPhoto(); },6000);
     setTimeout(()=>this.wireMasonry(),0);
     setTimeout(()=>this.wireMasonry(),600);
@@ -961,7 +962,7 @@ class Component extends DCLogic {
       });
     },90);
   }
-  componentWillUnmount(){ if(this._timer)clearInterval(this._timer); if(this.__photoTimer)clearInterval(this.__photoTimer); if(window.__labOff)window.__labOff(); if(this._onKeyDown)window.removeEventListener('keydown',this._onKeyDown); if(this._onVisibility)document.removeEventListener('visibilitychange',this._onVisibility); this.disposeLine(); }
+  componentWillUnmount(){ if(window.__labOff)window.__labOff(); if(this.__photoTimer)clearInterval(this.__photoTimer); if(this._onKeyDown)window.removeEventListener('keydown',this._onKeyDown); if(this._onVisibility)document.removeEventListener('visibilitychange',this._onVisibility); this.disposeLine(); }
 
   toggleLang=()=>{
     const next=this.state.lang==='zh'?'en':'zh';
@@ -1299,11 +1300,13 @@ class Component extends DCLogic {
 
   startLoop(){
     if(window.__labTimer)clearInterval(window.__labTimer);
+    if(window.__labFrame)cancelAnimationFrame(window.__labFrame);
     if(window.__labOff)window.__labOff();
     this._dragTheta=0; this._idx=-1; this._tlFor=null;
     const g=window.gsap;
     if(g&&window.ScrollTrigger){ g.registerPlugin(window.ScrollTrigger); g.ticker.lagSmoothing(0); }
-    const step=()=>{
+    let active=true,frameId=0,lastUi=0;
+    const step=now=>{
       if(document.hidden||this._pageHidden)return;
       const wrap=document.getElementById('scrollwrap');
       if(wrap){
@@ -1314,6 +1317,9 @@ class Component extends DCLogic {
         this.updateHero(prog);
         this.renderLine();
       } else if(this._L){ this.disposeLine(); }
+      const stamp=typeof now==='number'?now:performance.now();
+      if(stamp-lastUi<40)return;
+      lastUi=stamp;
       this.releaseReveals();
       if(window.innerWidth>760&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches)this.walkStick();
       else { const stick=document.getElementById('stick'); if(stick)stick.style.opacity='0'; }
@@ -1338,16 +1344,29 @@ class Component extends DCLogic {
         }
       }
     };
-    const req=()=>{try{step();}catch(e){console.error('loop',e);}};
+    const req=()=>{try{step(performance.now());}catch(e){console.error('loop',e);}};
+    const frame=now=>{
+      if(!active)return;
+      try{step(now);}catch(e){console.error('loop',e);}
+      frameId=requestAnimationFrame(frame);
+      window.__labFrame=frameId;
+    };
     const seen=[];
     [window,document,document.scrollingElement,document.documentElement,document.body].forEach(t=>{
       if(!t||seen.indexOf(t)>=0)return; seen.push(t);
       t.addEventListener('scroll',req,{passive:true,capture:true});
     });
     window.addEventListener('resize',req);
-    window.__labOff=()=>seen.forEach(t=>t.removeEventListener('scroll',req,{capture:true}));
-    window.__labTimer=setInterval(req,40);
-    this._timer=window.__labTimer;
+    window.__labOff=()=>{
+      active=false;
+      if(frameId)cancelAnimationFrame(frameId);
+      seen.forEach(t=>t.removeEventListener('scroll',req,{capture:true}));
+      window.removeEventListener('resize',req);
+      window.__labFrame=0;
+      window.__labOff=null;
+    };
+    frameId=requestAnimationFrame(frame);
+    window.__labFrame=frameId;
     this.wireOrbitDrag();
     req();
   }
